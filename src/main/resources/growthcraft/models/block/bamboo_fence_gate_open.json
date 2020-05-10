@@ -1,0 +1,6 @@
+{
+  "parent": "block/fence_gate_open",
+  "textures": {
+    "texture": "growthcraft:blocks/bamboo_planks"
+  }
+}

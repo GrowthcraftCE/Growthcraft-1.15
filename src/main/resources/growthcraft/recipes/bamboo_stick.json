@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "P"
+  ],
+  "key": {
+    "P": {
+      "item": "growthcraft:bamboo_plank"
+    }
+  },
+  "result": {
+    "item": "growthcraft:bamboo_stick",
+    "count": 4
+  }
+}

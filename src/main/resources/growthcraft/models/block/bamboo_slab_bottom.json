@@ -1,0 +1,8 @@
+{
+  "parent": "block/half_slab",
+  "textures": {
+    "bottom": "growthcraft:blocks/bamboo_planks",
+    "top": "growthcraft:blocks/bamboo_planks",
+    "side": "growthcraft:blocks/bamboo_planks"
+  }
+}
