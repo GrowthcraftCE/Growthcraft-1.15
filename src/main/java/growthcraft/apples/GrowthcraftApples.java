@@ -1,10 +1,12 @@
 package growthcraft.apples;
 
 import growthcraft.Growthcraft;
+import growthcraft.apples.client.proxy.ClientProxy;
+import growthcraft.apples.common.proxy.CommonProxy;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
+import growthcraft.apples.init.GrowthcraftApplesItems;
+import growthcraft.apples.init.config.GrowthcraftApplesConfig;
 import growthcraft.apples.shared.Reference;
-import growthcraft.core.client.proxy.ClientProxy;
-import growthcraft.core.common.proxy.CommonProxy;
 import growthcraft.core.shared.proxy.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -39,22 +41,23 @@ public class GrowthcraftApples {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        // Load GrowthcraftApplesConfig.loadConfig()
-
         // Mod event bus context for deferred registries
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Add DeferredRegister<Item> to the mod event bus.
+        GrowthcraftApplesItems.ITEMS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftApplesBlocks.BLOCKS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-
     }
-
 
     private void setup(final FMLCommonSetupEvent event) {
         proxy.init();
+
+        // Load GrowthcraftApplesConfig.loadConfig()
+        GrowthcraftApplesConfig.loadConfig();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -64,7 +67,7 @@ public class GrowthcraftApples {
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("growthcraft", "helloworld", () -> {
+        InterModComms.sendTo(Reference.MODID, "helloworld", () -> {
             LOGGER.info("Hello world from the MDK");
             return "Hello world";
         });
@@ -83,23 +86,33 @@ public class GrowthcraftApples {
         LOGGER.info("HELLO from server starting");
     }
 
-
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
 
+        /**
+         * Subscribe to the RegistryEvent.Register<Block> for manually registering Blocks.
+         *
+         * @param event Block registration event.
+         */
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             final IForgeRegistry<Block> blockRegistry = event.getRegistry();
             GrowthcraftApplesBlocks.registerBlocks(blockRegistry);
         }
 
+        /**
+         * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.
+         * Items should be added to the DeferredRegister<Item> which is in the constructor.
+         *
+         * @param event Item registration event.
+         */
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> itemRegistry = event.getRegistry();
             final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
+            // Block Items cannot be deferred.
             GrowthcraftApplesBlocks.registerBlockItems(itemRegistry, properties);
         }
     }
-
 
 }

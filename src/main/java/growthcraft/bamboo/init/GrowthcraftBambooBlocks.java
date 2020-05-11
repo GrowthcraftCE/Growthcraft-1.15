@@ -4,7 +4,7 @@ import growthcraft.Growthcraft;
 import growthcraft.bamboo.common.block.BlockBambooButton;
 import growthcraft.bamboo.common.block.BlockBambooPlanks;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
-import growthcraft.core.shared.Reference;
+import growthcraft.bamboo.shared.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -31,8 +31,6 @@ public class GrowthcraftBambooBlocks {
     public static Block blockBambooDoor;
     public static Block ropeKnotBamboo;
 
-    private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
-
     static {
         bambooButton = BLOCKS.register(
                 "bamboo_button",
@@ -43,8 +41,9 @@ public class GrowthcraftBambooBlocks {
         bambooStairs = BLOCKS.register(
                 "bamboo_stairs",
                 () -> new BlockBambooStairs(Blocks.OAK_PLANKS, "bamboo_stairs"));
-
     }
+
+    private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering blocks ...");
@@ -56,12 +55,11 @@ public class GrowthcraftBambooBlocks {
 
         BLOCKS.getEntries().stream()
                 .map(RegistryObject::get).forEach(block -> {
-                    final BlockItem blockItem = new BlockItem(block, properties);
-                    blockItem.setRegistryName(block.getRegistryName());
-                    itemRegistry.register(blockItem);
+            final BlockItem blockItem = new BlockItem(block, properties);
+            blockItem.setRegistryName(block.getRegistryName());
+            itemRegistry.register(blockItem);
         });
 
     }
-
 
 }

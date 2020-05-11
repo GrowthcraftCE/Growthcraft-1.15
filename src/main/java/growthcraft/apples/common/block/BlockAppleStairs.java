@@ -1,6 +1,5 @@
 package growthcraft.apples.common.block;
 
-import growthcraft.apples.shared.Reference;
 import growthcraft.core.shared.block.GrowthcraftStairsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -10,7 +9,6 @@ public class BlockAppleStairs extends GrowthcraftStairsBlock {
 
     public BlockAppleStairs(Block block, String unlocalizedName) {
         super(block, getInitProperties(), unlocalizedName);
-        this.setRegistryName(Reference.MODID, unlocalizedName);
     }
 
     private static Properties getInitProperties() {

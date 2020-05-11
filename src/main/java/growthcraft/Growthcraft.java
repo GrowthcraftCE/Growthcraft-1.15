@@ -1,8 +1,6 @@
 package growthcraft;
 
-import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
-import growthcraft.bamboo.init.GrowthcraftBambooItems;
 import growthcraft.core.client.proxy.ClientProxy;
 import growthcraft.core.common.proxy.CommonProxy;
 import growthcraft.core.init.GrowthcraftBlocks;
@@ -37,6 +35,12 @@ import java.util.stream.Collectors;
 public class Growthcraft {
 
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final ItemGroup itemGroup = new ItemGroup(Reference.MODID) {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(GrowthcraftBambooBlocks.bambooPlank.get());
+        }
+    };
     public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public Growthcraft() {
@@ -47,25 +51,16 @@ public class Growthcraft {
 
         GrowthcraftConfig.loadConfig();
 
-        // Mod event bus context for defferred registries
+        // Mod event bus context for deferred registries
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Add DeferredRegister<Item> to the mod event bus.
         GrowthcraftItems.ITEMS.register(modEventBus);
-        GrowthcraftBambooItems.ITEMS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
-        GrowthcraftBambooBlocks.BLOCKS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
-
-    public static final ItemGroup itemGroup = new ItemGroup(Reference.MODID) {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(GrowthcraftBambooBlocks.bambooPlank.get());
-        }
-    };
 
     private void setup(final FMLCommonSetupEvent event) {
         proxy.init();
@@ -112,7 +107,6 @@ public class Growthcraft {
             final IForgeRegistry<Item> itemRegistry = event.getRegistry();
             final Item.Properties properties = new Item.Properties().group(itemGroup);
             GrowthcraftBlocks.registerBlockItems(itemRegistry, properties);
-            GrowthcraftBambooBlocks.registerBlockItems(itemRegistry, properties);
 
         }
     }

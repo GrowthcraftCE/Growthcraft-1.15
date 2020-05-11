@@ -2,7 +2,7 @@ package growthcraft.bamboo.init;
 
 import growthcraft.bamboo.common.item.ItemBambooCoal;
 import growthcraft.bamboo.common.item.ItemBambooStick;
-import growthcraft.core.shared.Reference;
+import growthcraft.bamboo.shared.Reference;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

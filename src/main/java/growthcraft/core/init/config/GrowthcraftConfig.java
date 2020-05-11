@@ -3,6 +3,7 @@ package growthcraft.core.init.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import growthcraft.bamboo.init.config.GrowthcraftBambooConfig;
+import growthcraft.trapper.shared.Reference;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -45,6 +46,7 @@ public class GrowthcraftConfig {
         SERVER = SERVER_BUILDER.build();
         CLIENT = CLIENT_BUILDER.build();
     }
+
     private GrowthcraftConfig() { /* Prevent Default Public Constructor */ }
 
     public static void loadConfig() {
@@ -58,7 +60,7 @@ public class GrowthcraftConfig {
                         resolve(CLIENT_CONFIG).toString());
 
         // Load Growthcraft Bamboo Config
-        if ( growthcraftBambooEnabled() ) {
+        if (growthcraftBambooEnabled()) {
             GrowthcraftBambooConfig.loadConfig();
         }
         // Load Growthcraft Apples Config
@@ -92,7 +94,9 @@ public class GrowthcraftConfig {
     }
 
     public static void initWorldGenConfig(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client) {
-        server.comment("Growthcraft Core World Generation");
+
+        server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
+
         saltOreGenerate = server
                 .comment("Generate Growthcraft custom ores within the world.")
                 .define("worldgen.saltOre.enable", true);
@@ -112,26 +116,61 @@ public class GrowthcraftConfig {
     }
 
     // region Getters
-    public static boolean getSaltOreGenerate() { return saltOreGenerate.get(); }
-    public static int getSaltOreGenChance() { return saltOreGenChance.get(); }
-    public static int getSaltOreGenCount() { return saltOreGenCount.get(); }
-    public static int getSaltOreGenMinHeight() { return saltOreGenMinHeight.get(); }
-    public static int getSaltOreGenMaxHeight() { return saltOreGenMaxHeight.get(); }
+    public static boolean getSaltOreGenerate() {
+        return saltOreGenerate.get();
+    }
 
-    public static boolean growthcraftApplesEnabled() { return enableGrowthcraftApples.get(); }
-    public static boolean growthcraftBambooEnabled() { return enableGrowthcraftBamboo.get(); }
-    public static boolean growthcrafBeesEnabled() { return enableGrowthcraftBees.get(); }
-    public static boolean growthcraftCellarEnabled() { return enableGrowthcraftCellar.get(); }
-    public static boolean growthcraftTrapperEnabled() { return enableGrowthcraftTrapper.get(); }
-    public static boolean growthcraftGrapesEnabled() { return enableGrowthcraftGrapes.get(); }
-    public static boolean growthcraftHopsEnabled() { return enableGrowthcraftHops.get(); }
-    public static boolean growthcraftMilkEnabled() { return enableGrowthcraftMilk.get(); }
-    public static boolean growthcraftRiceEnabled() { return enableGrowthcraftRice.get(); }
+    public static int getSaltOreGenChance() {
+        return saltOreGenChance.get();
+    }
 
+    public static int getSaltOreGenCount() {
+        return saltOreGenCount.get();
+    }
 
+    public static int getSaltOreGenMinHeight() {
+        return saltOreGenMinHeight.get();
+    }
 
+    public static int getSaltOreGenMaxHeight() {
+        return saltOreGenMaxHeight.get();
+    }
 
+    public static boolean growthcraftApplesEnabled() {
+        return enableGrowthcraftApples.get();
+    }
 
+    public static boolean growthcraftBambooEnabled() {
+        return enableGrowthcraftBamboo.get();
+    }
+
+    public static boolean growthcrafBeesEnabled() {
+        return enableGrowthcraftBees.get();
+    }
+
+    public static boolean growthcraftCellarEnabled() {
+        return enableGrowthcraftCellar.get();
+    }
+
+    public static boolean growthcraftTrapperEnabled() {
+        return enableGrowthcraftTrapper.get();
+    }
+
+    public static boolean growthcraftGrapesEnabled() {
+        return enableGrowthcraftGrapes.get();
+    }
+
+    public static boolean growthcraftHopsEnabled() {
+        return enableGrowthcraftHops.get();
+    }
+
+    public static boolean growthcraftMilkEnabled() {
+        return enableGrowthcraftMilk.get();
+    }
+
+    public static boolean growthcraftRiceEnabled() {
+        return enableGrowthcraftRice.get();
+    }
 
     // endregion
 }
