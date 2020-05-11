@@ -1,7 +1,0 @@
-{
-  "parent": "block/door_bottom",
-  "textures": {
-    "bottom": "growthcraft:blocks/bamboo_door_lower",
-    "top": "growthcraft:blocks/bamboo_door_upper"
-  }
-}

@@ -1,0 +1,31 @@
+{
+  "block.growthcraft.apple_button": "Apple Wood Button",
+  "block.growthcraft.apple_plank": "Apple Wood Planks",
+
+  "block.growthcraft.bamboo_button": "Bamboo Button",
+  "block.growthcraft.bamboo_stairs": "Bamboo Stairs",
+  "block.growthcraft.bamboo_plank": "Bamboo Planks",
+
+  "block.growthcraft.rocksalt_ore": "Rock Salt Ore",
+  "block.growthcraft.salt_block": "Salt Block",
+
+  "item.growthcraft.crowbar_black": "Crowbar (Black)",
+  "item.growthcraft.crowbar_blue": "Crowbar (Blue)",
+  "item.growthcraft.crowbar_brown": "Crowbar (Brown)",
+  "item.growthcraft.crowbar_cyan": "Crowbar (Cyan)",
+  "item.growthcraft.crowbar_gray": "Crowbar (Gray)",
+  "item.growthcraft.crowbar_green": "Crowbar (Green)",
+  "item.growthcraft.crowbar_light_blue": "Crowbar (Light Blue)",
+  "item.growthcraft.crowbar_light_gray": "Crowbar (Light Gray)",
+  "item.growthcraft.crowbar_lime": "Crowbar (Lime)",
+  "item.growthcraft.crowbar_magenta": "Crowbar (Magenta)",
+  "item.growthcraft.crowbar_orange": "Crowbar (Orange)",
+  "item.growthcraft.crowbar_pink": "Crowbar (Pink)",
+  "item.growthcraft.crowbar_purple": "Crowbar (Purple)",
+  "item.growthcraft.crowbar_red": "Crowbar (Red)",
+  "item.growthcraft.crowbar_white": "Crowbar (White)",
+  "item.growthcraft.crowbar_yellow": "Crowbar (Yellow)",
+  "item.growthcraft.salt": "Salt",
+
+  "itemGroup.growthcraft": "Growthcraft"
+}

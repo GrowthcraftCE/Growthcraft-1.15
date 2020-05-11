@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "growthcraft:bamboo_plank"
+    }
+  ],
+  "result": {
+    "item": "growthcraft:bamboo_button"
+  }
+}

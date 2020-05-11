@@ -1,8 +1,12 @@
 package growthcraft;
 
+import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
+import growthcraft.bamboo.init.GrowthcraftBambooItems;
 import growthcraft.core.client.proxy.ClientProxy;
 import growthcraft.core.common.proxy.CommonProxy;
+import growthcraft.core.init.GrowthcraftBlocks;
+import growthcraft.core.init.GrowthcraftItems;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
 import growthcraft.core.shared.proxy.IProxy;
@@ -12,6 +16,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -23,7 +28,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,13 +47,23 @@ public class Growthcraft {
 
         GrowthcraftConfig.loadConfig();
 
+        // Mod event bus context for defferred registries
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        // Add DeferredRegister<Item> to the mod event bus.
+        GrowthcraftItems.ITEMS.register(modEventBus);
+        GrowthcraftBambooItems.ITEMS.register(modEventBus);
+
+        // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftBambooBlocks.BLOCKS.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static final ItemGroup itemGroup = new ItemGroup(Reference.MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(GrowthcraftBambooBlocks.bambooPlank);
+            return new ItemStack(GrowthcraftBambooBlocks.bambooPlank.get());
         }
     };
 
@@ -89,14 +103,15 @@ public class Growthcraft {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             final IForgeRegistry<Block> blockRegistry = event.getRegistry();
-            GrowthcraftBambooBlocks.registerBlocks(blockRegistry);
+
+            GrowthcraftBlocks.registerBlocks(blockRegistry);
         }
 
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             final IForgeRegistry<Item> itemRegistry = event.getRegistry();
-            Item.Properties properties = new Item.Properties().group(itemGroup);
-
+            final Item.Properties properties = new Item.Properties().group(itemGroup);
+            GrowthcraftBlocks.registerBlockItems(itemRegistry, properties);
             GrowthcraftBambooBlocks.registerBlockItems(itemRegistry, properties);
 
         }

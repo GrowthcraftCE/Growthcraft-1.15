@@ -47,3 +47,6 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# Asset files from net.minecraft
+.assets
