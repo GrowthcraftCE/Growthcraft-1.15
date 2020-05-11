@@ -1,6 +1,5 @@
 package growthcraft.bamboo.common.block;
 
-import growthcraft.core.shared.Reference;
 import growthcraft.core.shared.block.GrowthcraftStairsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

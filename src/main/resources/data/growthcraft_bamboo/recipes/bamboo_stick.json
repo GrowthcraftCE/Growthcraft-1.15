@@ -6,11 +6,11 @@
   ],
   "key": {
     "P": {
-      "item": "growthcraft:bamboo_plank"
+      "item": "growthcraft_bamboo:bamboo_plank"
     }
   },
   "result": {
-    "item": "growthcraft:bamboo_stick",
+    "item": "growthcraft_bamboo:bamboo_stick",
     "count": 4
   }
 }

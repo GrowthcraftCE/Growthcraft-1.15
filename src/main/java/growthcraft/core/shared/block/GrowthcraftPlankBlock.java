@@ -21,8 +21,9 @@ public class GrowthcraftPlankBlock extends Block {
 
     private static Properties getInitProperties(Material material) {
         Properties properties = Properties.create(material);
-        properties.hardnessAndResistance(2.0F, 5.0F);
+        properties.hardnessAndResistance(2.0F, 3.0F);
         properties.harvestTool(ToolType.AXE);
+        properties.harvestLevel(1);
         properties.sound(SoundType.WOOD);
         return properties;
     }

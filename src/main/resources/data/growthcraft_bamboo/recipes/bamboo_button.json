@@ -3,10 +3,10 @@
   "group": "wooden_button",
   "ingredients": [
     {
-      "item": "growthcraft:bamboo_plank"
+      "item": "growthcraft_bamboo:bamboo_plank"
     }
   ],
   "result": {
-    "item": "growthcraft:bamboo_button"
+    "item": "growthcraft_bamboo:bamboo_button"
   }
 }

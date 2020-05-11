@@ -25,6 +25,20 @@ sonarqube {
     }
 }
 
+repositories {
+    mavenLocal()
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+}
+
 version = project.minecraft_version + '-' + project.growthcraft_version
 group = 'growthcraft'
 archivesBaseName = 'growthcraft'
@@ -98,29 +112,17 @@ minecraft {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:' + project.forge_version
 
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
+    /** Compile time Dependencies
+     * Include mods that we have a direct dependency with.
+     */
 
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/wwwwdependency_management.html
-
+    /** Runtime Dependencies
+     *  Include mods the we need while testing during runtime. When adding mods
+     *  to this list, place the version into the gradle.properties file.
+     */
+    runtime "mezz.jei:jei_" + project.property('minecraft_version') + ":" + project.property('jei_version')
 }
 
 task sourcesJar(type: Jar) {

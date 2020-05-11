@@ -45,19 +45,33 @@ public class GrowthcraftBambooBlocks {
 
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
 
+    /**
+     * Legacy block registration. Use DeferredRegister<Block> and RegistryObject<T> instead.
+     *
+     * @param registry Forge Block Registry
+     * @deprecated use GrowthcraftBambooBlocks.BLOCKS deferred registry instead.
+     */
+    @Deprecated
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering blocks ...");
-
     }
 
+    /**
+     * Dynamically register Growthcraft Apples BlockItems.
+     *
+     * @param itemRegistry IForgeRegistry<Item> reference for registering items.
+     * @param properties   Item properties with item group for creative tab.
+     */
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
         Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering itemBlocks ...");
 
         BLOCKS.getEntries().stream()
                 .map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
-            blockItem.setRegistryName(block.getRegistryName());
-            itemRegistry.register(blockItem);
+            if (block.getRegistryName() != null) {
+                blockItem.setRegistryName(block.getRegistryName());
+                itemRegistry.register(blockItem);
+            }
         });
 
     }
