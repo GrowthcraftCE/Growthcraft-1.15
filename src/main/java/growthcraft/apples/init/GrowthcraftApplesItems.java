@@ -1,21 +1,21 @@
 package growthcraft.apples.init;
 
-import growthcraft.grapes.shared.Reference;
+import growthcraft.apples.common.item.ItemAppleSeeds;
+import growthcraft.apples.shared.Reference;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class GrowthcraftApplesItems {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Reference.MODID);
 
+    public static final RegistryObject<ItemAppleSeeds> appleSeeds;
+
     static {
-        /**
-         * bambooCoal = ITEMS.register("bamboo_coal", () -> new ItemBambooCoal("bamboo_coal"));
-         */
+        appleSeeds = ITEMS.register("apple_seeds", () -> new ItemAppleSeeds("apple_seeds"));
     }
 
-    /**
-     * public static final RegistryObject<ItemBambooCoal> bambooCoal;
-     */
     private GrowthcraftApplesItems() { /* Prevent default public constructor */ }
+
 }
