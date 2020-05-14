@@ -10,15 +10,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GrowthcraftApplesItems {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Reference.MODID);
 
-    private static final RegistryObject<ItemAppleSeeds> appleSeeds;
+    public static final RegistryObject<ItemAppleSeeds> appleSeeds;
 
     static {
         appleSeeds = ITEMS.register("apple_seeds", () -> new ItemAppleSeeds("apple_seeds"));
     }
 
-    /**
-     * public static final RegistryObject<ItemBambooCoal> bambooCoal;
-     */
     private GrowthcraftApplesItems() { /* Prevent default public constructor */ }
 
 }
