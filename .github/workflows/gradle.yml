@@ -18,9 +18,9 @@ jobs:
     - name: Setup Gradle
       run: chmod +x gradlew
     - name: Version Checks
-      run: ls -la; ./gradlew -classpath "./gradle/wrapper/gradle-wrapper.jar" -version
+      run: ls -la; ./gradlew -version
     - name: Build with Gradle
-      run: ./gradlew build -Dorg.gradle.debug=true --no-daemon
+      run: ./gradlew build
     - name: Setup sonarqube
       uses: warchant/setup-sonar-scanner@v1
     - name: Run sonarqube
