@@ -30,4 +30,5 @@ jobs:
              -Dsonar.organization=growthcraftce
              -Dsonar.host.url=https://sonarcloud.io/
              -Dsonar.projectKey=growthcraft:Growthcraft-1.15
+             -Dsonar.java.binaries=./build/classes
         
