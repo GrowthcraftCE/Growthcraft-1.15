@@ -21,41 +21,37 @@ public class GrowthcraftApplesBlocks {
 
     // public static Block definitions.
 
-    public static final RegistryObject<BlockAppleButton> appleWoodButton;
-    // TODO: Implement appleWoodDoor;
-    // TODO: GROWTHCRAFT-1.15-#35 Implement appleWoodFence;
+    public static final RegistryObject<BlockAppleButton> applePlankButton;
+    public static final RegistryObject<BlockApplePlanks> applePlank;
+    // TODO[43]: Implement applePlankBoat;
     public static final RegistryObject<BlockAppleFence> applePlankFence;
-    // TODO: Implement appleWoodFenceGate;
-    // TODO: Implement appleWoodFenceRope;
-    // TODO: Implement appleWoodFenceGate;
-    public static final RegistryObject<BlockApplePlanks> appleWoodPlank;
-    // TODO: Implement appleWoodPressurePlant;
-    // TODO: Implement appleWoodSign;
-    public static final RegistryObject<BlockAppleStairs> appleWoodStairs;
-    // TODO: #47 Implement appleStrippedLog;
-    // TODO: #46 Implement appleStrippedWood;
-    // TODO: Implement appleWoodTrapdoor;
-    // TODO: Implement appleTreeLeaves;
-    // TODO: Implement appleTreeSapling;
-    // TODO: Implement appleWood All sides bark;
-    // TODO: Implement appleWoodBoat;
-    // TODO: Implement appleWoodLog;
-    // TODO: Implement appleWoodSlab;
-
-
+    // TODO[36]: Implement applePlankFenceGate;
+    // TODO[38]: Implement applePlankFenceRope;
+    // TODO[44]: Implement applePlankPressurePlate;
+    // TODO[41]: Implement applePlankSign;
+    // TODO[32]: Implement applePlankSlab;
+    public static final RegistryObject<BlockAppleStairs> applePlankStairs;
+    // TODO[42]: Implement applePlankTrapdoor;
+    // TODO[39]: Implement appleTreeLeaves;
+    // TODO[34]: Implement appleTreeSapling;
+    // TODO[33]: Implement appleWoodDoor;
+    // TODO[45]: Implement appleWood;
+    // TODO[46]: Implement appleWoodStripped;
+    // TODO[37]: Implement appleWoodLog;
+    // TODO[47]: Implement appleWoodLogStripped;
 
     // Static initializer for Growthcraft Apples blocks.
     static {
         applePlankFence = BLOCKS.register(
                 "apple_plank_fence",
                 () -> new BlockAppleFence("apple_plank_fence"));
-        appleWoodButton = BLOCKS.register(
+        applePlankButton = BLOCKS.register(
                 "apple_button",
                 () -> new BlockAppleButton("apple_button"));
-        appleWoodPlank = BLOCKS.register(
+        applePlank = BLOCKS.register(
                 "apple_plank",
                 () -> new BlockApplePlanks("apple_plank"));
-        appleWoodStairs = BLOCKS.register(
+        applePlankStairs = BLOCKS.register(
                 "apple_stairs",
                 () -> new BlockAppleStairs(Blocks.OAK_PLANKS, "apple_stairs"));
     }
