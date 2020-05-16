@@ -18,7 +18,7 @@ jobs:
     - name: Setup Gradle
       run: chmod +x gradlew
     - name: Version Checks
-      run: ls -la; gradlew -classpath "gradle/wrapper" -version
+      run: ls -la; ./gradlew -classpath "gradle/wrapper" -version
     - name: Build with Gradle
       run: ./gradlew build -Dorg.gradle.debug=true --no-daemon
     - name: Setup sonarqube
