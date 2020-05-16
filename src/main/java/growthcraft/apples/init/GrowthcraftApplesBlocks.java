@@ -30,8 +30,8 @@ public class GrowthcraftApplesBlocks {
     // TODO: Implement appleWoodPressurePlant;
     // TODO: Implement appleWoodSign;
     public static final RegistryObject<BlockAppleStairs> appleWoodStairs;
-    // TODO: Implement appleStrippedLog;
-    // TODO: Implement appleStrippedWood;
+    // TODO: #47 Implement appleStrippedLog;
+    // TODO: #46 Implement appleStrippedWood;
     // TODO: Implement appleWoodTrapdoor;
     // TODO: Implement appleTreeLeaves;
     // TODO: Implement appleTreeSapling;

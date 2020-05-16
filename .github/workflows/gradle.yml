@@ -17,8 +17,6 @@ jobs:
         key:  
     - name: Setup Gradle
       run: chmod +x gradlew
-    - name: Version Checks
-      run: ls -lad /home/runner/work/Growthcraft-1.15/Growthcraft-1.15/gradle/wrapper/gradle-wrapper.jar ; ./gradlew -version
     - name: Build with Gradle
       run: ./gradlew build
     - name: Setup sonarqube
