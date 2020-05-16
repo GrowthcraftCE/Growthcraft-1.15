@@ -8,7 +8,6 @@ import growthcraft.apples.init.config.GrowthcraftApplesConfig;
 import growthcraft.apples.shared.Reference;
 import growthcraft.core.Growthcraft;
 import growthcraft.lib.proxy.IProxy;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -88,17 +87,6 @@ public class GrowthcraftApples {
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
-
-        /**
-         * Subscribe to the RegistryEvent.Register<Block> for manually registering Blocks.
-         *
-         * @param event Block registration event.
-         */
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            final IForgeRegistry<Block> blockRegistry = event.getRegistry();
-            GrowthcraftApplesBlocks.registerBlocks(blockRegistry);
-        }
 
         /**
          * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.

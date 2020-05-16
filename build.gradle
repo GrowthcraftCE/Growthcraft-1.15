@@ -117,12 +117,14 @@ dependencies {
     /** Compile time Dependencies
      * Include mods that we have a direct dependency with.
      */
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 
     /** Runtime Dependencies
      *  Include mods the we need while testing during runtime. When adding mods
      *  to this list, place the version into the gradle.properties file.
      */
-    runtime "mezz.jei:jei_" + project.property('minecraft_version') + ":" + project.property('jei_version')
+    //runtime "mezz.jei:jei_" + project.property('minecraft_version') + ":" + project.property('jei_version')
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
 }
 

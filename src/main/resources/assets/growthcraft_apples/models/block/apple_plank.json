@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "particle": "growthcraft_apples:block/apple_planks",
-    "all": "growthcraft_apples:block/apple_planks"
+    "particle": "growthcraft_apples:block/apple_plank",
+    "all": "growthcraft_apples:block/apple_plank"
   }
 }

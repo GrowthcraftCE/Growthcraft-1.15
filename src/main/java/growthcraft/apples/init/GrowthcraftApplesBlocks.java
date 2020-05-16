@@ -1,6 +1,7 @@
 package growthcraft.apples.init;
 
 import growthcraft.apples.common.block.BlockAppleButton;
+import growthcraft.apples.common.block.BlockAppleFence;
 import growthcraft.apples.common.block.BlockApplePlanks;
 import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.shared.Reference;
@@ -22,7 +23,8 @@ public class GrowthcraftApplesBlocks {
 
     public static final RegistryObject<BlockAppleButton> appleWoodButton;
     // TODO: Implement appleWoodDoor;
-    // TODO: Implement appleWoodFence;
+    // TODO: GROWTHCRAFT-1.15-#35 Implement appleWoodFence;
+    public static final RegistryObject<BlockAppleFence> applePlankFence;
     // TODO: Implement appleWoodFenceGate;
     // TODO: Implement appleWoodFenceRope;
     // TODO: Implement appleWoodFenceGate;
@@ -44,6 +46,9 @@ public class GrowthcraftApplesBlocks {
 
     // Static initializer for Growthcraft Apples blocks.
     static {
+        applePlankFence = BLOCKS.register(
+                "apple_plank_fence",
+                () -> new BlockAppleFence("apple_plank_fence"));
         appleWoodButton = BLOCKS.register(
                 "apple_button",
                 () -> new BlockAppleButton("apple_button"));
