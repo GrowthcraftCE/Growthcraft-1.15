@@ -17,8 +17,6 @@ jobs:
         key:  
     - name: Setup Gradle
       run: chmod +x gradlew
-    - name: Setup CI Workspace
-      run:  ./gradlew setupCIWorkspace
     - name: Build with Gradle
       run: ./gradlew build  
     - name: Setup sonarqube
@@ -31,5 +29,5 @@ jobs:
              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
              -Dsonar.organization=growthcraftce
              -Dsonar.host.url=https://sonarcloud.io/
-             -Dsonar.projectKey=growthcraft:Growthcraft-1.12
+             -Dsonar.projectKey=growthcraft:Growthcraft-1.15
         
