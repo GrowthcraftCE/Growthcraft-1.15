@@ -4,7 +4,7 @@ import growthcraft.bees.client.proxy.ClientProxy;
 import growthcraft.bees.common.proxy.CommonProxy;
 import growthcraft.bees.init.config.GrowthcraftBeesConfig;
 import growthcraft.bees.shared.Reference;
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

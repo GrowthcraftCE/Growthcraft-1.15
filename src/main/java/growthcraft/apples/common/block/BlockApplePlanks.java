@@ -1,6 +1,6 @@
 package growthcraft.apples.common.block;
 
-import growthcraft.core.shared.block.GrowthcraftPlankBlock;
+import growthcraft.lib.common.block.GrowthcraftPlankBlock;
 import net.minecraft.block.material.Material;
 
 public class BlockApplePlanks extends GrowthcraftPlankBlock {

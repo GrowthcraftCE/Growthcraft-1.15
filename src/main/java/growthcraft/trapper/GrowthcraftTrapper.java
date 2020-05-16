@@ -1,6 +1,6 @@
 package growthcraft.trapper;
 
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import growthcraft.trapper.client.proxy.ClientProxy;
 import growthcraft.trapper.common.proxy.CommonProxy;
 import growthcraft.trapper.init.config.GrowthcraftTrapperConfig;

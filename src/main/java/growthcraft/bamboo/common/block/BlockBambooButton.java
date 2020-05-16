@@ -1,9 +1,6 @@
 package growthcraft.bamboo.common.block;
 
-import growthcraft.core.shared.Reference;
-import growthcraft.core.shared.block.GrowthcraftButtonBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import growthcraft.lib.common.block.GrowthcraftButtonBlock;
 
 public class BlockBambooButton extends GrowthcraftButtonBlock {
 

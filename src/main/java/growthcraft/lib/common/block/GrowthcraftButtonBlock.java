@@ -1,6 +1,5 @@
-package growthcraft.core.shared.block;
+package growthcraft.lib.common.block;
 
-import growthcraft.core.shared.Reference;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.material.Material;

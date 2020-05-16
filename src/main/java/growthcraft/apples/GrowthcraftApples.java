@@ -1,13 +1,13 @@
 package growthcraft.apples;
 
-import growthcraft.Growthcraft;
 import growthcraft.apples.client.proxy.ClientProxy;
 import growthcraft.apples.common.proxy.CommonProxy;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.apples.init.GrowthcraftApplesItems;
 import growthcraft.apples.init.config.GrowthcraftApplesConfig;
 import growthcraft.apples.shared.Reference;
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.core.Growthcraft;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;

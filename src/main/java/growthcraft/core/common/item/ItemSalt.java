@@ -1,7 +1,6 @@
 package growthcraft.core.common.item;
 
-import growthcraft.core.shared.Reference;
-import growthcraft.core.shared.item.GrowthcraftItem;
+import growthcraft.lib.common.item.GrowthcraftItem;
 
 public class ItemSalt extends GrowthcraftItem {
 

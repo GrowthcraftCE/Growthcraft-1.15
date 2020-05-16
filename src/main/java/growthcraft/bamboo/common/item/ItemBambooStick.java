@@ -1,6 +1,6 @@
 package growthcraft.bamboo.common.item;
 
-import growthcraft.core.shared.item.GrowthcraftItem;
+import growthcraft.lib.common.item.GrowthcraftItem;
 
 public class ItemBambooStick extends GrowthcraftItem {
 

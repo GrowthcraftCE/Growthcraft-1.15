@@ -1,6 +1,6 @@
 package growthcraft.apples.common.block;
 
-import growthcraft.core.shared.block.GrowthcraftButtonBlock;
+import growthcraft.lib.common.block.GrowthcraftButtonBlock;
 
 public class BlockAppleButton extends GrowthcraftButtonBlock {
 

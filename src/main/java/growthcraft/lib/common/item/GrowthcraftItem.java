@@ -1,6 +1,6 @@
-package growthcraft.core.shared.item;
+package growthcraft.lib.common.item;
 
-import growthcraft.Growthcraft;
+import growthcraft.core.Growthcraft;
 import net.minecraft.item.Item;
 
 public class GrowthcraftItem extends Item {

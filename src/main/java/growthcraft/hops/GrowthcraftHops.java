@@ -1,10 +1,10 @@
 package growthcraft.hops;
 
-import growthcraft.core.shared.proxy.IProxy;
 import growthcraft.hops.client.proxy.ClientProxy;
 import growthcraft.hops.common.proxy.CommonProxy;
 import growthcraft.hops.init.config.GrowthcraftHopsConfig;
 import growthcraft.hops.shared.Reference;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

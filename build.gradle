@@ -123,6 +123,7 @@ dependencies {
      *  to this list, place the version into the gradle.properties file.
      */
     runtime "mezz.jei:jei_" + project.property('minecraft_version') + ":" + project.property('jei_version')
+
 }
 
 task sourcesJar(type: Jar) {
