@@ -1,6 +1,6 @@
 package growthcraft.apples.common.block;
 
-import growthcraft.core.shared.block.GrowthcraftStairsBlock;
+import growthcraft.lib.common.block.GrowthcraftStairsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

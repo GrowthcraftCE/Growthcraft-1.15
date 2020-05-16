@@ -1,6 +1,6 @@
 package growthcraft.milk;
 
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import growthcraft.milk.client.proxy.ClientProxy;
 import growthcraft.milk.common.proxy.CommonProxy;
 import growthcraft.milk.init.config.GrowthcraftMilkConfig;

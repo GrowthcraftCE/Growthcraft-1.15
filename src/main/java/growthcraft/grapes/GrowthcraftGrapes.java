@@ -1,10 +1,10 @@
 package growthcraft.grapes;
 
-import growthcraft.core.shared.proxy.IProxy;
 import growthcraft.grapes.client.proxy.ClientProxy;
 import growthcraft.grapes.common.proxy.CommonProxy;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.grapes.shared.Reference;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

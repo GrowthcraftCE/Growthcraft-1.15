@@ -1,10 +1,10 @@
 package growthcraft.bamboo.init;
 
-import growthcraft.Growthcraft;
 import growthcraft.bamboo.common.block.BlockBambooButton;
 import growthcraft.bamboo.common.block.BlockBambooPlanks;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
 import growthcraft.bamboo.shared.Reference;
+import growthcraft.core.Growthcraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;

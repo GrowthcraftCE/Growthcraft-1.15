@@ -4,7 +4,7 @@ import growthcraft.cellar.client.proxy.ClientProxy;
 import growthcraft.cellar.common.proxy.CommonProxy;
 import growthcraft.cellar.init.config.GrowthcraftCellarConfig;
 import growthcraft.cellar.shared.Reference;
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

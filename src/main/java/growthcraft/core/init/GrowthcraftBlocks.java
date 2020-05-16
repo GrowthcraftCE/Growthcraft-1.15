@@ -1,6 +1,6 @@
 package growthcraft.core.init;
 
-import growthcraft.Growthcraft;
+import growthcraft.core.Growthcraft;
 import growthcraft.core.common.block.BlockRockSaltOre;
 import growthcraft.core.common.block.BlockSalt;
 import growthcraft.core.shared.Reference;

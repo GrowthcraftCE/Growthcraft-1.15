@@ -1,6 +1,6 @@
 package growthcraft.rice.client.proxy;
 
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;

@@ -1,4 +1,4 @@
-package growthcraft;
+package growthcraft.core;
 
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
 import growthcraft.core.client.proxy.ClientProxy;
@@ -7,7 +7,7 @@ import growthcraft.core.init.GrowthcraftBlocks;
 import growthcraft.core.init.GrowthcraftItems;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

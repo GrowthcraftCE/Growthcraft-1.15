@@ -1,4 +1,4 @@
-package growthcraft.core.shared.block;
+package growthcraft.lib.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

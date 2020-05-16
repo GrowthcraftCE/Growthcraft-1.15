@@ -1,13 +1,13 @@
 package growthcraft.bamboo;
 
-import growthcraft.Growthcraft;
 import growthcraft.bamboo.client.proxy.ClientProxy;
 import growthcraft.bamboo.common.proxy.CommonProxy;
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
 import growthcraft.bamboo.init.GrowthcraftBambooItems;
 import growthcraft.bamboo.init.config.GrowthcraftBambooConfig;
 import growthcraft.bamboo.shared.Reference;
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.core.Growthcraft;
+import growthcraft.lib.proxy.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;

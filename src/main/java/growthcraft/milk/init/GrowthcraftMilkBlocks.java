@@ -1,6 +1,6 @@
 package growthcraft.milk.init;
 
-import growthcraft.Growthcraft;
+import growthcraft.core.Growthcraft;
 import growthcraft.core.shared.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

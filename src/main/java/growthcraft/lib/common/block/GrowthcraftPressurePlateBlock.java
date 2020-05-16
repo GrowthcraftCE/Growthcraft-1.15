@@ -1,4 +1,4 @@
-package growthcraft.core.shared.block;
+package growthcraft.lib.common.block;
 
 import growthcraft.core.shared.Reference;
 import net.minecraft.block.PressurePlateBlock;

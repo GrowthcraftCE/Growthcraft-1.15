@@ -1,4 +1,4 @@
-package growthcraft.core.shared.worldgen;
+package growthcraft.lib.worldgen;
 
 import growthcraft.core.init.GrowthcraftBlocks;
 import growthcraft.core.init.config.GrowthcraftConfig;

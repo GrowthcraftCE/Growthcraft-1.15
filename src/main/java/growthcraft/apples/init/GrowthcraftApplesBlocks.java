@@ -1,10 +1,10 @@
 package growthcraft.apples.init;
 
-import growthcraft.Growthcraft;
 import growthcraft.apples.common.block.BlockAppleButton;
 import growthcraft.apples.common.block.BlockApplePlanks;
 import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.shared.Reference;
+import growthcraft.core.Growthcraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -19,19 +19,38 @@ public class GrowthcraftApplesBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     // public static Block definitions.
-    public static final RegistryObject<BlockAppleButton> appleButton;
-    public static final RegistryObject<BlockApplePlanks> applePlank;
-    public static final RegistryObject<BlockAppleStairs> appleStairs;
+
+    public static final RegistryObject<BlockAppleButton> appleWoodButton;
+    // TODO: Implement appleWoodDoor;
+    // TODO: Implement appleWoodFence;
+    // TODO: Implement appleWoodFenceGate;
+    // TODO: Implement appleWoodFenceRope;
+    // TODO: Implement appleWoodFenceGate;
+    public static final RegistryObject<BlockApplePlanks> appleWoodPlank;
+    // TODO: Implement appleWoodPressurePlant;
+    // TODO: Implement appleWoodSign;
+    public static final RegistryObject<BlockAppleStairs> appleWoodStairs;
+    // TODO: Implement appleStrippedLog;
+    // TODO: Implement appleStrippedWood;
+    // TODO: Implement appleWoodTrapdoor;
+    // TODO: Implement appleTreeLeaves;
+    // TODO: Implement appleTreeSapling;
+    // TODO: Implement appleWood All sides bark;
+    // TODO: Implement appleWoodBoat;
+    // TODO: Implement appleWoodLog;
+    // TODO: Implement appleWoodSlab;
+
+
 
     // Static initializer for Growthcraft Apples blocks.
     static {
-        appleButton = BLOCKS.register(
+        appleWoodButton = BLOCKS.register(
                 "apple_button",
                 () -> new BlockAppleButton("apple_button"));
-        applePlank = BLOCKS.register(
+        appleWoodPlank = BLOCKS.register(
                 "apple_plank",
                 () -> new BlockApplePlanks("apple_plank"));
-        appleStairs = BLOCKS.register(
+        appleWoodStairs = BLOCKS.register(
                 "apple_stairs",
                 () -> new BlockAppleStairs(Blocks.OAK_PLANKS, "apple_stairs"));
     }

@@ -1,6 +1,6 @@
 package growthcraft.rice;
 
-import growthcraft.core.shared.proxy.IProxy;
+import growthcraft.lib.proxy.IProxy;
 import growthcraft.rice.client.proxy.ClientProxy;
 import growthcraft.rice.common.proxy.CommonProxy;
 import growthcraft.rice.init.config.GrowthcraftRiceConfig;

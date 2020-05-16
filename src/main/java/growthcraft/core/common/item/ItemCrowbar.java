@@ -1,9 +1,6 @@
 package growthcraft.core.common.item;
 
-import growthcraft.Growthcraft;
-import growthcraft.core.shared.Reference;
-import growthcraft.core.shared.item.GrowthcraftItem;
-import net.minecraft.item.Item;
+import growthcraft.lib.common.item.GrowthcraftItem;
 
 public class ItemCrowbar extends GrowthcraftItem {
 
