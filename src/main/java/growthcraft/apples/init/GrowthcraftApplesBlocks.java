@@ -1,11 +1,13 @@
 package growthcraft.apples.init;
 
-import growthcraft.apples.common.block.BlockAppleButton;
-import growthcraft.apples.common.block.BlockAppleFence;
-import growthcraft.apples.common.block.BlockApplePlanks;
 import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.shared.Reference;
+import growthcraft.apples.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
+import growthcraft.lib.common.block.GrowthcraftButtonBlock;
+import growthcraft.lib.common.block.GrowthcraftFenceBlock;
+import growthcraft.lib.common.block.GrowthcraftLogBlock;
+import growthcraft.lib.common.block.GrowthcraftPlankBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -20,11 +22,10 @@ public class GrowthcraftApplesBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     // public static Block definitions.
-
-    public static final RegistryObject<BlockAppleButton> applePlankButton;
-    public static final RegistryObject<BlockApplePlanks> applePlank;
+    public static final RegistryObject<GrowthcraftButtonBlock> applePlankButton;
+    public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
     // TODO[43]: Implement applePlankBoat;
-    public static final RegistryObject<BlockAppleFence> applePlankFence;
+    public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
     // TODO[36]: Implement applePlankFenceGate;
     // TODO[38]: Implement applePlankFenceRope;
     // TODO[44]: Implement applePlankPressurePlate;
@@ -32,28 +33,36 @@ public class GrowthcraftApplesBlocks {
     // TODO[32]: Implement applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
     // TODO[42]: Implement applePlankTrapdoor;
-    // TODO[39]: Implement appleTreeLeaves;
-    // TODO[34]: Implement appleTreeSapling;
+    // TODO[39]: **Implement appleTreeLeaves;
+    // TODO[34]: **Implement appleTreeSapling;
     // TODO[33]: Implement appleWoodDoor;
-    // TODO[45]: Implement appleWood;
+    // TODO[45]: **Implement appleWood;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWood;
     // TODO[46]: Implement appleWoodStripped;
-    // TODO[37]: Implement appleWoodLog;
+    // TODO[37]: **Implement appleWoodLog;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWoodLog;
     // TODO[47]: Implement appleWoodLogStripped;
 
     // Static initializer for Growthcraft Apples blocks.
     static {
-        applePlankFence = BLOCKS.register(
-                "apple_plank_fence",
-                () -> new BlockAppleFence("apple_plank_fence"));
         applePlankButton = BLOCKS.register(
-                "apple_button",
-                () -> new BlockAppleButton("apple_button"));
+                UnlocalizedName.APPLE_PLANK_BUTTON,
+                () -> new GrowthcraftButtonBlock(UnlocalizedName.APPLE_PLANK_BUTTON));
         applePlank = BLOCKS.register(
-                "apple_plank",
-                () -> new BlockApplePlanks("apple_plank"));
+                UnlocalizedName.APPLE_PLANK,
+                () -> new GrowthcraftPlankBlock(UnlocalizedName.APPLE_PLANK));
+        applePlankFence = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_FENCE,
+                () -> new GrowthcraftFenceBlock(UnlocalizedName.APPLE_PLANK_FENCE));
         applePlankStairs = BLOCKS.register(
-                "apple_stairs",
-                () -> new BlockAppleStairs(Blocks.OAK_PLANKS, "apple_stairs"));
+                UnlocalizedName.APPLE_PLANK_STAIRS,
+                () -> new BlockAppleStairs(Blocks.OAK_PLANKS, UnlocalizedName.APPLE_PLANK_STAIRS));
+        appleWood = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD));
+        appleWoodLog = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD_LOG,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_LOG));
     }
 
     private GrowthcraftApplesBlocks() { /* Prevent Default Public Constructor */ }

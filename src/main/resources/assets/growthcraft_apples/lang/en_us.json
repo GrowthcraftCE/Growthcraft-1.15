@@ -2,5 +2,7 @@
   "block.growthcraft_apples.apple_button": "Apple Wood Button",
   "block.growthcraft_apples.apple_plank": "Apple Wood Planks",
   "block.growthcraft_apples.apple_plank_fence": "Apple Wood Fence",
-  "block.growthcraft_apples.apple_stairs": "Apple Wood Stairs"
+  "block.growthcraft_apples.apple_stairs": "Apple Wood Stairs",
+  "block.growthcraft_apples.apple_wood": "Apple Wood",
+  "block.growthcraft_apples.apple_wood_log": "Apple Log"
 }
