@@ -4,12 +4,10 @@ import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.shared.Reference;
 import growthcraft.apples.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
-import growthcraft.lib.common.block.GrowthcraftButtonBlock;
-import growthcraft.lib.common.block.GrowthcraftFenceBlock;
-import growthcraft.lib.common.block.GrowthcraftLogBlock;
-import growthcraft.lib.common.block.GrowthcraftPlankBlock;
+import growthcraft.lib.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -27,12 +25,14 @@ public class GrowthcraftApplesBlocks {
     // TODO[43]: Implement applePlankBoat;
     public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
     // TODO[36]: Implement applePlankFenceGate;
+    public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
     // TODO[38]: Implement applePlankFenceRope;
     // TODO[44]: Implement applePlankPressurePlate;
     // TODO[41]: Implement applePlankSign;
     // TODO[32]: Implement applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
     // TODO[42]: Implement applePlankTrapdoor;
+    public static final RegistryObject<GrowthcraftTrapdoor> applePlankTrapdoor;
     // TODO[39]: **Implement appleTreeLeaves;
     // TODO[34]: **Implement appleTreeSapling;
     // TODO[33]: Implement appleWoodDoor;
@@ -54,9 +54,15 @@ public class GrowthcraftApplesBlocks {
         applePlankFence = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_FENCE,
                 () -> new GrowthcraftFenceBlock(UnlocalizedName.APPLE_PLANK_FENCE));
+        applePlankFenceGate = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_FENCE_GATE,
+                () -> new GrowthcraftFenceGateBlock(UnlocalizedName.APPLE_PLANK_FENCE_GATE));
         applePlankStairs = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_STAIRS,
                 () -> new BlockAppleStairs(Blocks.OAK_PLANKS, UnlocalizedName.APPLE_PLANK_STAIRS));
+        applePlankTrapdoor = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_TRAPDOOR,
+                () -> new GrowthcraftTrapdoor(UnlocalizedName.APPLE_PLANK_TRAPDOOR, Material.WOOD));
         appleWood = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD,
                 () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD));

@@ -1,6 +1,7 @@
 package growthcraft.apples;
 
 import growthcraft.apples.client.proxy.ClientProxy;
+import growthcraft.apples.client.render.GrowthcraftApplesBlockRenders;
 import growthcraft.apples.common.proxy.CommonProxy;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.apples.init.GrowthcraftApplesItems;
@@ -59,9 +60,12 @@ public class GrowthcraftApples {
         GrowthcraftApplesConfig.loadConfig();
     }
 
+    /**
+     * Do something that can only be done on the client like transparent blocks.
+     * @param event FMLClientSetupEvent
+     */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftApplesBlockRenders.setRenderLayer();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
