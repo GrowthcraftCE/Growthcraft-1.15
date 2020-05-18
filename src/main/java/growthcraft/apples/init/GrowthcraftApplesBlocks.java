@@ -1,12 +1,13 @@
 package growthcraft.apples.init;
 
-import growthcraft.apples.common.block.BlockAppleButton;
-import growthcraft.apples.common.block.BlockApplePlanks;
 import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.shared.Reference;
+import growthcraft.apples.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
+import growthcraft.lib.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -19,54 +20,69 @@ public class GrowthcraftApplesBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     // public static Block definitions.
-
-    public static final RegistryObject<BlockAppleButton> appleWoodButton;
-    // TODO: Implement appleWoodDoor;
-    // TODO: Implement appleWoodFence;
-    // TODO: Implement appleWoodFenceGate;
-    // TODO: Implement appleWoodFenceRope;
-    // TODO: Implement appleWoodFenceGate;
-    public static final RegistryObject<BlockApplePlanks> appleWoodPlank;
-    // TODO: Implement appleWoodPressurePlant;
-    // TODO: Implement appleWoodSign;
-    public static final RegistryObject<BlockAppleStairs> appleWoodStairs;
-    // TODO: Implement appleStrippedLog;
-    // TODO: Implement appleStrippedWood;
-    // TODO: Implement appleWoodTrapdoor;
-    // TODO: Implement appleTreeLeaves;
-    // TODO: Implement appleTreeSapling;
-    // TODO: Implement appleWood All sides bark;
-    // TODO: Implement appleWoodBoat;
-    // TODO: Implement appleWoodLog;
-    // TODO: Implement appleWoodSlab;
-
-
+    public static final RegistryObject<GrowthcraftButtonBlock> applePlankButton;
+    public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
+    // TODO[43]: Implement applePlankBoat;
+    public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
+    public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
+    // TODO[38]: Implement applePlankFenceRope;
+    public static final RegistryObject<GrowthcraftPressurePlateBlock> applePlankPressurePlate;
+    // TODO[41]: Implement applePlankSign;
+    public static final RegistryObject<GrowthcraftSlabBlock> applePlankSlab;
+    public static final RegistryObject<BlockAppleStairs> applePlankStairs;
+    public static final RegistryObject<GrowthcraftTrapdoor> applePlankTrapdoor;
+    public static final RegistryObject<GrowthcraftDoorBlock> applePlankDoor;
+    // TODO[39]: **Implement appleTreeLeaves;
+    // TODO[34]: **Implement appleTreeSapling;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWood;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWoodStripped;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWoodLog;
+    public static final RegistryObject<GrowthcraftLogBlock> appleWoodLogStripped;
 
     // Static initializer for Growthcraft Apples blocks.
     static {
-        appleWoodButton = BLOCKS.register(
-                "apple_button",
-                () -> new BlockAppleButton("apple_button"));
-        appleWoodPlank = BLOCKS.register(
-                "apple_plank",
-                () -> new BlockApplePlanks("apple_plank"));
-        appleWoodStairs = BLOCKS.register(
-                "apple_stairs",
-                () -> new BlockAppleStairs(Blocks.OAK_PLANKS, "apple_stairs"));
+        applePlankButton = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_BUTTON,
+                () -> new GrowthcraftButtonBlock(UnlocalizedName.APPLE_PLANK_BUTTON));
+        applePlank = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK,
+                () -> new GrowthcraftPlankBlock(UnlocalizedName.APPLE_PLANK));
+        applePlankDoor = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_DOOR,
+                () -> new GrowthcraftDoorBlock(UnlocalizedName.APPLE_PLANK_DOOR));
+        applePlankFence = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_FENCE,
+                () -> new GrowthcraftFenceBlock(UnlocalizedName.APPLE_PLANK_FENCE));
+        applePlankFenceGate = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_FENCE_GATE,
+                () -> new GrowthcraftFenceGateBlock(UnlocalizedName.APPLE_PLANK_FENCE_GATE));
+        applePlankPressurePlate = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_PRESSURE_PLATE,
+                () -> new GrowthcraftPressurePlateBlock(UnlocalizedName.APPLE_PLANK_PRESSURE_PLATE));
+        applePlankSlab = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_SLAB,
+                () -> new GrowthcraftSlabBlock(UnlocalizedName.APPLE_PLANK_SLAB));
+        applePlankStairs = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_STAIRS,
+                () -> new BlockAppleStairs(Blocks.OAK_PLANKS, UnlocalizedName.APPLE_PLANK_STAIRS));
+        applePlankTrapdoor = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_TRAPDOOR,
+                () -> new GrowthcraftTrapdoor(UnlocalizedName.APPLE_PLANK_TRAPDOOR, Material.WOOD));
+        appleWood = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD));
+        appleWoodStripped = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD_STRIPPED,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_STRIPPED));
+        appleWoodLog = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD_LOG,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_LOG));
+        appleWoodLogStripped = BLOCKS.register(
+                UnlocalizedName.APPLE_WOOD_LOG_STRIPPED,
+                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_LOG_STRIPPED));
     }
 
     private GrowthcraftApplesBlocks() { /* Prevent Default Public Constructor */ }
-
-    /**
-     * Legacy block registration. Use DeferredRegister<Block> and RegistryObject<T> instead.
-     *
-     * @param registry Forge Block Registry
-     * @deprecated use GrowthcraftBambooBlocks.BLOCKS deferred registry instead.
-     */
-    @Deprecated
-    public static void registerBlocks(IForgeRegistry<Block> registry) {
-        Growthcraft.LOGGER.debug("Growthcraft Apples Registering blocks ...");
-    }
 
     /**
      * Dynamically register Growthcraft Apples BlockItems.
@@ -77,14 +93,15 @@ public class GrowthcraftApplesBlocks {
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
         Growthcraft.LOGGER.debug("Growthcraft Apples Registering itemBlocks ...");
 
-        BLOCKS.getEntries().stream()
-                .map(RegistryObject::get).forEach(block -> {
+        BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
             if (block.getRegistryName() != null) {
                 blockItem.setRegistryName(block.getRegistryName());
                 itemRegistry.register(blockItem);
             }
         });
+
+        Growthcraft.LOGGER.debug("Growthcraft Apples itemBlocks Registered.");
 
     }
 }

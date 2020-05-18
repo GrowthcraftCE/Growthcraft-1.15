@@ -2,7 +2,7 @@ package growthcraft.bamboo.init.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import growthcraft.apples.shared.Reference;
+import growthcraft.bamboo.shared.Reference;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -52,7 +52,7 @@ public class GrowthcraftBambooConfig {
      */
     public static void initWorldGenConfig(ForgeConfigSpec.Builder server) {
         server.push("_general");
-        server.comment(String.format("General configuration for %s.", growthcraft.trapper.shared.Reference.NAME)).define("_general.version", growthcraft.trapper.shared.Reference.VERSION);
+        server.comment(String.format("General configuration for %s.", Reference.NAME)).define("_general.version", Reference.VERSION);
         server.pop();
 
         server.push("worldgen");

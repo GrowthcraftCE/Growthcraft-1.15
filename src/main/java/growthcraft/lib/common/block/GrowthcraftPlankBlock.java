@@ -9,12 +9,11 @@ public class GrowthcraftPlankBlock extends Block {
 
     private final String unlocalizedName;
 
-    public GrowthcraftPlankBlock(Material material, String unlocalizedName) {
-        super(getInitProperties(material));
-        this.unlocalizedName = unlocalizedName;
+    public GrowthcraftPlankBlock(String unlocalizedName) {
+        this(unlocalizedName, getInitProperties(Material.WOOD));
     }
 
-    public GrowthcraftPlankBlock(Properties properties, String unlocalizedName) {
+    public GrowthcraftPlankBlock(String unlocalizedName, Properties properties) {
         super(properties);
         this.unlocalizedName = unlocalizedName;
     }

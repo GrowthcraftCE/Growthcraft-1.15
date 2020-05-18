@@ -1,7 +1,7 @@
 package growthcraft.rice.init;
 
 import growthcraft.core.Growthcraft;
-import growthcraft.core.shared.Reference;
+import growthcraft.rice.shared.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

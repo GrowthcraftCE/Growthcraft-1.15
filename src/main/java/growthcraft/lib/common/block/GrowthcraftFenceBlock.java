@@ -3,6 +3,7 @@ package growthcraft.lib.common.block;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 
 public class GrowthcraftFenceBlock extends FenceBlock {
 
@@ -14,9 +15,7 @@ public class GrowthcraftFenceBlock extends FenceBlock {
     }
 
     private static Properties getInitProperties(Material material) {
-        Properties properties = Properties.create(material);
-        properties.hardnessAndResistance(0.5F);
-        properties.doesNotBlockMovement();
+        Properties properties = Properties.create(material, MaterialColor.WOOD);
         properties.sound(SoundType.WOOD);
         return properties;
     }

@@ -1,6 +1,7 @@
 package growthcraft.apples;
 
 import growthcraft.apples.client.proxy.ClientProxy;
+import growthcraft.apples.client.render.GrowthcraftApplesBlockRenders;
 import growthcraft.apples.common.proxy.CommonProxy;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.apples.init.GrowthcraftApplesItems;
@@ -8,7 +9,6 @@ import growthcraft.apples.init.config.GrowthcraftApplesConfig;
 import growthcraft.apples.shared.Reference;
 import growthcraft.core.Growthcraft;
 import growthcraft.lib.proxy.IProxy;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -60,9 +60,12 @@ public class GrowthcraftApples {
         GrowthcraftApplesConfig.loadConfig();
     }
 
+    /**
+     * Do something that can only be done on the client like transparent blocks.
+     * @param event FMLClientSetupEvent
+     */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftApplesBlockRenders.setRenderLayer();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -88,17 +91,6 @@ public class GrowthcraftApples {
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
-
-        /**
-         * Subscribe to the RegistryEvent.Register<Block> for manually registering Blocks.
-         *
-         * @param event Block registration event.
-         */
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            final IForgeRegistry<Block> blockRegistry = event.getRegistry();
-            GrowthcraftApplesBlocks.registerBlocks(blockRegistry);
-        }
 
         /**
          * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.

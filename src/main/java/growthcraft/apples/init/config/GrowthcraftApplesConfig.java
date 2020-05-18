@@ -50,7 +50,7 @@ public class GrowthcraftApplesConfig {
      */
     public static void initWorldGenConfig(ForgeConfigSpec.Builder server) {
         server.push("general");
-        server.comment(String.format("General configuration for %s.", growthcraft.trapper.shared.Reference.NAME)).define("general.version", growthcraft.trapper.shared.Reference.VERSION);
+        server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
         server.pop();
 
         enableAppleTreeGen = server

@@ -2,8 +2,7 @@ package growthcraft.core.init.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import growthcraft.bamboo.init.config.GrowthcraftBambooConfig;
-import growthcraft.trapper.shared.Reference;
+import growthcraft.core.shared.Reference;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -60,9 +59,6 @@ public class GrowthcraftConfig {
                         resolve(CLIENT_CONFIG).toString());
 
         // Load Growthcraft Bamboo Config
-        if (growthcraftBambooEnabled()) {
-            GrowthcraftBambooConfig.loadConfig();
-        }
         // Load Growthcraft Apples Config
         // Load Growthcraft Cellar Config
         // Load Growthcraft Grapes Config

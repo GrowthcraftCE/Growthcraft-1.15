@@ -49,3 +49,4 @@ forge*changelog.txt
 
 # Asset files from net.minecraft
 .assets
+.data

@@ -2,7 +2,7 @@ package growthcraft.grapes.init.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import growthcraft.trapper.shared.Reference;
+import growthcraft.grapes.shared.Reference;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -10,8 +10,8 @@ import java.io.File;
 
 public class GrowthcraftGrapesConfig {
 
-    public static final String SERVER_CONFIG = String.format("growthcraft-%s-server.toml", growthcraft.trapper.shared.Reference.NAME_SHORT);
-    public static final String CLIENT_CONFIG = String.format("growthcraft-%s-client.toml", growthcraft.trapper.shared.Reference.NAME_SHORT);
+    public static final String SERVER_CONFIG = String.format("growthcraft-%s-server.toml", Reference.NAME_SHORT);
+    public static final String CLIENT_CONFIG = String.format("growthcraft-%s-client.toml", Reference.NAME_SHORT);
 
     public static final ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();

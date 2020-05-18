@@ -5,6 +5,9 @@ import growthcraft.bamboo.common.block.BlockBambooPlanks;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.core.Growthcraft;
+import growthcraft.lib.common.block.GrowthcraftButtonBlock;
+import growthcraft.lib.common.block.GrowthcraftPlankBlock;
+import growthcraft.lib.common.block.GrowthcraftStairsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -18,9 +21,9 @@ public class GrowthcraftBambooBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    public static final RegistryObject<BlockBambooStairs> bambooStairs;
-    public static final RegistryObject<BlockBambooPlanks> bambooPlank;
-    public static final RegistryObject<BlockBambooButton> bambooButton;
+    public static final RegistryObject<GrowthcraftStairsBlock> bambooStairs;
+    public static final RegistryObject<GrowthcraftPlankBlock> bambooPlank;
+    public static final RegistryObject<GrowthcraftButtonBlock> bambooButton;
     public static Block bambooSlabHalf;
     public static Block bambooSlabDouble;
     public static Block bambooFence;
@@ -65,8 +68,7 @@ public class GrowthcraftBambooBlocks {
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
         Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering itemBlocks ...");
 
-        BLOCKS.getEntries().stream()
-                .map(RegistryObject::get).forEach(block -> {
+        BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
             if (block.getRegistryName() != null) {
                 blockItem.setRegistryName(block.getRegistryName());
@@ -74,6 +76,7 @@ public class GrowthcraftBambooBlocks {
             }
         });
 
+        Growthcraft.LOGGER.debug("Growthcraft Bamboo itemBlocks registered.");
     }
 
 }
