@@ -31,7 +31,6 @@ public class GrowthcraftApplesBlocks {
     // TODO[32]: Implement applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
     public static final RegistryObject<GrowthcraftTrapdoor> applePlankTrapdoor;
-    // TODO[33]: Implement appleWoodDoor;
     public static final RegistryObject<GrowthcraftDoorBlock> applePlankDoor;
     // TODO[39]: **Implement appleTreeLeaves;
     // TODO[34]: **Implement appleTreeSapling;
