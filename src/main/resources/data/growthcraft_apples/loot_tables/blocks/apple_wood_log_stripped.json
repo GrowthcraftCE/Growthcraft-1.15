@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "growthcraft_apples:apple_wood_log"
+          "name": "growthcraft_apples:apple_wood_log_stripped"
         }
       ],
       "conditions": [

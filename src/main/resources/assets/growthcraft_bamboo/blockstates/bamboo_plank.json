@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "growthcraft:block/bamboo_plank"
+      "model": "growthcraft_bamboo:block/bamboo_plank"
     }
   }
 }
