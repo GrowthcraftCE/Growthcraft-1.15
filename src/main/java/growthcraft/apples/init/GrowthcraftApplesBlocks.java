@@ -24,7 +24,6 @@ public class GrowthcraftApplesBlocks {
     public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
     // TODO[43]: Implement applePlankBoat;
     public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
-    // TODO[36]: Implement applePlankFenceGate;
     public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
     // TODO[38]: Implement applePlankFenceRope;
     // TODO[44]: Implement applePlankPressurePlate;
