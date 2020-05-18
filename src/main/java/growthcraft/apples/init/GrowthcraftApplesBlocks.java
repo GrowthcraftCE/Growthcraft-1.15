@@ -26,7 +26,7 @@ public class GrowthcraftApplesBlocks {
     public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
     public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
     // TODO[38]: Implement applePlankFenceRope;
-    // TODO[44]: Implement applePlankPressurePlate;
+    public static final RegistryObject<GrowthcraftPressurePlateBlock> applePlankPressurePlate;
     // TODO[41]: Implement applePlankSign;
     // TODO[32]: Implement applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
@@ -56,6 +56,9 @@ public class GrowthcraftApplesBlocks {
         applePlankFenceGate = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_FENCE_GATE,
                 () -> new GrowthcraftFenceGateBlock(UnlocalizedName.APPLE_PLANK_FENCE_GATE));
+        applePlankPressurePlate = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_PRESSURE_PLATE,
+                () -> new GrowthcraftPressurePlateBlock(UnlocalizedName.APPLE_PLANK_PRESSURE_PLATE));
         applePlankStairs = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_STAIRS,
                 () -> new BlockAppleStairs(Blocks.OAK_PLANKS, UnlocalizedName.APPLE_PLANK_STAIRS));
