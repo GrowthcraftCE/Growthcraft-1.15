@@ -1,6 +1,5 @@
 package growthcraft.core.common.block;
 
-import growthcraft.core.shared.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,12 +7,8 @@ import net.minecraftforge.common.ToolType;
 
 public class BlockRockSaltOre extends Block {
 
-    public final String unlocalizedName;
-
     public BlockRockSaltOre(String unlocalizedName) {
         super(getInitProperties());
-        this.setRegistryName(Reference.MODID, unlocalizedName);
-        this.unlocalizedName = unlocalizedName;
     }
 
     private static Properties getInitProperties() {
@@ -24,7 +19,5 @@ public class BlockRockSaltOre extends Block {
         properties.sound(SoundType.STONE);
         return properties;
     }
-
-    public String getUnlocalizedName() { return unlocalizedName; }
 
 }

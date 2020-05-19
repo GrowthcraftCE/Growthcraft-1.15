@@ -1,6 +1,7 @@
 package growthcraft.apples.init;
 
 import growthcraft.apples.common.block.BlockAppleStairs;
+import growthcraft.apples.common.tree.AppleTree;
 import growthcraft.apples.shared.Reference;
 import growthcraft.apples.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
@@ -20,6 +21,7 @@ public class GrowthcraftApplesBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     // public static Block definitions.
+    //TODO[]: Implement Apple Crop Block
     public static final RegistryObject<GrowthcraftButtonBlock> applePlankButton;
     public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
     // TODO[43]: Implement applePlankBoat;
@@ -33,7 +35,9 @@ public class GrowthcraftApplesBlocks {
     public static final RegistryObject<GrowthcraftTrapdoor> applePlankTrapdoor;
     public static final RegistryObject<GrowthcraftDoorBlock> applePlankDoor;
     // TODO[39]: **Implement appleTreeLeaves;
+    public static final RegistryObject<GrowthcraftTreeLeaves> appleTreeLeaves;
     // TODO[34]: **Implement appleTreeSapling;
+    public static final RegistryObject<GrowthcraftSaplingBlock> appleTreeSapling;
     public static final RegistryObject<GrowthcraftLogBlock> appleWood;
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodStripped;
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodLog;
@@ -68,18 +72,25 @@ public class GrowthcraftApplesBlocks {
         applePlankTrapdoor = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_TRAPDOOR,
                 () -> new GrowthcraftTrapdoor(UnlocalizedName.APPLE_PLANK_TRAPDOOR, Material.WOOD));
+        appleTreeLeaves = BLOCKS.register(
+                UnlocalizedName.APPLE_TREE_LEAVES,
+                () -> new GrowthcraftTreeLeaves());
         appleWood = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD,
-                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD));
+                () -> new GrowthcraftLogBlock());
         appleWoodStripped = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD_STRIPPED,
-                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_STRIPPED));
+                () -> new GrowthcraftLogBlock());
         appleWoodLog = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD_LOG,
-                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_LOG));
+                () -> new GrowthcraftLogBlock());
         appleWoodLogStripped = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD_LOG_STRIPPED,
-                () -> new GrowthcraftLogBlock(UnlocalizedName.APPLE_WOOD_LOG_STRIPPED));
+                () -> new GrowthcraftLogBlock());
+        appleTreeSapling = BLOCKS.register(
+                UnlocalizedName.APPLE_TREE_SAPLING,
+                () -> new GrowthcraftSaplingBlock(() -> new AppleTree()));
+
     }
 
     private GrowthcraftApplesBlocks() { /* Prevent Default Public Constructor */ }

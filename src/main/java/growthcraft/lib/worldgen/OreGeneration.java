@@ -29,7 +29,7 @@ public class OreGeneration {
                         Feature.ORE.withConfiguration(
                                 new OreFeatureConfig(
                                         OreFeatureConfig.FillerBlockType.NATURAL_STONE,
-                                        GrowthcraftBlocks.rockSaltOre.getDefaultState(),
+                                        GrowthcraftBlocks.rockSaltOre.get().getDefaultState(),
                                         GrowthcraftConfig.getSaltOreGenChance()
                                 )
                         ).withPlacement(Placement.COUNT_RANGE

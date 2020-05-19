@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod(Reference.MODID)
+@Mod.EventBusSubscriber(modid = Reference.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GrowthcraftGrapes {
 
     public static final Logger LOGGER = LogManager.getLogger();

@@ -10,5 +10,6 @@ public class GrowthcraftApplesBlockRenders {
 
     public static void setRenderLayer() {
         RenderTypeLookup.setRenderLayer(GrowthcraftApplesBlocks.applePlankTrapdoor.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftApplesBlocks.appleTreeSapling.get(), RenderType.getCutout());
     }
 }

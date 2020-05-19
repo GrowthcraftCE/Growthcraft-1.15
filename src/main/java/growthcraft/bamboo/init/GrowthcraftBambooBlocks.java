@@ -49,17 +49,6 @@ public class GrowthcraftBambooBlocks {
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
 
     /**
-     * Legacy block registration. Use DeferredRegister<Block> and RegistryObject<T> instead.
-     *
-     * @param registry Forge Block Registry
-     * @deprecated use GrowthcraftBambooBlocks.BLOCKS deferred registry instead.
-     */
-    @Deprecated
-    public static void registerBlocks(IForgeRegistry<Block> registry) {
-        Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering blocks ...");
-    }
-
-    /**
      * Dynamically register Growthcraft Apples BlockItems.
      *
      * @param itemRegistry IForgeRegistry<Item> reference for registering items.

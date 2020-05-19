@@ -8,7 +8,6 @@ import growthcraft.bamboo.init.config.GrowthcraftBambooConfig;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.core.Growthcraft;
 import growthcraft.lib.proxy.IProxy;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -30,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod(Reference.MODID)
+@Mod.EventBusSubscriber(modid = Reference.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GrowthcraftBamboo {
 
     public static final Logger LOGGER = LogManager.getLogger();
@@ -51,6 +51,20 @@ public class GrowthcraftBamboo {
         GrowthcraftBambooBlocks.BLOCKS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    /**
+     * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.
+     * Items should be added to the DeferredRegister<Item> which is in the constructor.
+     *
+     * @param event Item registration event.
+     */
+    @SubscribeEvent
+    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> itemRegistry = event.getRegistry();
+        final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
+        // Block Items cannot be deferred.
+        GrowthcraftBambooBlocks.registerBlockItems(itemRegistry, properties);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -84,35 +98,6 @@ public class GrowthcraftBamboo {
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
-    }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-
-        /**
-         * Subscribe to the RegistryEvent.Register<Block> for manually registering Blocks.
-         *
-         * @param event Block registration event.
-         */
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            final IForgeRegistry<Block> blockRegistry = event.getRegistry();
-            GrowthcraftBambooBlocks.registerBlocks(blockRegistry);
-        }
-
-        /**
-         * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.
-         * Items should be added to the DeferredRegister<Item> which is in the constructor.
-         *
-         * @param event Item registration event.
-         */
-        @SubscribeEvent
-        public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            final IForgeRegistry<Item> itemRegistry = event.getRegistry();
-            final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
-            // Block Items cannot be deferred.
-            GrowthcraftBambooBlocks.registerBlockItems(itemRegistry, properties);
-        }
     }
 
 }

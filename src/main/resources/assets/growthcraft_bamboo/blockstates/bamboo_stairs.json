@@ -68,7 +68,7 @@
       "uvlock": true
     },
     "facing=north,half=bottom,shape=inner_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "y": 270,
       "uvlock": true
     },
@@ -86,121 +86,121 @@
       "model": "growthcraft_bamboo:block/bamboo_stairs_inner"
     },
     "facing=north,half=bottom,shape=inner_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "y": 180,
       "uvlock": true
     },
     "facing=east,half=top,shape=straight": {
-      "model": "growthcraft_bambooblock/bamboo_stairs",
+      "model": "growthcraft_bamboo:block/bamboo_stairs",
       "x": 180,
       "uvlock": true
     },
     "facing=west,half=top,shape=straight": {
-      "model": "growthcraft_bambooblock/bamboo_stairs",
+      "model": "growthcraft_bamboo:block/bamboo_stairs",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=south,half=top,shape=straight": {
-      "model": "growthcraft_bambooblock/bamboo_stairs",
+      "model": "growthcraft_bamboo:block/bamboo_stairs",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=north,half=top,shape=straight": {
-      "model": "growthcraft_bambooblock/bamboo_stairs",
+      "model": "growthcraft_bamboo:block/bamboo_stairs",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=east,half=top,shape=outer_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=west,half=top,shape=outer_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=south,half=top,shape=outer_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=north,half=top,shape=outer_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "uvlock": true
     },
     "facing=east,half=top,shape=outer_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "uvlock": true
     },
     "facing=west,half=top,shape=outer_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=south,half=top,shape=outer_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=north,half=top,shape=outer_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_outer",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_outer",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=east,half=top,shape=inner_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=west,half=top,shape=inner_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=south,half=top,shape=inner_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=north,half=top,shape=inner_right": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "uvlock": true
     },
     "facing=east,half=top,shape=inner_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "uvlock": true
     },
     "facing=west,half=top,shape=inner_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=south,half=top,shape=inner_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=north,half=top,shape=inner_left": {
-      "model": "growthcraft_bambooblock/bamboo_stairs_inner",
+      "model": "growthcraft_bamboo:block/bamboo_stairs_inner",
       "x": 180,
       "y": 270,
       "uvlock": true
