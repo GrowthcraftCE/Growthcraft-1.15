@@ -8,7 +8,6 @@ import growthcraft.core.init.GrowthcraftItems;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
 import growthcraft.lib.proxy.IProxy;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -32,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod("growthcraft")
+@Mod.EventBusSubscriber(modid = Reference.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Growthcraft {
 
     public static final Logger LOGGER = LogManager.getLogger();
@@ -41,7 +41,7 @@ public class Growthcraft {
             return new ItemStack(GrowthcraftBambooBlocks.bambooPlank.get());
         }
     };
-    public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static final IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public Growthcraft() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -58,8 +58,22 @@ public class Growthcraft {
         GrowthcraftItems.ITEMS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftBlocks.BLOCKS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    /**
+     * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.
+     * Items should be added to the DeferredRegister<Item> which is in the constructor.
+     *
+     * @param event Item registration event.
+     */
+    @SubscribeEvent
+    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> itemRegistry = event.getRegistry();
+        final Item.Properties properties = new Item.Properties().group(itemGroup);
+        GrowthcraftBlocks.registerBlockItems(itemRegistry, properties);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -92,22 +106,4 @@ public class Growthcraft {
         LOGGER.info("HELLO from server starting");
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            final IForgeRegistry<Block> blockRegistry = event.getRegistry();
-
-            GrowthcraftBlocks.registerBlocks(blockRegistry);
-        }
-
-        @SubscribeEvent
-        public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            final IForgeRegistry<Item> itemRegistry = event.getRegistry();
-            final Item.Properties properties = new Item.Properties().group(itemGroup);
-            GrowthcraftBlocks.registerBlockItems(itemRegistry, properties);
-
-        }
-    }
 }

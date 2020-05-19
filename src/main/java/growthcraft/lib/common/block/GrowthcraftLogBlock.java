@@ -8,15 +8,12 @@ import net.minecraftforge.common.ToolType;
 
 public class GrowthcraftLogBlock extends LogBlock {
 
-    private final String unlocalizedName;
-
-    public GrowthcraftLogBlock(String unlocalizedName) {
-        this(unlocalizedName, MaterialColor.WOOD, getInitProperties(Material.WOOD));
+    public GrowthcraftLogBlock() {
+        this(MaterialColor.WOOD, getInitProperties(Material.WOOD));
     }
 
-    public GrowthcraftLogBlock(String unlocalizedName, MaterialColor verticalColorIn, Properties properties) {
+    public GrowthcraftLogBlock(MaterialColor verticalColorIn, Properties properties) {
         super(verticalColorIn, properties);
-        this.unlocalizedName = unlocalizedName;
     }
 
     private static Properties getInitProperties(Material material) {
@@ -27,7 +24,5 @@ public class GrowthcraftLogBlock extends LogBlock {
         properties.sound(SoundType.WOOD);
         return properties;
     }
-
-    public String getUnlocalizedName() { return unlocalizedName; }
 
 }
