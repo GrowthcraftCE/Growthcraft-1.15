@@ -66,7 +66,7 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
             world.setBlockState(pos, state.cycle(STAGE), 4);
         } else {
             if(!ForgeEventFactory.saplingGrowTree(world, random, pos)) { return; }
-            this.tree.get().func_225545_a_(world,world.getChunkProvider().getChunkGenerator(), pos, state, random);
+            this.tree.get().place(world,world.getChunkProvider().getChunkGenerator(), pos, state, random);
         }
     }
 
