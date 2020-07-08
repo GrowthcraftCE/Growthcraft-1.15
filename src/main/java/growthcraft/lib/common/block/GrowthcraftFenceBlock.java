@@ -17,6 +17,7 @@ public class GrowthcraftFenceBlock extends FenceBlock {
     private static Properties getInitProperties(Material material) {
         Properties properties = Properties.create(material, MaterialColor.WOOD);
         properties.sound(SoundType.WOOD);
+        properties.hardnessAndResistance(2.0F, 3.0F);
         return properties;
     }
 

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "growthcraft_bamboo:block/bamboo_wood_log",
+        "side": "growthcraft_bamboo:block/bamboo_wood_log"
+    }
+}
