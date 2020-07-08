@@ -1,11 +1,12 @@
 package growthcraft.lib.worldgen;
 
-import growthcraft.core.init.GrowthcraftBlocks;
-import growthcraft.core.init.config.GrowthcraftConfig;
+import growthcraft.core.Growthcraft;
+import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,28 +15,27 @@ public class OreGeneration {
 
     private OreGeneration() { /* Disable default public constructor */ }
 
-    public static void setupOreGeneration() {
+    public static void setupOreGeneration(Block oreBlock, FillerBlockType fillerBlockType, int count, int minHeight, int topOffset, int maxHeight, int chance) {
         for(Biome biome : ForgeRegistries.BIOMES) {
-            if(GrowthcraftConfig.getSaltOreGenerate()) {
-                CountRangeConfig countRangeConfig = new CountRangeConfig(
-                        GrowthcraftConfig.getSaltOreGenCount(),
-                        GrowthcraftConfig.getSaltOreGenMinHeight(),
-                        0,
-                        GrowthcraftConfig.getSaltOreGenMaxHeight()
-                );
+            CountRangeConfig countRangeConfig = new CountRangeConfig(
+                    count,
+                    minHeight,
+                    topOffset,
+                    maxHeight
+            );
 
-                biome.addFeature(
-                        GenerationStage.Decoration.UNDERGROUND_ORES,
-                        Feature.ORE.withConfiguration(
-                                new OreFeatureConfig(
-                                        OreFeatureConfig.FillerBlockType.NATURAL_STONE,
-                                        GrowthcraftBlocks.rockSaltOre.get().getDefaultState(),
-                                        GrowthcraftConfig.getSaltOreGenChance()
-                                )
-                        ).withPlacement(Placement.COUNT_RANGE
-                                .configure(countRangeConfig))
-                );
-            }
+            biome.addFeature(
+                    GenerationStage.Decoration.UNDERGROUND_ORES,
+                    Feature.ORE.withConfiguration(
+                            new OreFeatureConfig(
+                                    fillerBlockType,
+                                    oreBlock.getDefaultState(),
+                                    chance
+                            )
+                    ).withPlacement(Placement.COUNT_RANGE.configure(countRangeConfig))
+            );
+            Growthcraft.LOGGER.warn("generating salt ores ...");
         }
     }
+
 }
