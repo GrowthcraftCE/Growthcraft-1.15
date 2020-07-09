@@ -21,7 +21,6 @@ public class GrowthcraftBambooBlocks {
 
     public static final RegistryObject<GrowthcraftButtonBlock> bambooPlankButton;
     public static final RegistryObject<GrowthcraftPlankBlock> bambooPlank;
-    // TODO[]: Implement bambooPlankBoat
     public static final RegistryObject<GrowthcraftFenceBlock> bambooPlankFence;
     // TODO[21]: Implement bambooPlankFenceGate
     // TODO[25]: Implement bambooPlankFenceRope
