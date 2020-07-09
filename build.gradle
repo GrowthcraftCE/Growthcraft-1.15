@@ -99,8 +99,8 @@ dependencies {
      *  Include mods the we need while testing during runtime. When adding mods
      *  to this list, place the version into the gradle.properties file.
      */
-    //runtime fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-    //runtime fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${theoneprobe_version}")
+    runtime fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    runtime fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${theoneprobe_version}")
 
 }
 

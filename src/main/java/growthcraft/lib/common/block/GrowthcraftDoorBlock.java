@@ -21,6 +21,9 @@ public class GrowthcraftDoorBlock extends DoorBlock {
     private static Properties getInitProperties(Material material) {
         Properties properties = Properties.create(material, MaterialColor.WOOD);
         properties.sound(SoundType.WOOD);
+        properties.notSolid();
         return properties;
     }
+
+
 }

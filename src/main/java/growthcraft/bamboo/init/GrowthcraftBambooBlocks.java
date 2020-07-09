@@ -1,15 +1,11 @@
 package growthcraft.bamboo.init;
 
-import growthcraft.bamboo.common.block.BlockBambooButton;
-import growthcraft.bamboo.common.block.BlockBambooPlanks;
+import growthcraft.bamboo.common.block.BlockBambooLog;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.bamboo.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
-import growthcraft.lib.common.block.GrowthcraftButtonBlock;
-import growthcraft.lib.common.block.GrowthcraftFenceBlock;
-import growthcraft.lib.common.block.GrowthcraftPlankBlock;
-import growthcraft.lib.common.block.GrowthcraftStairsBlock;
+import growthcraft.lib.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -27,39 +23,58 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftPlankBlock> bambooPlank;
     // TODO[]: Implement bambooPlankBoat
     public static final RegistryObject<GrowthcraftFenceBlock> bambooPlankFence;
-    // TODO[21]: Implement bambooPlankFenceGate;
+    // TODO[21]: Implement bambooPlankFenceGate
     // TODO[25]: Implement bambooPlankFenceRope
-    // TODO[]: Implement bambooPlankPressurePlate
+    public static final RegistryObject<GrowthcraftPressurePlateBlock> bambooPlankPressurePlate;
     // TODO[23]: Implement bambooPlankSlab
-    public static final RegistryObject<GrowthcraftStairsBlock> bambooStairs;
+    public static final RegistryObject<GrowthcraftStairsBlock> bambooPlankStairs;
     // TODO[19]: Implement bambooPlankTrapdoor
-    // TODO[]: Implement bambooPlankDoor
-    // TODO[]: Implement bambooTreeLeaves
+    public static final RegistryObject<GrowthcraftDoorBlock> bambooPlankDoor;
+    public static final RegistryObject<GrowthcraftTreeLeaves> bambooTreeLeaves;
     // TODO[22]: Implement bambooTreeSapling
-    // TODO[]: Implement bambooWood
-    // TODO[]: Implement bambooWoodStripped
+    public static final RegistryObject<BlockBambooLog> bambooWood;
+    public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
     // TODO[24]: Implement bambooWoodLog
-    // TODO[]: Implement bambooWoodLogStripped
+    //public static final RegistryObject<BlockBambooLog> bambooWoodLog;
+    public static final RegistryObject<BlockBambooLog> bambooWoodLogStripped;
 
     static {
         bambooPlankButton = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_BUTTON,
-                () -> new BlockBambooButton(UnlocalizedName.BAMBOO_PLANK_BUTTON));
+                () -> new GrowthcraftButtonBlock(UnlocalizedName.BAMBOO_PLANK_BUTTON));
         bambooPlank = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK,
-                () -> new BlockBambooPlanks(UnlocalizedName.BAMBOO_PLANK));
+                () -> new GrowthcraftPlankBlock(UnlocalizedName.BAMBOO_PLANK));
+        bambooPlankDoor = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_DOOR,
+                () -> new GrowthcraftDoorBlock(UnlocalizedName.BAMBOO_PLANK_DOOR));
         bambooPlankFence = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_FENCE,
                 () -> new GrowthcraftFenceBlock(UnlocalizedName.BAMBOO_PLANK_FENCE));
-        bambooStairs = BLOCKS.register(
+        bambooPlankPressurePlate = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE,
+                () -> new GrowthcraftPressurePlateBlock(UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE));
+        bambooPlankStairs = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_STAIRS,
                 () -> new BlockBambooStairs(Blocks.OAK_PLANKS, UnlocalizedName.BAMBOO_PLANK_STAIRS));
+        bambooTreeLeaves = BLOCKS.register(
+                UnlocalizedName.BAMBOO_TREE_LEAVES,
+                () -> new GrowthcraftTreeLeaves());
+        bambooWood = BLOCKS.register(
+                UnlocalizedName.BAMBOO_WOOD,
+                () -> new BlockBambooLog());
+        bambooWoodStripped = BLOCKS.register(
+                UnlocalizedName.BAMBOO_WOOD_STRIPPED,
+                () -> new BlockBambooLog());
+        bambooWoodLogStripped = BLOCKS.register(
+                UnlocalizedName.BAMBOO_WOOD_LOG_STRIPPED,
+                () -> new BlockBambooLog());
     }
 
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
 
     /**
-     * Dynamically register Growthcraft Apples BlockItems.
+     * Dynamically register Growthcraft Bamboo BlockItems.
      *
      * @param itemRegistry IForgeRegistry<Item> reference for registering items.
      * @param properties   Item properties with item group for creative tab.

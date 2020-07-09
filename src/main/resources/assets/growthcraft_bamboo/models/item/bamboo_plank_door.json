@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "growthcraft_apples:item/apple_plank_door"
+        "layer0": "growthcraft_bamboo:item/bamboo_plank_door"
     }
 }
