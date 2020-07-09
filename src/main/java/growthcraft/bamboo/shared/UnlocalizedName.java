@@ -2,7 +2,6 @@ package growthcraft.bamboo.shared;
 
 public class UnlocalizedName {
     public static final String BAMBOO_PLANK = "bamboo_plank";
-    public static final String BAMBOO_PLANK_BOAT = "bamboo_plank_boat";
     public static final String BAMBOO_PLANK_BUTTON = "bamboo_plank_button";
     public static final String BAMBOO_PLANK_DOOR = "bamboo_plank_door";
     public static final String BAMBOO_PLANK_FENCE = "bamboo_plank_fence";

@@ -22,7 +22,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftButtonBlock> bambooPlankButton;
     public static final RegistryObject<GrowthcraftPlankBlock> bambooPlank;
     public static final RegistryObject<GrowthcraftFenceBlock> bambooPlankFence;
-    // TODO[21]: Implement bambooPlankFenceGate
+    public static final RegistryObject<GrowthcraftFenceGateBlock> bambooPlankFenceGate;
     // TODO[25]: Implement bambooPlankFenceRope
     public static final RegistryObject<GrowthcraftPressurePlateBlock> bambooPlankPressurePlate;
     // TODO[23]: Implement bambooPlankSlab
@@ -34,7 +34,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<BlockBambooLog> bambooWood;
     public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
     // TODO[24]: Implement bambooWoodLog
-    //public static final RegistryObject<BlockBambooLog> bambooWoodLog;
+    public static final RegistryObject<BlockBambooLog> bambooWoodLog;
     public static final RegistryObject<BlockBambooLog> bambooWoodLogStripped;
 
     static {
@@ -50,6 +50,9 @@ public class GrowthcraftBambooBlocks {
         bambooPlankFence = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_FENCE,
                 () -> new GrowthcraftFenceBlock(UnlocalizedName.BAMBOO_PLANK_FENCE));
+        bambooPlankFenceGate = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_FENCE_GATE,
+                () -> new GrowthcraftFenceGateBlock(UnlocalizedName.BAMBOO_PLANK_FENCE_GATE));
         bambooPlankPressurePlate = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE,
                 () -> new GrowthcraftPressurePlateBlock(UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE));
@@ -64,6 +67,9 @@ public class GrowthcraftBambooBlocks {
                 () -> new BlockBambooLog());
         bambooWoodStripped = BLOCKS.register(
                 UnlocalizedName.BAMBOO_WOOD_STRIPPED,
+                () -> new BlockBambooLog());
+        bambooWoodLog = BLOCKS.register(
+                UnlocalizedName.BAMBOO_WOOD_LOG,
                 () -> new BlockBambooLog());
         bambooWoodLogStripped = BLOCKS.register(
                 UnlocalizedName.BAMBOO_WOOD_LOG_STRIPPED,
