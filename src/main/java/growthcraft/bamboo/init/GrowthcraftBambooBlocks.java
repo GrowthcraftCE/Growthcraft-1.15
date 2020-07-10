@@ -25,7 +25,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftFenceGateBlock> bambooPlankFenceGate;
     // TODO[25]: Implement bambooPlankFenceRope
     public static final RegistryObject<GrowthcraftPressurePlateBlock> bambooPlankPressurePlate;
-    // TODO[23]: Implement bambooPlankSlab
+    public static final RegistryObject<GrowthcraftSlabBlock> bambooPlankSlab;
     public static final RegistryObject<GrowthcraftStairsBlock> bambooPlankStairs;
     // TODO[19]: Implement bambooPlankTrapdoor
     public static final RegistryObject<GrowthcraftDoorBlock> bambooPlankDoor;
@@ -33,7 +33,6 @@ public class GrowthcraftBambooBlocks {
     // TODO[22]: Implement bambooTreeSapling
     public static final RegistryObject<BlockBambooLog> bambooWood;
     public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
-    // TODO[24]: Implement bambooWoodLog
     public static final RegistryObject<BlockBambooLog> bambooWoodLog;
     public static final RegistryObject<BlockBambooLog> bambooWoodLogStripped;
 
@@ -56,6 +55,9 @@ public class GrowthcraftBambooBlocks {
         bambooPlankPressurePlate = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE,
                 () -> new GrowthcraftPressurePlateBlock(UnlocalizedName.BAMBOO_PLANK_PRESSURE_PLATE));
+        bambooPlankSlab = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_SLAB,
+                () -> new GrowthcraftSlabBlock(UnlocalizedName.BAMBOO_PLANK_SLAB));
         bambooPlankStairs = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_STAIRS,
                 () -> new BlockBambooStairs(Blocks.OAK_PLANKS, UnlocalizedName.BAMBOO_PLANK_STAIRS));
