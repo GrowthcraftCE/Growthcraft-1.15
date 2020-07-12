@@ -1,6 +1,5 @@
 package growthcraft.lib.worldgen;
 
-import growthcraft.core.Growthcraft;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -16,7 +15,7 @@ public class OreGeneration {
     private OreGeneration() { /* Disable default public constructor */ }
 
     public static void setupOreGeneration(Block oreBlock, FillerBlockType fillerBlockType, int count, int minHeight, int topOffset, int maxHeight, int chance) {
-        for(Biome biome : ForgeRegistries.BIOMES) {
+        for (Biome biome : ForgeRegistries.BIOMES) {
             CountRangeConfig countRangeConfig = new CountRangeConfig(
                     count,
                     minHeight,
@@ -34,7 +33,6 @@ public class OreGeneration {
                             )
                     ).withPlacement(Placement.COUNT_RANGE.configure(countRangeConfig))
             );
-            Growthcraft.LOGGER.warn("generating salt ores ...");
         }
     }
 

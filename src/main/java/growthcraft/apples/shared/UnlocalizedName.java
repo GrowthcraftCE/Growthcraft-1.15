@@ -12,6 +12,7 @@ public class UnlocalizedName {
     public static final String APPLE_PLANK_SLAB = "apple_plank_slab";
     public static final String APPLE_PLANK_STAIRS = "apple_plank_stairs";
     public static final String APPLE_PLANK_TRAPDOOR = "apple_plank_trapdoor";
+    public static final String APPLE_TREE_FRUIT = "apple_tree_fruit";
     public static final String APPLE_TREE_LEAVES = "apple_tree_leaves";
     public static final String APPLE_TREE_SAPLING = "apple_tree_sapling";
     public static final String APPLE_WOOD = "apple_wood";

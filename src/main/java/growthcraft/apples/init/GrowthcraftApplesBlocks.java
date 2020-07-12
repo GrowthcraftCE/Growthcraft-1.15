@@ -1,6 +1,8 @@
 package growthcraft.apples.init;
 
 import growthcraft.apples.common.block.BlockAppleStairs;
+import growthcraft.apples.common.block.BlockAppleTreeFruit;
+import growthcraft.apples.common.block.BlockAppleTreeLeaves;
 import growthcraft.apples.common.tree.AppleTree;
 import growthcraft.apples.shared.Reference;
 import growthcraft.apples.shared.UnlocalizedName;
@@ -11,32 +13,31 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 public class GrowthcraftApplesBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     // public static Block definitions.
-    //TODO[]: Implement Apple Crop Block
+    public static final RegistryObject<BlockAppleTreeFruit> appleTreeFruit;
     public static final RegistryObject<GrowthcraftButtonBlock> applePlankButton;
     public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
-    // TODO[43]: Implement applePlankBoat;
     public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
     public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
     // TODO[38]: Implement applePlankFenceRope;
     public static final RegistryObject<GrowthcraftPressurePlateBlock> applePlankPressurePlate;
-    // TODO[41]: Implement applePlankSign;
     public static final RegistryObject<GrowthcraftSlabBlock> applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
     public static final RegistryObject<GrowthcraftTrapdoor> applePlankTrapdoor;
     public static final RegistryObject<GrowthcraftDoorBlock> applePlankDoor;
-    // TODO[39]: **Implement appleTreeLeaves;
-    public static final RegistryObject<GrowthcraftTreeLeaves> appleTreeLeaves;
-    // TODO[34]: **Implement appleTreeSapling;
+    public static final RegistryObject<BlockAppleTreeLeaves> appleTreeLeaves;
     public static final RegistryObject<GrowthcraftSaplingBlock> appleTreeSapling;
     public static final RegistryObject<GrowthcraftLogBlock> appleWood;
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodStripped;
@@ -45,6 +46,9 @@ public class GrowthcraftApplesBlocks {
 
     // Static initializer for Growthcraft Apples blocks.
     static {
+        appleTreeFruit = BLOCKS.register(
+                UnlocalizedName.APPLE_TREE_FRUIT,
+                () -> new BlockAppleTreeFruit());
         applePlankButton = BLOCKS.register(
                 UnlocalizedName.APPLE_PLANK_BUTTON,
                 () -> new GrowthcraftButtonBlock(UnlocalizedName.APPLE_PLANK_BUTTON));
@@ -74,7 +78,7 @@ public class GrowthcraftApplesBlocks {
                 () -> new GrowthcraftTrapdoor(UnlocalizedName.APPLE_PLANK_TRAPDOOR, Material.WOOD));
         appleTreeLeaves = BLOCKS.register(
                 UnlocalizedName.APPLE_TREE_LEAVES,
-                () -> new GrowthcraftTreeLeaves());
+                () -> new BlockAppleTreeLeaves());
         appleWood = BLOCKS.register(
                 UnlocalizedName.APPLE_WOOD,
                 () -> new GrowthcraftLogBlock());
@@ -106,7 +110,7 @@ public class GrowthcraftApplesBlocks {
 
         BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
-            if (block.getRegistryName() != null) {
+            if (block.getRegistryName() != null && !excludeBlockItemRegistry(block.getRegistryName())) {
                 blockItem.setRegistryName(block.getRegistryName());
                 itemRegistry.register(blockItem);
             }
@@ -114,5 +118,11 @@ public class GrowthcraftApplesBlocks {
 
         Growthcraft.LOGGER.debug("Growthcraft Apples itemBlocks Registered.");
 
+    }
+
+    private static boolean excludeBlockItemRegistry(ResourceLocation registryName) {
+        ArrayList<String> excludeBlocks = new ArrayList<>();
+        excludeBlocks.add(Reference.MODID + ":" + UnlocalizedName.APPLE_TREE_FRUIT);
+        return excludeBlocks.contains(registryName.toString());
     }
 }
