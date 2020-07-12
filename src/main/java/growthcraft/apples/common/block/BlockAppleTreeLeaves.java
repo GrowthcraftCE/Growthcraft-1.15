@@ -43,8 +43,12 @@ public class BlockAppleTreeLeaves extends GrowthcraftTreeLeaves implements IGrow
 
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        super.randomTick(state, worldIn, pos, random);
-        tick(state, worldIn, pos, random);
+        if (Boolean.FALSE.equals(state.get(PERSISTENT)) && (state.get(DISTANCE) == 7)) {
+            spawnDrops(state, worldIn, pos);
+            worldIn.removeBlock(pos, false);
+        } else {
+            tick(state, worldIn, pos, random);
+        }
     }
 
     @Override
