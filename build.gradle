@@ -29,6 +29,8 @@ repositories {
     maven { url = "https://dvs1.progwml6.com/files/maven" }
     // The One Probe
     maven { url "http://maven.tterrag.com/" }
+    // Patchouli
+    maven { url 'https://maven.blamejared.com' }
     maven { url 'https://oss.sonatype.org/content/groups/public/' }
 }
 
@@ -92,8 +94,7 @@ dependencies {
     /** Compile time Dependencies
      * Include mods that we have a direct dependency with.
      */
-    //compile fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    //compile fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${theoneprobe_version}:api")
+    compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}:api")
 
     /** Runtime Dependencies
      *  Include mods the we need while testing during runtime. When adding mods
@@ -101,6 +102,7 @@ dependencies {
      */
     runtime fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
     runtime fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${theoneprobe_version}")
+    runtime fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
 }
 

@@ -1,6 +1,5 @@
 package growthcraft.apples.common.block;
 
-import growthcraft.apples.GrowthcraftApples;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.lib.common.block.GrowthcraftLogBlock;
 import growthcraft.lib.common.block.GrowthcraftTreeLeaves;
@@ -67,7 +66,6 @@ public class BlockAppleTreeLeaves extends GrowthcraftTreeLeaves implements IGrow
 
     @Override
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        GrowthcraftApples.LOGGER.debug("BlockAppleTreeLeaves trying to grow ...");
         if (!worldIn.isRemote) {
             if (worldIn.getLightSubtracted(pos, 0) >= 9) {
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {

@@ -3,6 +3,7 @@ package growthcraft.core.init;
 import growthcraft.core.common.item.ItemCrowbar;
 import growthcraft.core.common.item.ItemSalt;
 import growthcraft.core.shared.Reference;
+import growthcraft.core.shared.UnlocalizedName;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -49,7 +50,7 @@ public class GrowthcraftItems {
         crowbarGreen = ITEMS.register("crowbar_green", () -> new ItemCrowbar("green"));
         crowbarRed = ITEMS.register("crowbar_red", () -> new ItemCrowbar("red"));
         crowbarBlack = ITEMS.register("crowbar_black", () -> new ItemCrowbar("black"));
-        salt = ITEMS.register("salt", () -> new ItemSalt("salt"));
+        salt = ITEMS.register(UnlocalizedName.SALT_ITEM, () -> new ItemSalt(UnlocalizedName.SALT_ITEM));
     }
 
 }

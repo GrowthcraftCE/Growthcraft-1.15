@@ -27,6 +27,11 @@ issueTrackerURL="https://github.com/GrowthcraftCE/Growthcraft-1.15/issues"
         versionRange="[1.15.2]"
         ordering="NONE"
         side="BOTH"
+    [[dependencies.growthcraft]]
+        modId="patchouli"
+        mandatory=false
+        versionRange="[1.15.2-1.2-32,)"
+        side="BOTH"
 
 [[mods]]
     modId="growthcraft_apples"

@@ -1,0 +1,6 @@
+{
+  "name": "Growthcraft Apples",
+  "description": "Apple trees produce an edible fruit called, an apple.$(br2)They are cultivated world wide. They have been grown for thousands of years.",
+  "icon": "minecraft:textures/item/apple.png",
+  "sortnum": 0
+}
