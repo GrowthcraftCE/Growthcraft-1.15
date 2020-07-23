@@ -8,6 +8,7 @@ import growthcraft.core.Growthcraft;
 import growthcraft.lib.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -28,6 +29,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftSlabBlock> bambooPlankSlab;
     public static final RegistryObject<GrowthcraftStairsBlock> bambooPlankStairs;
     // TODO[19]: Implement bambooPlankTrapdoor
+    public static final RegistryObject<GrowthcraftTrapdoor> bambooPlankTrapdoor;
     public static final RegistryObject<GrowthcraftDoorBlock> bambooPlankDoor;
     public static final RegistryObject<GrowthcraftTreeLeaves> bambooTreeLeaves;
     // TODO[22]: Implement bambooTreeSapling
@@ -61,6 +63,9 @@ public class GrowthcraftBambooBlocks {
         bambooPlankStairs = BLOCKS.register(
                 UnlocalizedName.BAMBOO_PLANK_STAIRS,
                 () -> new BlockBambooStairs(Blocks.OAK_PLANKS, UnlocalizedName.BAMBOO_PLANK_STAIRS));
+        bambooPlankTrapdoor = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_TRAPDOOR,
+                () -> new GrowthcraftTrapdoor(UnlocalizedName.BAMBOO_PLANK_TRAPDOOR, Material.WOOD));
         bambooTreeLeaves = BLOCKS.register(
                 UnlocalizedName.BAMBOO_TREE_LEAVES,
                 () -> new GrowthcraftTreeLeaves());
