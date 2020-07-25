@@ -2,6 +2,7 @@ package growthcraft.bamboo.init;
 
 import growthcraft.bamboo.common.block.BlockBambooLog;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
+import growthcraft.bamboo.common.tree.BambooTree;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.bamboo.shared.UnlocalizedName;
 import growthcraft.core.Growthcraft;
@@ -33,6 +34,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftDoorBlock> bambooPlankDoor;
     public static final RegistryObject<GrowthcraftTreeLeaves> bambooTreeLeaves;
     // TODO[22]: Implement bambooTreeSapling
+    public static final RegistryObject<GrowthcraftSaplingBlock> bambooTreeSapling;
     public static final RegistryObject<BlockBambooLog> bambooWood;
     public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
     public static final RegistryObject<BlockBambooLog> bambooWoodLog;
@@ -69,6 +71,9 @@ public class GrowthcraftBambooBlocks {
         bambooTreeLeaves = BLOCKS.register(
                 UnlocalizedName.BAMBOO_TREE_LEAVES,
                 () -> new GrowthcraftTreeLeaves());
+        bambooTreeSapling = BLOCKS.register(
+                UnlocalizedName.BAMBOO_TREE_SAPLING,
+                () -> new GrowthcraftSaplingBlock(() -> new BambooTree()));
         bambooWood = BLOCKS.register(
                 UnlocalizedName.BAMBOO_WOOD,
                 () -> new BlockBambooLog());

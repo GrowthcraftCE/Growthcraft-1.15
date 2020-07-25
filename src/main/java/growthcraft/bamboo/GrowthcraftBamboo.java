@@ -1,6 +1,7 @@
 package growthcraft.bamboo;
 
 import growthcraft.bamboo.client.proxy.ClientProxy;
+import growthcraft.bamboo.client.render.GrowthcraftBambooBlockRenders;
 import growthcraft.bamboo.common.proxy.CommonProxy;
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
 import growthcraft.bamboo.init.GrowthcraftBambooItems;
@@ -74,9 +75,13 @@ public class GrowthcraftBamboo {
         GrowthcraftBambooConfig.loadConfig();
     }
 
+    /**
+     * Do something that can only be done on the client like transparent blocks.
+     *
+     * @param event FMLClientSetupEvent
+     */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftBambooBlockRenders.setRenderLayer();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

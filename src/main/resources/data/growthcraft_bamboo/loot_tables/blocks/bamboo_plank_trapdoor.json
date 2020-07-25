@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "growthcraft_apples:apple_plank_trapdoor"
+          "name": "growthcraft_bamboo:bamboo_plank_trapdoor"
         }
       ],
       "conditions": [

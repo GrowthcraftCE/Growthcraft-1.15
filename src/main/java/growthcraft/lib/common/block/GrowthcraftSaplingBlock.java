@@ -22,7 +22,7 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
     public static final IntegerProperty STAGE = BlockStateProperties.STAGE_0_1;
 
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(
-            2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D
+            4.0D, 0.0D, 4.0D, 12.0D, 12.0D, 12.0D
     );
 
     private final Supplier<Tree> tree;
@@ -30,13 +30,10 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
     public GrowthcraftSaplingBlock(Supplier<Tree> tree) {
         this(tree, getInitProperties());
     }
+
     public GrowthcraftSaplingBlock(Supplier<Tree> tree, Properties properties) {
         super(properties);
         this.tree = tree;
-    }
-
-    public static VoxelShape getSHAPE(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
     }
 
     private static Properties getInitProperties() {
@@ -45,7 +42,13 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
         properties.tickRandomly();
         properties.hardnessAndResistance(0.0F, 0.0F);
         properties.sound(SoundType.PLANT);
+        properties.notSolid();
         return properties;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return SHAPE;
     }
 
     @SuppressWarnings("deprecation")

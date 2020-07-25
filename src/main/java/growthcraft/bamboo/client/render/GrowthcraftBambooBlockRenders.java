@@ -1,0 +1,14 @@
+package growthcraft.bamboo.client.render;
+
+import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+
+public class GrowthcraftBambooBlockRenders {
+
+    private GrowthcraftBambooBlockRenders() { /* Disable default public constructor */ }
+
+    public static void setRenderLayer() {
+        RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooTreeSapling.get(), RenderType.getCutout());
+    }
+}
