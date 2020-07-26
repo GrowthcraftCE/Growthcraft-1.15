@@ -1,11 +1,12 @@
 package growthcraft.apples;
 
 import growthcraft.apples.client.proxy.ClientProxy;
-import growthcraft.apples.client.render.GrowthcraftApplesBlockRenders;
 import growthcraft.apples.common.proxy.CommonProxy;
 import growthcraft.apples.init.GrowthcraftApplesBiomes;
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import growthcraft.apples.init.GrowthcraftApplesItems;
+import growthcraft.apples.init.GrowthcraftApplesTileEntities;
+import growthcraft.apples.init.client.GrowthcraftApplesBlockRenders;
 import growthcraft.apples.init.config.GrowthcraftApplesConfig;
 import growthcraft.apples.shared.Reference;
 import growthcraft.core.Growthcraft;
@@ -50,6 +51,7 @@ public class GrowthcraftApples {
         // Add Deferred Registries
         GrowthcraftApplesItems.ITEMS.register(modEventBus);
         GrowthcraftApplesBlocks.BLOCKS.register(modEventBus);
+        GrowthcraftApplesTileEntities.TILE_ENTITIES.register(modEventBus);
         GrowthcraftApplesBiomes.BIOMES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);

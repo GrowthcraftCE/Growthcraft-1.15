@@ -1,5 +1,6 @@
 package growthcraft.apples.init;
 
+import growthcraft.apples.common.block.BlockAppleFishtrap;
 import growthcraft.apples.common.block.BlockAppleStairs;
 import growthcraft.apples.common.block.BlockAppleTreeFruit;
 import growthcraft.apples.common.block.BlockAppleTreeLeaves;
@@ -43,6 +44,9 @@ public class GrowthcraftApplesBlocks {
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodStripped;
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodLog;
     public static final RegistryObject<GrowthcraftLogBlock> appleWoodLogStripped;
+
+    // Growthcraft Trapper
+    public static final RegistryObject<BlockAppleFishtrap> appleFishtrap;
 
     // Static initializer for Growthcraft Apples blocks.
     static {
@@ -94,7 +98,9 @@ public class GrowthcraftApplesBlocks {
         appleTreeSapling = BLOCKS.register(
                 UnlocalizedName.APPLE_TREE_SAPLING,
                 () -> new GrowthcraftSaplingBlock(() -> new AppleTree()));
-
+        appleFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_APPLE,
+                () -> new BlockAppleFishtrap());
     }
 
     private GrowthcraftApplesBlocks() { /* Prevent Default Public Constructor */ }

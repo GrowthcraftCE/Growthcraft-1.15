@@ -1,10 +1,11 @@
 package growthcraft.bamboo;
 
 import growthcraft.bamboo.client.proxy.ClientProxy;
-import growthcraft.bamboo.client.render.GrowthcraftBambooBlockRenders;
 import growthcraft.bamboo.common.proxy.CommonProxy;
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
 import growthcraft.bamboo.init.GrowthcraftBambooItems;
+import growthcraft.bamboo.init.GrowthcraftBambooTileEntities;
+import growthcraft.bamboo.init.client.GrowthcraftBambooBlockRenders;
 import growthcraft.bamboo.init.config.GrowthcraftBambooConfig;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.core.Growthcraft;
@@ -50,6 +51,7 @@ public class GrowthcraftBamboo {
 
         // Add DeferredRegister<Block> to the mod event bus.
         GrowthcraftBambooBlocks.BLOCKS.register(modEventBus);
+        GrowthcraftBambooTileEntities.TILE_ENTITIES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

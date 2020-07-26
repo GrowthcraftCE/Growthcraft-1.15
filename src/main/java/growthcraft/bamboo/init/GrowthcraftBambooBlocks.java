@@ -1,5 +1,6 @@
 package growthcraft.bamboo.init;
 
+import growthcraft.bamboo.common.block.BlockBambooFishtrap;
 import growthcraft.bamboo.common.block.BlockBambooLog;
 import growthcraft.bamboo.common.block.BlockBambooStairs;
 import growthcraft.bamboo.common.tree.BambooTree;
@@ -35,6 +36,9 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
     public static final RegistryObject<BlockBambooLog> bambooWoodLog;
     public static final RegistryObject<BlockBambooLog> bambooWoodLogStripped;
+
+    // Growthcraft Trapper
+    public static final RegistryObject<BlockBambooFishtrap> bambooFishtrap;
 
     static {
         bambooPlankButton = BLOCKS.register(
@@ -82,6 +86,9 @@ public class GrowthcraftBambooBlocks {
         bambooWoodLogStripped = BLOCKS.register(
                 UnlocalizedName.BAMBOO_WOOD_LOG_STRIPPED,
                 () -> new BlockBambooLog());
+        bambooFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_BAMBOO,
+                () -> new BlockBambooFishtrap());
     }
 
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }

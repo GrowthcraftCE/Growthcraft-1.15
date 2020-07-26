@@ -1,4 +1,4 @@
-package growthcraft.bamboo.client.render;
+package growthcraft.bamboo.init.client;
 
 import growthcraft.bamboo.init.GrowthcraftBambooBlocks;
 import net.minecraft.client.renderer.RenderType;
@@ -11,6 +11,7 @@ public class GrowthcraftBambooBlockRenders {
     public static void setRenderLayer() {
         RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooPlankDoor.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooTreeSapling.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooFishtrap.get(), RenderType.getCutout());
     }
 
 }

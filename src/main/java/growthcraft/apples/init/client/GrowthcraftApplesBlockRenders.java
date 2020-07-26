@@ -1,4 +1,4 @@
-package growthcraft.apples.client.render;
+package growthcraft.apples.init.client;
 
 import growthcraft.apples.init.GrowthcraftApplesBlocks;
 import net.minecraft.client.renderer.RenderType;
@@ -11,5 +11,6 @@ public class GrowthcraftApplesBlockRenders {
     public static void setRenderLayer() {
         RenderTypeLookup.setRenderLayer(GrowthcraftApplesBlocks.applePlankTrapdoor.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(GrowthcraftApplesBlocks.appleTreeSapling.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftApplesBlocks.appleFishtrap.get(), RenderType.getCutout());
     }
 }

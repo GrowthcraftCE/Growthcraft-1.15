@@ -19,5 +19,7 @@ public class UnlocalizedName {
     public static final String BAMBOO_WOOD_LOG = "bamboo_wood_log";
     public static final String BAMBOO_WOOD_LOG_STRIPPED = "bamboo_wood_log_stripped";
 
+    public static final String FISHTRAP_BAMBOO = "fishtrap_bamboo";
+
     private UnlocalizedName() { /* Disable default public constructor. */ }
 }
