@@ -1,8 +1,5 @@
 {
   "variants": {
-    "": {
-      "model": "growthcraft_apples:block/fishtrap_apple"
-    },
     "facing=north": {
       "model": "growthcraft_apples:block/fishtrap_apple"
     },

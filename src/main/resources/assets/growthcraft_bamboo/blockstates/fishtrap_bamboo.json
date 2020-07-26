@@ -1,8 +1,5 @@
 {
   "variants": {
-    "": {
-      "model": "growthcraft_bamboo:block/fishtrap_bamboo"
-    },
     "facing=north": {
       "model": "growthcraft_bamboo:block/fishtrap_bamboo"
     },

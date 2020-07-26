@@ -1,8 +1,5 @@
 {
   "variants": {
-    "": {
-      "model": "growthcraft_trapper:block/fishtrap_dark_oak"
-    },
     "facing=north": {
       "model": "growthcraft_trapper:block/fishtrap_dark_oak"
     },

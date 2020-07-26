@@ -38,12 +38,6 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ITicka
         super(tileEntityTypeIn);
     }
 
-    /**
-     * Switch the ItemStack contents between two tile entities.
-     *
-     * @param tileEntityFishtrapOne
-     * @param tileEntityFishtrapTwo
-     */
     public static void swapContents(TileEntityFishtrap tileEntityFishtrapOne, TileEntityFishtrap tileEntityFishtrapTwo) {
         NonNullList<ItemStack> list = tileEntityFishtrapOne.getItems();
         tileEntityFishtrapOne.setItems(tileEntityFishtrapTwo.getItems());

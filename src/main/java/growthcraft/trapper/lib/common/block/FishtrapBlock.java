@@ -8,16 +8,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -77,22 +80,38 @@ public class FishtrapBlock extends Block implements IWaterLoggable {
         return ActionResultType.FAIL;
     }
 
+    public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity placer) {
+        return Direction.getFacingFromVector(
+                (float) (placer.getPosX() - clickedBlock.getX()),
+                (float) (placer.getPosY() - clickedBlock.getY()),
+                (float) (placer.getPosZ() - clickedBlock.getZ())
+        );
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (placer != null) {
+            worldIn.setBlockState(pos, state.with(BlockStateProperties.FACING, getFacingFromEntity(pos, placer)), 2);
+        }
+    }
+
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile instanceof TileEntityFishtrap) {
+            if (tile != null && tile instanceof TileEntityFishtrap) {
                 // Drop the inventory contents into the world.
                 InventoryHelper.dropItems(worldIn, pos, ((TileEntityFishtrap) tile).getItems());
             }
         }
-    }
-
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     public IFluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    }
+
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.FACING, WATERLOGGED);
     }
 }

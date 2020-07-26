@@ -7,10 +7,10 @@
   ],
   "key": {
     "#": {
-      "item": "growthcraft_apples:apple_plank"
+      "item": "growthcraft_bamboo:bamboo_plank"
     }
   },
   "result": {
-    "item": "growthcraft_apples:apple_plank_trapdoor"
+    "item": "growthcraft_bamboo:bamboo_plank_trapdoor"
   }
 }
