@@ -1,7 +1,8 @@
 package growthcraft.trapper.init;
 
-import growthcraft.core.Growthcraft;
+import growthcraft.trapper.common.block.BlockFishtrap;
 import growthcraft.trapper.shared.Reference;
+import growthcraft.trapper.shared.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -11,26 +12,30 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class GrowthcraftTrapperBlocks {
-
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    static {
-        /**
-         * bambooButton = BLOCKS.register(
-         *                 "bamboo_button",
-         *                 () -> new BlockBambooButton("bamboo_button"));
-         */
-    }
+    /* TODO[13]: Implement oakFishtrap */
+    public static final RegistryObject<BlockFishtrap> oakFishtrap;
+    public static final RegistryObject<BlockFishtrap> acaciaFishtrap;
+    // darkOakFishtrap
+    // birchFishtrap
+    // jungleFishtrap
+    // spruceFishtrap
 
-    /**
-     * public static final RegistryObject<BlockBambooStairs> bambooStairs;
-     */
+    static {
+        oakFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_OAK,
+                () -> new BlockFishtrap()
+        );
+        acaciaFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_ACACIA,
+                () -> new BlockFishtrap()
+        );
+    }
 
     private GrowthcraftTrapperBlocks() { /* Prevent default public constructor */ }
 
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
-        Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering itemBlocks ...");
-
         BLOCKS.getEntries().stream()
                 .map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
@@ -39,7 +44,6 @@ public class GrowthcraftTrapperBlocks {
                 itemRegistry.register(blockItem);
             }
         });
-
     }
 
 }

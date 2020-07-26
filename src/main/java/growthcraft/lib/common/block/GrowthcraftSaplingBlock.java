@@ -58,7 +58,7 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
         if (!world.isAreaLoaded(pos, 1)) {
             return;
         }
-        // TODO: Create config for min-light level for apple tree growing default is 9
+        // TODO[]: Create config for min-light level for apple tree growing default is 9
         if (world.getLight(pos.up()) >= 9 && rand.nextInt(7) == 0) {
             this.grow(world, pos, state, rand);
         }
@@ -85,7 +85,7 @@ public class GrowthcraftSaplingBlock extends BushBlock implements IGrowable {
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        // TODO: Create config for chance for apple sapling bonemeal grow. Default is 45%
+        // TODO[]: Create config for chance for apple sapling bonemeal grow. Default is 45%
         return worldIn.rand.nextInt(100) < 45;
     }
 

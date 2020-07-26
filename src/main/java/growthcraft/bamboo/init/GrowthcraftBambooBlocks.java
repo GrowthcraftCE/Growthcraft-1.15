@@ -5,7 +5,6 @@ import growthcraft.bamboo.common.block.BlockBambooStairs;
 import growthcraft.bamboo.common.tree.BambooTree;
 import growthcraft.bamboo.shared.Reference;
 import growthcraft.bamboo.shared.UnlocalizedName;
-import growthcraft.core.Growthcraft;
 import growthcraft.lib.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -18,7 +17,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class GrowthcraftBambooBlocks {
-
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     public static final RegistryObject<GrowthcraftButtonBlock> bambooPlankButton;
@@ -29,11 +27,9 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftPressurePlateBlock> bambooPlankPressurePlate;
     public static final RegistryObject<GrowthcraftSlabBlock> bambooPlankSlab;
     public static final RegistryObject<GrowthcraftStairsBlock> bambooPlankStairs;
-    // TODO[19]: Implement bambooPlankTrapdoor
     public static final RegistryObject<GrowthcraftTrapdoor> bambooPlankTrapdoor;
     public static final RegistryObject<GrowthcraftDoorBlock> bambooPlankDoor;
     public static final RegistryObject<GrowthcraftTreeLeaves> bambooTreeLeaves;
-    // TODO[22]: Implement bambooTreeSapling
     public static final RegistryObject<GrowthcraftSaplingBlock> bambooTreeSapling;
     public static final RegistryObject<BlockBambooLog> bambooWood;
     public static final RegistryObject<BlockBambooLog> bambooWoodStripped;
@@ -90,24 +86,15 @@ public class GrowthcraftBambooBlocks {
 
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
 
-    /**
-     * Dynamically register Growthcraft Bamboo BlockItems.
-     *
-     * @param itemRegistry IForgeRegistry<Item> reference for registering items.
-     * @param properties   Item properties with item group for creative tab.
-     */
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
-        Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering itemBlocks ...");
-
-        BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
+        BLOCKS.getEntries().stream()
+                .map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
             if (block.getRegistryName() != null) {
                 blockItem.setRegistryName(block.getRegistryName());
                 itemRegistry.register(blockItem);
             }
         });
-
-        Growthcraft.LOGGER.debug("Growthcraft Bamboo itemBlocks registered.");
     }
 
 }

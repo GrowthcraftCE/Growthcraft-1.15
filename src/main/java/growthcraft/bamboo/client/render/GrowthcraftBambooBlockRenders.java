@@ -9,6 +9,8 @@ public class GrowthcraftBambooBlockRenders {
     private GrowthcraftBambooBlockRenders() { /* Disable default public constructor */ }
 
     public static void setRenderLayer() {
+        RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooPlankDoor.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(GrowthcraftBambooBlocks.bambooTreeSapling.get(), RenderType.getCutout());
     }
+
 }

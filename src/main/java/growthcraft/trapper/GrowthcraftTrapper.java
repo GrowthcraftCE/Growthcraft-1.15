@@ -1,11 +1,19 @@
 package growthcraft.trapper;
 
+import growthcraft.core.Growthcraft;
 import growthcraft.lib.proxy.IProxy;
 import growthcraft.trapper.client.proxy.ClientProxy;
 import growthcraft.trapper.common.proxy.CommonProxy;
+import growthcraft.trapper.init.GrowthcraftTrapperBlocks;
+import growthcraft.trapper.init.GrowthcraftTrapperContainers;
+import growthcraft.trapper.init.GrowthcraftTrapperTileEntities;
+import growthcraft.trapper.init.client.GrowthcraftTrapperBlockRenders;
+import growthcraft.trapper.init.client.GrowthcraftTrapperScreenManager;
 import growthcraft.trapper.init.config.GrowthcraftTrapperConfig;
 import growthcraft.trapper.shared.Reference;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -17,6 +25,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,24 +44,46 @@ public class GrowthcraftTrapper {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        GrowthcraftTrapperConfig.loadConfig();
-
+        // Mod event bus context for deferred registries
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Add DeferredRegister<Item> to the mod event bus.
 
         // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftTrapperBlocks.BLOCKS.register(modEventBus);
+        GrowthcraftTrapperTileEntities.TILE_ENTITIES.register(modEventBus);
+        GrowthcraftTrapperContainers.CONTAINERS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event) {
-        proxy.init();
+    /**
+     * Subscribe to the RegistryEvent.Register<Item> for manually registering BlockItems.
+     * Items should be added to the DeferredRegister<Item> which is in the constructor.
+     *
+     * @param event Item registration event.
+     */
+    @SubscribeEvent
+    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> itemRegistry = event.getRegistry();
+        final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
+        // Block Items cannot be deferred.
+        GrowthcraftTrapperBlocks.registerBlockItems(itemRegistry, properties);
     }
 
+    private void setup(final FMLCommonSetupEvent event) {
+        proxy.init();
+        GrowthcraftTrapperConfig.loadConfig();
+    }
+
+    /**
+     * Do something that can only be done on the client like transparent blocks.
+     *
+     * @param event FMLClientSetupEvent
+     */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftTrapperBlockRenders.setRenderLayers();
+        GrowthcraftTrapperScreenManager.registerFactories();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

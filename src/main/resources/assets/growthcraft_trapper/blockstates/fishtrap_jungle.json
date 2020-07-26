@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle",
+        "y": 180,
+        "uvlock": false
+      }
+    },
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle",
+        "y": 270,
+        "uvlock": false
+      }
+    },
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "apply": {
+        "model": "growthcraft_trapper:fishtrap_jungle",
+        "x": 270,
+        "uvlock": false
+      }
+    }
+  ]
+}
