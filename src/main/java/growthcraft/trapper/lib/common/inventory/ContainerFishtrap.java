@@ -1,7 +1,7 @@
-package growthcraft.trapper.common.inventory;
+package growthcraft.trapper.lib.common.inventory;
 
-import growthcraft.trapper.common.tileentity.TileEntityFishtrap;
 import growthcraft.trapper.init.GrowthcraftTrapperContainers;
+import growthcraft.trapper.lib.common.tileentity.TileEntityFishtrap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;

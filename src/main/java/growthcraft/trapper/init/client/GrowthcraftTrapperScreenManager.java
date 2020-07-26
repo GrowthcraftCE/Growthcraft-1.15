@@ -1,7 +1,7 @@
 package growthcraft.trapper.init.client;
 
-import growthcraft.trapper.client.gui.ScreenFishtrap;
 import growthcraft.trapper.init.GrowthcraftTrapperContainers;
+import growthcraft.trapper.lib.client.gui.ScreenFishtrap;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

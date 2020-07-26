@@ -1,7 +1,7 @@
-package growthcraft.trapper.client.gui;
+package growthcraft.trapper.lib.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import growthcraft.trapper.common.inventory.ContainerFishtrap;
+import growthcraft.trapper.lib.common.inventory.ContainerFishtrap;
 import growthcraft.trapper.shared.Reference;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;

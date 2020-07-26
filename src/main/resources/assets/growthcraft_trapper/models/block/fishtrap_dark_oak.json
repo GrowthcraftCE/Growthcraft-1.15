@@ -1,9 +1,9 @@
 {
   "parent": "block/block",
   "textures": {
-    "0": "growthcraft_trapper:block/fishtrap_birch",
-    "1": "growthcraft_trapper:block/fishtrap_birch_front",
-    "particle": "growthcraft_trapper:block/fishtrap_birch"
+    "0": "growthcraft_trapper:block/fishtrap_dark_oak",
+    "1": "growthcraft_trapper:block/fishtrap_dark_oak_front",
+    "particle": "growthcraft_trapper:block/fishtrap_dark_oak"
   },
   "elements": [
     {

@@ -1,7 +1,6 @@
 package growthcraft.trapper.init;
 
-import growthcraft.lib.common.block.GrowthcraftFishtrapBlock;
-import growthcraft.trapper.common.block.BlockAcaciaFishtrap;
+import growthcraft.trapper.common.block.*;
 import growthcraft.trapper.shared.Reference;
 import growthcraft.trapper.shared.UnlocalizedName;
 import net.minecraft.block.Block;
@@ -16,21 +15,37 @@ public class GrowthcraftTrapperBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     /* TODO[13]: Implement oakFishtrap */
-    public static final RegistryObject<GrowthcraftFishtrapBlock> oakFishtrap;
+    public static final RegistryObject<BlockOakFishtrap> oakFishtrap;
     public static final RegistryObject<BlockAcaciaFishtrap> acaciaFishtrap;
-    // darkOakFishtrap
-    // birchFishtrap
-    // jungleFishtrap
-    // spruceFishtrap
+    public static final RegistryObject<BlockDarkOakFishtrap> darkOakFishtrap;
+    public static final RegistryObject<BlockBirchFishtrap> birchFishtrap;
+    public static final RegistryObject<BlockJungleFishtrap> jungleFishtrap;
+    public static final RegistryObject<BlockSpruceFishtrap> spruceFishtrap;
 
     static {
         oakFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_OAK,
-                () -> new GrowthcraftFishtrapBlock()
+                () -> new BlockOakFishtrap()
         );
         acaciaFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_ACACIA,
                 () -> new BlockAcaciaFishtrap()
+        );
+        darkOakFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_DARK_OAK,
+                () -> new BlockDarkOakFishtrap()
+        );
+        birchFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_BIRCH,
+                () -> new BlockBirchFishtrap()
+        );
+        jungleFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_JUNGLE,
+                () -> new BlockJungleFishtrap()
+        );
+        spruceFishtrap = BLOCKS.register(
+                UnlocalizedName.FISHTRAP_SPRUCE,
+                () -> new BlockSpruceFishtrap()
         );
     }
 

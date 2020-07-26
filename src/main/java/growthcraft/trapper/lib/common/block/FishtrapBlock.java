@@ -1,8 +1,8 @@
-package growthcraft.lib.common.block;
+package growthcraft.trapper.lib.common.block;
 
 import growthcraft.core.init.GrowthcraftSoundsEvents;
-import growthcraft.trapper.common.tileentity.TileEntityFishtrap;
 import growthcraft.trapper.init.GrowthcraftTrapperTileEntities;
+import growthcraft.trapper.lib.common.tileentity.TileEntityFishtrap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -22,13 +22,13 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class GrowthcraftFishtrapBlock extends Block {
+public class FishtrapBlock extends Block {
 
-    public GrowthcraftFishtrapBlock() {
+    public FishtrapBlock() {
         this(getInitProperties(Material.WOOD));
     }
 
-    public GrowthcraftFishtrapBlock(Properties properties) {
+    public FishtrapBlock(Properties properties) {
         super(properties);
     }
 

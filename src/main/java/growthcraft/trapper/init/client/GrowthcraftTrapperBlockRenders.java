@@ -11,6 +11,10 @@ public class GrowthcraftTrapperBlockRenders {
     public static void setRenderLayers() {
         RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.oakFishtrap.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.acaciaFishtrap.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.darkOakFishtrap.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.spruceFishtrap.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.jungleFishtrap.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.birchFishtrap.get(), RenderType.getCutout());
     }
 
 }

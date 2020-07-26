@@ -1,44 +1,30 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce"
-      }
+  "variants": {
+    "": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce"
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce",
-        "y": 90,
-        "uvlock": false
-      }
+    "facing=north": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce"
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce",
-        "y": 180,
-        "uvlock": false
-      }
+    "facing=south": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce",
+      "y": 180
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce",
-        "y": 270,
-        "uvlock": false
-      }
+    "facing=west": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce",
+      "y": 270
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce",
-        "x": 90,
-        "uvlock": false
-      }
+    "facing=east": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce",
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_spruce",
-        "x": 270,
-        "uvlock": false
-      }
+    "facing=up": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce",
+      "x": -90
+    },
+    "facing=down": {
+      "model": "growthcraft_trapper:block/fishtrap_spruce",
+      "x": 90
     }
-  ]
+  }
 }

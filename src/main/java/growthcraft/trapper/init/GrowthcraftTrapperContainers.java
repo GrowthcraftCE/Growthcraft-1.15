@@ -1,6 +1,6 @@
 package growthcraft.trapper.init;
 
-import growthcraft.trapper.common.inventory.ContainerFishtrap;
+import growthcraft.trapper.lib.common.inventory.ContainerFishtrap;
 import growthcraft.trapper.shared.Reference;
 import growthcraft.trapper.shared.UnlocalizedName;
 import net.minecraft.inventory.container.ContainerType;

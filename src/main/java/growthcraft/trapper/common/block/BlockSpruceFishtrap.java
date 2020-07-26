@@ -12,12 +12,12 @@ import javax.annotation.Nullable;
  * e
  * Customized Fishtrap Block - Inherit everything except createTileEntity.
  */
-public class BlockAcaciaFishtrap extends FishtrapBlock {
+public class BlockSpruceFishtrap extends FishtrapBlock {
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return GrowthcraftTrapperTileEntities.acaciaFishtrapTileEntity.get().create();
+        return GrowthcraftTrapperTileEntities.spruceFishtrapTileEntity.get().create();
     }
 
 }

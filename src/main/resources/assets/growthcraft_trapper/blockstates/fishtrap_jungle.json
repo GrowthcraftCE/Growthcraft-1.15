@@ -1,44 +1,30 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle"
-      }
+  "variants": {
+    "": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle"
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle",
-        "y": 90,
-        "uvlock": false
-      }
+    "facing=north": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle"
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle",
-        "y": 180,
-        "uvlock": false
-      }
+    "facing=south": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle",
+      "y": 180
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle",
-        "y": 270,
-        "uvlock": false
-      }
+    "facing=west": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle",
+      "y": 270
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle",
-        "x": 90,
-        "uvlock": false
-      }
+    "facing=east": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle",
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "growthcraft_trapper:fishtrap_jungle",
-        "x": 270,
-        "uvlock": false
-      }
+    "facing=up": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle",
+      "x": -90
+    },
+    "facing=down": {
+      "model": "growthcraft_trapper:block/fishtrap_jungle",
+      "x": 90
     }
-  ]
+  }
 }

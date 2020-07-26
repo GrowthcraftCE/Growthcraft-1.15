@@ -1,7 +1,7 @@
-package growthcraft.trapper.common.tileentity;
+package growthcraft.trapper.lib.common.tileentity;
 
-import growthcraft.lib.common.block.GrowthcraftFishtrapBlock;
-import growthcraft.trapper.common.inventory.ContainerFishtrap;
+import growthcraft.trapper.lib.common.block.FishtrapBlock;
+import growthcraft.trapper.lib.common.inventory.ContainerFishtrap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -165,7 +165,7 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ITicka
 
     protected void onOpenOrClose() {
         Block block = this.getBlockState().getBlock();
-        if (block instanceof GrowthcraftFishtrapBlock) {
+        if (block instanceof FishtrapBlock) {
             this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
             this.world.notifyNeighborsOfStateChange(this.pos, block);
         }

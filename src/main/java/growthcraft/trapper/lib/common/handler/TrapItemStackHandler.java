@@ -1,4 +1,4 @@
-package growthcraft.trapper.common.handler;
+package growthcraft.trapper.lib.common.handler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
