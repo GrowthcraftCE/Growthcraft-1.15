@@ -1,6 +1,7 @@
 package growthcraft.trapper.init;
 
-import growthcraft.trapper.common.block.BlockFishtrap;
+import growthcraft.lib.common.block.GrowthcraftFishtrapBlock;
+import growthcraft.trapper.common.block.BlockAcaciaFishtrap;
 import growthcraft.trapper.shared.Reference;
 import growthcraft.trapper.shared.UnlocalizedName;
 import net.minecraft.block.Block;
@@ -15,8 +16,8 @@ public class GrowthcraftTrapperBlocks {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
     /* TODO[13]: Implement oakFishtrap */
-    public static final RegistryObject<BlockFishtrap> oakFishtrap;
-    public static final RegistryObject<BlockFishtrap> acaciaFishtrap;
+    public static final RegistryObject<GrowthcraftFishtrapBlock> oakFishtrap;
+    public static final RegistryObject<BlockAcaciaFishtrap> acaciaFishtrap;
     // darkOakFishtrap
     // birchFishtrap
     // jungleFishtrap
@@ -25,11 +26,11 @@ public class GrowthcraftTrapperBlocks {
     static {
         oakFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_OAK,
-                () -> new BlockFishtrap()
+                () -> new GrowthcraftFishtrapBlock()
         );
         acaciaFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_ACACIA,
-                () -> new BlockFishtrap()
+                () -> new BlockAcaciaFishtrap()
         );
     }
 

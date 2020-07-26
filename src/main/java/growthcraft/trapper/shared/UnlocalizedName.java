@@ -5,6 +5,7 @@ package growthcraft.trapper.shared;
  */
 public class UnlocalizedName {
 
+    public static final String FISHTRAP_CONTAINER = "fishtrap_container";
     public static final String FISHTRAP_OAK = "fishtrap_oak";
     public static final String FISHTRAP_ACACIA = "fishtrap_acacia";
     public static final String FISHTRAP_SPRUCE = "fishtrap_spruce";

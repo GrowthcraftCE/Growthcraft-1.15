@@ -1,7 +1,6 @@
 package growthcraft.trapper.common.tileentity;
 
-import growthcraft.trapper.GrowthcraftTrapper;
-import growthcraft.trapper.common.block.BlockFishtrap;
+import growthcraft.lib.common.block.GrowthcraftFishtrapBlock;
 import growthcraft.trapper.common.inventory.ContainerFishtrap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -128,7 +127,6 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ITicka
         double dx = (double) this.pos.getX() + 0.5D;
         double dy = (double) this.pos.getY() + 0.5D;
         double dz = (double) this.pos.getZ() + 0.5D;
-        GrowthcraftTrapper.LOGGER.warn("Playing sound!");
 
         assert this.world != null;
         this.world.playSound(player, dx, dy, dz, sound, SoundCategory.BLOCKS, 0.5F,
@@ -167,7 +165,7 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ITicka
 
     protected void onOpenOrClose() {
         Block block = this.getBlockState().getBlock();
-        if (block instanceof BlockFishtrap) {
+        if (block instanceof GrowthcraftFishtrapBlock) {
             this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
             this.world.notifyNeighborsOfStateChange(this.pos, block);
         }

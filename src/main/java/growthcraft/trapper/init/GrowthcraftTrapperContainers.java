@@ -16,7 +16,7 @@ public class GrowthcraftTrapperContainers {
 
     static {
         fishtrapContainer = CONTAINERS.register(
-                UnlocalizedName.FISHTRAP_OAK,
+                UnlocalizedName.FISHTRAP_CONTAINER,
                 () -> IForgeContainerType.create(ContainerFishtrap::new)
         );
     }

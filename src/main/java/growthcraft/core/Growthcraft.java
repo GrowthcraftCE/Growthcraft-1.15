@@ -5,6 +5,7 @@ import growthcraft.core.client.proxy.ClientProxy;
 import growthcraft.core.common.proxy.CommonProxy;
 import growthcraft.core.init.GrowthcraftBlocks;
 import growthcraft.core.init.GrowthcraftItems;
+import growthcraft.core.init.GrowthcraftSoundsEvents;
 import growthcraft.core.init.GrowthcraftWorldGen;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
@@ -58,6 +59,7 @@ public class Growthcraft {
 
         // Add DeferredRegister<Item> to the mod event bus.
         GrowthcraftItems.ITEMS.register(modEventBus);
+        GrowthcraftSoundsEvents.SOUND_EVENTS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
         GrowthcraftBlocks.BLOCKS.register(modEventBus);

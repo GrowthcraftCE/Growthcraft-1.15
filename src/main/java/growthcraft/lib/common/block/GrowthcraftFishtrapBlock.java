@@ -1,5 +1,6 @@
-package growthcraft.trapper.common.block;
+package growthcraft.lib.common.block;
 
+import growthcraft.core.init.GrowthcraftSoundsEvents;
 import growthcraft.trapper.common.tileentity.TileEntityFishtrap;
 import growthcraft.trapper.init.GrowthcraftTrapperTileEntities;
 import net.minecraft.block.Block;
@@ -12,7 +13,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
@@ -22,13 +22,13 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class BlockFishtrap extends Block {
+public class GrowthcraftFishtrapBlock extends Block {
 
-    public BlockFishtrap() {
+    public GrowthcraftFishtrapBlock() {
         this(getInitProperties(Material.WOOD));
     }
 
-    public BlockFishtrap(Properties properties) {
+    public GrowthcraftFishtrapBlock(Properties properties) {
         super(properties);
     }
 
@@ -59,9 +59,11 @@ public class BlockFishtrap extends Block {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TileEntityFishtrap) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (TileEntityFishtrap) tile, pos);
-                ((TileEntityFishtrap) tile).playSound(null, SoundEvents.BLOCK_BARREL_OPEN);
+                ((TileEntityFishtrap) tile).playSound(null, GrowthcraftSoundsEvents.fishtrapOpen.get());
                 return ActionResultType.SUCCESS;
             }
+        } else {
+            return ActionResultType.SUCCESS;
         }
         return ActionResultType.FAIL;
     }

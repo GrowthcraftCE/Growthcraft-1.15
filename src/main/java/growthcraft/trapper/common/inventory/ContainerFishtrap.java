@@ -1,7 +1,6 @@
 package growthcraft.trapper.common.inventory;
 
 import growthcraft.trapper.common.tileentity.TileEntityFishtrap;
-import growthcraft.trapper.init.GrowthcraftTrapperBlocks;
 import growthcraft.trapper.init.GrowthcraftTrapperContainers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -76,7 +75,7 @@ public class ContainerFishtrap extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, GrowthcraftTrapperBlocks.oakFishtrap.get());
+        return this.tileEntityFishtrap.canOpen(playerIn);
     }
 
     @Override
