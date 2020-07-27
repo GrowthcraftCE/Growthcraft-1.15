@@ -3,6 +3,7 @@
   "textures": {
     "0": "growthcraft_apples:block/fishtrap_apple",
     "1": "growthcraft_apples:block/fishtrap_apple_front",
+    "missing": "growthcraft:block/missing",
     "particle": "growthcraft_apples:block/fishtrap_apple"
   },
   "elements": [

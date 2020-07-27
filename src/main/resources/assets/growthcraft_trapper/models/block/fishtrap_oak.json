@@ -3,6 +3,7 @@
   "textures": {
     "0": "growthcraft_trapper:block/fishtrap_oak",
     "1": "growthcraft_trapper:block/fishtrap_oak_front",
+    "missing": "growthcraft:block/missing",
     "particle": "growthcraft_trapper:block/fishtrap_oak"
   },
   "elements": [

@@ -3,6 +3,7 @@
   "textures": {
     "0": "growthcraft_bamboo:block/fishtrap_bamboo",
     "1": "growthcraft_bamboo:block/fishtrap_bamboo_front",
+    "missing": "growthcraft:block/missing",
     "particle": "growthcraft_bamboo:block/fishtrap_bamboo"
   },
   "elements": [

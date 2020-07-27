@@ -95,6 +95,7 @@ public class FishtrapBlock extends Block implements IWaterLoggable {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
@@ -107,6 +108,7 @@ public class FishtrapBlock extends Block implements IWaterLoggable {
         super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
+    @SuppressWarnings("deprecation")
     public IFluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }

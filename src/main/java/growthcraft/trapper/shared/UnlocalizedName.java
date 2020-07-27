@@ -12,6 +12,7 @@ public class UnlocalizedName {
     public static final String FISHTRAP_JUNGLE = "fishtrap_jungle";
     public static final String FISHTRAP_DARK_OAK = "fishtrap_dark_oak";
     public static final String FISHTRAP_BIRCH = "fishtrap_birch";
+    public static final String TAG_FISHING_BAIT = "fishing_bait";
 
     private UnlocalizedName() { /* Disable default public constructor. */ }
 

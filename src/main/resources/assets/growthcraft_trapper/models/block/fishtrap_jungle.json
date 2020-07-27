@@ -3,6 +3,7 @@
   "textures": {
     "0": "growthcraft_trapper:block/fishtrap_jungle",
     "1": "growthcraft_trapper:block/fishtrap_jungle_front",
+    "missing": "growthcraft:block/missing",
     "particle": "growthcraft_trapper:block/fishtrap_jungle"
   },
   "elements": [
