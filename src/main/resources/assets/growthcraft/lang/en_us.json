@@ -1,7 +1,8 @@
 {
+  "advancements.growthcraft.root.title": "Growthcraft",
+  "advancements.growthcraft.root.description": " ",
   "block.growthcraft.rocksalt_ore": "Rock Salt Ore",
   "block.growthcraft.salt_block": "Salt Block",
-
   "item.growthcraft.crowbar_black": "Crowbar (Black)",
   "item.growthcraft.crowbar_blue": "Crowbar (Blue)",
   "item.growthcraft.crowbar_brown": "Crowbar (Brown)",

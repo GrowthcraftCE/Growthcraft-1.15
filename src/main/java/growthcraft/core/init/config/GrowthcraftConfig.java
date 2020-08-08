@@ -32,6 +32,7 @@ public class GrowthcraftConfig {
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftBamboo;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftBees;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftCellar;
+    private static ForgeConfigSpec.BooleanValue enableGrowthcraftDeco;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftTrapper;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftGrapes;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftHops;
@@ -57,15 +58,6 @@ public class GrowthcraftConfig {
         loadConfig(
                 CLIENT, FMLPaths.CONFIGDIR.get().
                         resolve(CLIENT_CONFIG).toString());
-
-        // Load Growthcraft Bamboo Config
-        // Load Growthcraft Apples Config
-        // Load Growthcraft Cellar Config
-        // Load Growthcraft Grapes Config
-        // Load Growthcraft Hops Config
-        // Load Growthcraft Trapper Config
-        // Load Growthcraft Milk Config
-        // Load Growthcraft Rice Config
     }
 
     public static void loadConfig(ForgeConfigSpec configSpec, String path) {
@@ -82,6 +74,7 @@ public class GrowthcraftConfig {
         enableGrowthcraftBamboo = server.comment("Enable/Disable Growthcraft Bamboo").define("growthcraft.bamboo.enable", true);
         enableGrowthcraftBees = server.comment("Enable/Disable Growthcraft Bees").define("growthcraft.bees.enable", true);
         enableGrowthcraftCellar = server.comment("Enable/Disable Growthcraft Cellar").define("growthcraft.cellar.enable", true);
+        enableGrowthcraftDeco = server.comment("Enable/Disable Growthcraft Decorations").define("growthcraft.deco.enable", true);
         enableGrowthcraftGrapes = server.comment("Enable/Disable Growthcraft Grapes - Requires Cellar for Wine").define("growthcraft.grapes.enable", true);
         enableGrowthcraftHops = server.comment("Enable/Disable Growthcraft Hops - Requires Cellar for Ale").define("growthcraft.hops.enable", true);
         enableGrowthcraftMilk = server.comment("Enable/Disable Growthcraft Milk - Requires Cellar").define("growthcraft.milk.enable", true);
@@ -146,6 +139,10 @@ public class GrowthcraftConfig {
 
     public static boolean growthcraftCellarEnabled() {
         return enableGrowthcraftCellar.get();
+    }
+
+    public static boolean growthcraftDecoEnabled() {
+        return enableGrowthcraftDeco.get();
     }
 
     public static boolean growthcraftTrapperEnabled() {
