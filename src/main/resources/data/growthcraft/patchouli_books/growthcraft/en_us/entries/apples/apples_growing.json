@@ -1,7 +1,7 @@
 {
-  "name": "Growing apples",
+  "name": "growthcraft.apples.entry.apples_growing",
   "icon": "growthcraft_apples:apple_tree_sapling",
-  "category": "apples",
+  "category": "growthcraft:apples",
   "sortnum": 0,
   "pages": [
     {

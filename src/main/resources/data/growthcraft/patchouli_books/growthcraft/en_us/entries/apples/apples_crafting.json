@@ -1,9 +1,13 @@
 {
-  "name": "Carpentry with Apple Wood",
-  "icon": "minecraft:crafting_table",
-  "category": "apples",
+  "name": "growthcraft.entry.apples_crafting",
+  "icon": "growthcraft_apples:apple_wood_log",
+  "category": "growthcraft:apples",
   "sortnum": 1,
   "pages": [
+    {
+      "type": "text",
+      "text": "Test"
+    },
     {
       "type": "image",
       "images": [
