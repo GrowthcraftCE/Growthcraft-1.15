@@ -5,9 +5,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
 
-public class TerricattoStairs extends StairsBlock {
+public class TerracottaStairs extends StairsBlock {
 
-    public TerricattoStairs() {
+    public TerracottaStairs() {
         super(Blocks.WHITE_TERRACOTTA::getDefaultState, getInitProperties());
     }
 
