@@ -34,23 +34,23 @@ public class GrowthcraftItems {
     private GrowthcraftItems() { /* Disable default public constructor */ }
 
     static {
-        crowbarWhite = ITEMS.register("crowbar_white", () -> new ItemCrowbar("white"));
-        crowbarOrange = ITEMS.register("crowbar_orange", () -> new ItemCrowbar("orange"));
-        crowbarMagenta = ITEMS.register("crowbar_magenta", () -> new ItemCrowbar("magenta"));
-        crowbarLightBlue = ITEMS.register("crowbar_light_blue", () -> new ItemCrowbar("light_blue"));
-        crowbarYellow = ITEMS.register("crowbar_yellow", () -> new ItemCrowbar("yellow"));
-        crowbarLime = ITEMS.register("crowbar_lime", () -> new ItemCrowbar("lime"));
-        crowbarPink = ITEMS.register("crowbar_pink", () -> new ItemCrowbar("pink"));
-        crowbarGray = ITEMS.register("crowbar_gray", () -> new ItemCrowbar("gray"));
-        crowbarLightGray = ITEMS.register("crowbar_light_gray", () -> new ItemCrowbar("light_gray"));
-        crowbarCyan = ITEMS.register("crowbar_cyan", () -> new ItemCrowbar("cyan"));
-        crowbarPurple = ITEMS.register("crowbar_purple", () -> new ItemCrowbar("purple"));
-        crowbarBlue = ITEMS.register("crowbar_blue", () -> new ItemCrowbar("blue"));
-        crowbarBrown = ITEMS.register("crowbar_brown", () -> new ItemCrowbar("brown"));
-        crowbarGreen = ITEMS.register("crowbar_green", () -> new ItemCrowbar("green"));
-        crowbarRed = ITEMS.register("crowbar_red", () -> new ItemCrowbar("red"));
-        crowbarBlack = ITEMS.register("crowbar_black", () -> new ItemCrowbar("black"));
-        salt = ITEMS.register(UnlocalizedName.SALT_ITEM, () -> new ItemSalt(UnlocalizedName.SALT_ITEM));
+        crowbarWhite = ITEMS.register("crowbar_white", () -> new ItemCrowbar());
+        crowbarOrange = ITEMS.register("crowbar_orange", () -> new ItemCrowbar());
+        crowbarMagenta = ITEMS.register("crowbar_magenta", () -> new ItemCrowbar());
+        crowbarLightBlue = ITEMS.register("crowbar_light_blue", () -> new ItemCrowbar());
+        crowbarYellow = ITEMS.register("crowbar_yellow", () -> new ItemCrowbar());
+        crowbarLime = ITEMS.register("crowbar_lime", () -> new ItemCrowbar());
+        crowbarPink = ITEMS.register("crowbar_pink", () -> new ItemCrowbar());
+        crowbarGray = ITEMS.register("crowbar_gray", () -> new ItemCrowbar());
+        crowbarLightGray = ITEMS.register("crowbar_light_gray", () -> new ItemCrowbar());
+        crowbarCyan = ITEMS.register("crowbar_cyan", () -> new ItemCrowbar());
+        crowbarPurple = ITEMS.register("crowbar_purple", () -> new ItemCrowbar());
+        crowbarBlue = ITEMS.register("crowbar_blue", () -> new ItemCrowbar());
+        crowbarBrown = ITEMS.register("crowbar_brown", () -> new ItemCrowbar());
+        crowbarGreen = ITEMS.register("crowbar_green", () -> new ItemCrowbar());
+        crowbarRed = ITEMS.register("crowbar_red", () -> new ItemCrowbar());
+        crowbarBlack = ITEMS.register("crowbar_black", () -> new ItemCrowbar());
+        salt = ITEMS.register(UnlocalizedName.SALT_ITEM, () -> new ItemSalt());
     }
 
 }

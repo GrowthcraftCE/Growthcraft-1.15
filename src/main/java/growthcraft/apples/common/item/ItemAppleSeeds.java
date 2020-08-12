@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 
 public class ItemAppleSeeds extends GrowthcraftItem {
 
-    public ItemAppleSeeds(String unlocalizedName) {
-        super(unlocalizedName);
+    public ItemAppleSeeds() {
+        super();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ItemAppleSeeds extends GrowthcraftItem {
         BlockPos blockpos = context.getPos();
         BlockState blockstate = world.getBlockState(blockpos);
         Block targetBlock = blockstate.getBlock();
-        if ( targetBlock != null && targetBlock instanceof GrassBlock) {
+        if (targetBlock != null && targetBlock instanceof GrassBlock) {
             PlayerEntity playerentity = context.getPlayer();
             world.playSound(playerentity, blockpos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (!world.isRemote) {

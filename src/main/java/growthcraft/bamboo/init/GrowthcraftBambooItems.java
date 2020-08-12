@@ -18,7 +18,7 @@ public class GrowthcraftBambooItems {
     private GrowthcraftBambooItems() { /* Disable default public constructor */ }
 
     static {
-        bambooCoal = ITEMS.register("bamboo_coal", () -> new ItemBambooCoal("bamboo_coal"));
-        bambooStick = ITEMS.register("bamboo_stick", () -> new ItemBambooStick("bamboo_stick"));
+        bambooCoal = ITEMS.register("bamboo_coal", () -> new ItemBambooCoal());
+        bambooStick = ITEMS.register("bamboo_stick", () -> new ItemBambooStick());
     }
 }

@@ -13,7 +13,7 @@ public class GrowthcraftApplesItems {
     public static final RegistryObject<ItemAppleSeeds> appleSeeds;
 
     static {
-        appleSeeds = ITEMS.register("apple_seeds", () -> new ItemAppleSeeds("apple_seeds"));
+        appleSeeds = ITEMS.register("apple_seeds", () -> new ItemAppleSeeds());
     }
 
     private GrowthcraftApplesItems() { /* Prevent default public constructor */ }

@@ -15,11 +15,8 @@ import net.minecraft.world.World;
 
 public class ItemBambooStick extends GrowthcraftItem {
 
-    public final String unlocalizedName;
-
-    public ItemBambooStick(String unlocalizedName) {
-        super(unlocalizedName);
-        this.unlocalizedName = unlocalizedName;
+    public ItemBambooStick() {
+        super();
     }
 
     @Override

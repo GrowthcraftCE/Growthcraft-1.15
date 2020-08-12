@@ -5,16 +5,12 @@ import net.minecraft.item.Item;
 
 public class GrowthcraftItem extends Item {
 
-    private final String unlocalizedName;
-
-    public GrowthcraftItem(String unlocalizedName) {
+    public GrowthcraftItem() {
         super(getInitProperties(64));
-        this.unlocalizedName = unlocalizedName;
     }
 
-    public GrowthcraftItem(String unlocalizedName, int maxStackSize) {
+    public GrowthcraftItem(int maxStackSize) {
         super(getInitProperties(maxStackSize));
-        this.unlocalizedName = unlocalizedName;
     }
 
     /**
@@ -25,9 +21,8 @@ public class GrowthcraftItem extends Item {
     private static Properties getInitProperties(int maxStackSize) {
         Properties properties = new Properties();
         properties.group(Growthcraft.itemGroup);
+        properties.maxStackSize(maxStackSize);
         return properties;
     }
-
-    public String getUnlocalizedName() { return unlocalizedName; }
 
 }
