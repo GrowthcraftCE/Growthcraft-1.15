@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "stage=0": { "model": "growthcraft:bamboo_shoot" },
-    "stage=1": { "model": "growthcraft:bamboo_shoot" }
-  }
-}

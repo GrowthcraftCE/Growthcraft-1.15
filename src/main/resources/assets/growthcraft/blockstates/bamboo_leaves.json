@@ -1,9 +1,0 @@
-{
-  "variants": {
-    "": { "model": "growthcraft:bamboo_leaves" },
-    "check_decay=true,decayable=true": { "model": "growthcraft:bamboo_leaves" },
-    "check_decay=false,decayable=true": { "model": "growthcraft:bamboo_leaves" },
-    "check_decay=true,decayable=false": { "model": "growthcraft:bamboo_leaves" },
-    "check_decay=false,decayable=false": { "model": "growthcraft:bamboo_leaves" }
-  }
-}

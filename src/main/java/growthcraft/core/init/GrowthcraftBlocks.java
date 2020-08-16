@@ -5,6 +5,7 @@ import growthcraft.core.common.block.BlockRockSaltOre;
 import growthcraft.core.common.block.BlockSalt;
 import growthcraft.core.shared.Reference;
 import growthcraft.core.shared.UnlocalizedName;
+import growthcraft.lib.common.block.RopeBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -17,17 +18,21 @@ public class GrowthcraftBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    public static final RegistryObject<BlockRockSaltOre> rockSaltOre;
-    public static final RegistryObject<BlockSalt> saltBlock;
+    public static final RegistryObject<BlockRockSaltOre> rock_salt_ore;
+    public static final RegistryObject<BlockSalt> salt_block;
+    public static final RegistryObject<RopeBlock> rope_linen;
 
     static {
-        rockSaltOre = BLOCKS.register(
+        rock_salt_ore = BLOCKS.register(
                 UnlocalizedName.ROCK_SALT_ORE,
                 () -> new BlockRockSaltOre(UnlocalizedName.ROCK_SALT_ORE));
-        saltBlock = BLOCKS.register(
+        salt_block = BLOCKS.register(
                 UnlocalizedName.SALT_BLOCK,
                 () -> new BlockSalt(UnlocalizedName.SALT_BLOCK)
         );
+        rope_linen = BLOCKS.register(
+                UnlocalizedName.ROPE_LINEN,
+                () -> new RopeBlock());
     }
 
     private GrowthcraftBlocks() { /* Disable default public constructor */ }
