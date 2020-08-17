@@ -58,11 +58,12 @@ public class Growthcraft {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Add DeferredRegister<Item> to the mod event bus.
-        GrowthcraftItems.ITEMS.register(modEventBus);
         GrowthcraftSoundsEvents.SOUND_EVENTS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
         GrowthcraftBlocks.BLOCKS.register(modEventBus);
+        // Items has to be after blocks because rope needs the blocks registered first.
+        GrowthcraftItems.ITEMS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

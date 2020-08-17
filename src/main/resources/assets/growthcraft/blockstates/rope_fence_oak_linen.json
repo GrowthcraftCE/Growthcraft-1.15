@@ -2,12 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "growthcraft:block/rope_linen"
+        "model": "growthcraft:block/rope_fence_oak_linen"
       }
     },
     {
       "when": {
-        "north": "true"
+        "north": 1
       },
       "apply": {
         "model": "growthcraft:block/rope_linen_side",
@@ -16,7 +16,16 @@
     },
     {
       "when": {
-        "east": "true"
+        "north": 2
+      },
+      "apply": {
+        "model": "minecraft:block/oak_fence_side",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": 1
       },
       "apply": {
         "model": "growthcraft:block/rope_linen_side",
@@ -26,7 +35,17 @@
     },
     {
       "when": {
-        "south": "true"
+        "east": 2
+      },
+      "apply": {
+        "model": "minecraft:block/oak_fence_side",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": 1
       },
       "apply": {
         "model": "growthcraft:block/rope_linen_side",
@@ -36,7 +55,17 @@
     },
     {
       "when": {
-        "west": "true"
+        "south": 2
+      },
+      "apply": {
+        "model": "minecraft:block/oak_fence_side",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": 1
       },
       "apply": {
         "model": "growthcraft:block/rope_linen_side",
@@ -46,22 +75,12 @@
     },
     {
       "when": {
-        "up": "true"
+        "west": 2
       },
       "apply": {
-        "model": "growthcraft:block/rope_linen_side",
-        "x": 270,
-        "uvlock": false
-      }
-    },
-    {
-      "when": {
-        "down": "true"
-      },
-      "apply": {
-        "model": "growthcraft:block/rope_linen_side",
-        "x": 90,
-        "uvlock": false
+        "model": "minecraft:block/oak_fence_side",
+        "y": 270,
+        "uvlock": true
       }
     }
   ]

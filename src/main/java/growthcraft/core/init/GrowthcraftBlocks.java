@@ -5,8 +5,10 @@ import growthcraft.core.common.block.BlockRockSaltOre;
 import growthcraft.core.common.block.BlockSalt;
 import growthcraft.core.shared.Reference;
 import growthcraft.core.shared.UnlocalizedName;
-import growthcraft.lib.common.block.RopeBlock;
+import growthcraft.lib.common.block.GrowthcraftRopeBlock;
+import growthcraft.lib.common.block.GrowthcraftRopeFenceBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -20,7 +22,8 @@ public class GrowthcraftBlocks {
 
     public static final RegistryObject<BlockRockSaltOre> rock_salt_ore;
     public static final RegistryObject<BlockSalt> salt_block;
-    public static final RegistryObject<RopeBlock> rope_linen;
+    public static final RegistryObject<GrowthcraftRopeBlock> rope_linen;
+    public static final RegistryObject<GrowthcraftRopeFenceBlock> rope_fence_oak_linen;
 
     static {
         rock_salt_ore = BLOCKS.register(
@@ -32,7 +35,10 @@ public class GrowthcraftBlocks {
         );
         rope_linen = BLOCKS.register(
                 UnlocalizedName.ROPE_LINEN,
-                () -> new RopeBlock());
+                () -> new GrowthcraftRopeBlock());
+        rope_fence_oak_linen = BLOCKS.register(
+                UnlocalizedName.ROPE_FENCE_OAK_LINEN,
+                () -> new GrowthcraftRopeFenceBlock(Blocks.OAK_FENCE));
     }
 
     private GrowthcraftBlocks() { /* Disable default public constructor */ }
@@ -48,7 +54,7 @@ public class GrowthcraftBlocks {
 
         BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
-            if (block.getRegistryName() != null) {
+            if (block.getRegistryName() != null && !GrowthcraftRopeBlock.class.isInstance(block)) {
                 blockItem.setRegistryName(block.getRegistryName());
                 itemRegistry.register(blockItem);
             }

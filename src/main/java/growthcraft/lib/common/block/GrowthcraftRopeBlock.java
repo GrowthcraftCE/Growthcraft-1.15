@@ -1,5 +1,6 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.shared.Reference;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.block.Block;
@@ -13,6 +14,8 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class RopeBlock extends Block implements IBlockRope, IWaterLoggable {
+public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLoggable {
 
     /*
         Types of natural fiber rope:
@@ -56,11 +59,11 @@ public class RopeBlock extends Block implements IBlockRope, IWaterLoggable {
     private static final VoxelShape UP_BOUNDING_BOX = makeCuboidShape(7.0D, 9.0D, 7.0D, 9.0D, 16.0D, 9.0D);
     private static final VoxelShape DOWN_BOUNDING_BOX = makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 7.0D, 9.0D);
 
-    public RopeBlock() {
+    public GrowthcraftRopeBlock() {
         this(getInitProperties(Material.WOOL));
     }
 
-    public RopeBlock(Properties properties) {
+    public GrowthcraftRopeBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState()
                 .with(NORTH, Boolean.valueOf(false))
@@ -92,12 +95,14 @@ public class RopeBlock extends Block implements IBlockRope, IWaterLoggable {
         ArrayList<VoxelShape> voxelShapeArrayList = new ArrayList<VoxelShape>();
         Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(worldIn, pos);
 
-        if (blockMap.get("north") instanceof RopeBlock) voxelShapeArrayList.add(NORTH_BOUNDING_BOX);
-        if (blockMap.get("east") instanceof RopeBlock) voxelShapeArrayList.add(EAST_BOUNDING_BOX);
-        if (blockMap.get("south") instanceof RopeBlock) voxelShapeArrayList.add(SOUTH_BOUNDING_BOX);
-        if (blockMap.get("west") instanceof RopeBlock) voxelShapeArrayList.add(WEST_BOUNDING_BOX);
-        if (blockMap.get("up") instanceof RopeBlock) voxelShapeArrayList.add(UP_BOUNDING_BOX);
-        if (blockMap.get("down") instanceof RopeBlock) voxelShapeArrayList.add(DOWN_BOUNDING_BOX);
+        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+
+        if (tagRope.contains(blockMap.get("north"))) voxelShapeArrayList.add(NORTH_BOUNDING_BOX);
+        if (tagRope.contains(blockMap.get("east"))) voxelShapeArrayList.add(EAST_BOUNDING_BOX);
+        if (tagRope.contains(blockMap.get("south"))) voxelShapeArrayList.add(SOUTH_BOUNDING_BOX);
+        if (tagRope.contains(blockMap.get("west"))) voxelShapeArrayList.add(WEST_BOUNDING_BOX);
+        if (tagRope.contains(blockMap.get("up"))) voxelShapeArrayList.add(UP_BOUNDING_BOX);
+        if (tagRope.contains(blockMap.get("down"))) voxelShapeArrayList.add(DOWN_BOUNDING_BOX);
 
         VoxelShape[] voxelShapes = new VoxelShape[voxelShapeArrayList.size()];
         voxelShapes = voxelShapeArrayList.toArray(voxelShapes);
@@ -112,19 +117,20 @@ public class RopeBlock extends Block implements IBlockRope, IWaterLoggable {
         return getActualBlockState(context.getWorld(), context.getPos());
     }
 
-    private BlockState getActualBlockState(World world, BlockPos blockPos) {
+    public BlockState getActualBlockState(World world, BlockPos blockPos) {
         Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
         IFluidState ifluidstate = world.getFluidState(blockPos);
 
-        BlockState blockState = this.getDefaultState()
-                .with(NORTH, blockMap.get("north") instanceof RopeBlock)
-                .with(EAST, blockMap.get("east") instanceof RopeBlock)
-                .with(SOUTH, blockMap.get("south") instanceof RopeBlock)
-                .with(WEST, blockMap.get("west") instanceof RopeBlock)
-                .with(UP, blockMap.get("up") instanceof RopeBlock)
-                .with(DOWN, blockMap.get("down") instanceof RopeBlock)
+        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+
+        return this.getDefaultState()
+                .with(NORTH, tagRope.contains(blockMap.get("north")))
+                .with(EAST, tagRope.contains(blockMap.get("east")))
+                .with(SOUTH, tagRope.contains(blockMap.get("south")))
+                .with(WEST, tagRope.contains(blockMap.get("west")))
+                .with(UP, tagRope.contains(blockMap.get("up")))
+                .with(DOWN, tagRope.contains(blockMap.get("down")))
                 .with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
-        return blockState;
     }
 
     @Override
@@ -136,7 +142,7 @@ public class RopeBlock extends Block implements IBlockRope, IWaterLoggable {
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
         Block connectingBlock = state.getBlock();
-        return connectingBlock instanceof RopeBlock;
+        return connectingBlock instanceof GrowthcraftRopeBlock;
     }
 
     @SuppressWarnings("deprecation")
