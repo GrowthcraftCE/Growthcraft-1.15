@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "growthcraft:rope_fence_oak_linen"
+    "growthcraft:rope_fence_oak_linen",
+    "growthcraft_bamboo:bamboo_plank_fence_rope_linen"
   ]
 }

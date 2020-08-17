@@ -6,7 +6,7 @@ public class UnlocalizedName {
     public static final String BAMBOO_PLANK_DOOR = "bamboo_plank_door";
     public static final String BAMBOO_PLANK_FENCE = "bamboo_plank_fence";
     public static final String BAMBOO_PLANK_FENCE_GATE = "bamboo_plank_fence_gate";
-    public static final String BAMBOO_PLANK_FENCE_ROPE = "bamboo_plank_fence_rope";
+    public static final String BAMBOO_PLANK_FENCE_ROPE_LINEN = "bamboo_plank_fence_rope_linen";
     public static final String BAMBOO_PLANK_PRESSURE_PLATE = "bamboo_plank_pressure_plate";
     public static final String BAMBOO_PLANK_SIGN = "bamboo_plank_sign";
     public static final String BAMBOO_PLANK_SLAB = "bamboo_plank_slab";

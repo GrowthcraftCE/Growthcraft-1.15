@@ -24,7 +24,7 @@ public class GrowthcraftBambooBlocks {
     public static final RegistryObject<GrowthcraftPlankBlock> bambooPlank;
     public static final RegistryObject<GrowthcraftFenceBlock> bambooPlankFence;
     public static final RegistryObject<GrowthcraftFenceGateBlock> bambooPlankFenceGate;
-    // TODO[25]: Implement bambooPlankFenceRope
+    public static final RegistryObject<GrowthcraftRopeFenceBlock> bambooPlankFenceRopeLinen;
     public static final RegistryObject<GrowthcraftPressurePlateBlock> bambooPlankPressurePlate;
     public static final RegistryObject<GrowthcraftSlabBlock> bambooPlankSlab;
     public static final RegistryObject<GrowthcraftStairsBlock> bambooPlankStairs;
@@ -89,6 +89,9 @@ public class GrowthcraftBambooBlocks {
         bambooFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_BAMBOO,
                 () -> new BlockBambooFishtrap());
+        bambooPlankFenceRopeLinen = BLOCKS.register(
+                UnlocalizedName.BAMBOO_PLANK_FENCE_ROPE_LINEN,
+                () -> new GrowthcraftRopeFenceBlock(bambooPlankFence.get()));
     }
 
     private GrowthcraftBambooBlocks() { /* Prevent default public constructor */ }
@@ -97,7 +100,7 @@ public class GrowthcraftBambooBlocks {
         BLOCKS.getEntries().stream()
                 .map(RegistryObject::get).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
-            if (block.getRegistryName() != null) {
+            if (block.getRegistryName() != null && !(block instanceof GrowthcraftRopeFenceBlock)) {
                 blockItem.setRegistryName(block.getRegistryName());
                 itemRegistry.register(blockItem);
             }
