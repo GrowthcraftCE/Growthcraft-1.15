@@ -7,7 +7,7 @@ public class UnlocalizedName {
     public static final String APPLE_PLANK_DOOR = "apple_plank_door";
     public static final String APPLE_PLANK_FENCE = "apple_plank_fence";
     public static final String APPLE_PLANK_FENCE_GATE = "apple_plank_fence_gate";
-    public static final String APPLE_PLANK_FENCE_ROPE = "apple_plank_fence_rope";
+    public static final String APPLE_PLANK_FENCE_ROPE_LINEN = "apple_plank_fence_rope_linen";
     public static final String APPLE_PLANK_PRESSURE_PLATE = "apple_plank_pressure_plate";
     public static final String APPLE_PLANK_SLAB = "apple_plank_slab";
     public static final String APPLE_PLANK_STAIRS = "apple_plank_stairs";

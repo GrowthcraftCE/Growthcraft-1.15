@@ -32,7 +32,7 @@ public class GrowthcraftApplesBlocks {
     public static final RegistryObject<GrowthcraftPlankBlock> applePlank;
     public static final RegistryObject<GrowthcraftFenceBlock> applePlankFence;
     public static final RegistryObject<GrowthcraftFenceGateBlock> applePlankFenceGate;
-    // TODO[38]: Implement applePlankFenceRope;
+    public static final RegistryObject<GrowthcraftRopeFenceBlock> applePlankFenceRopeLinen;
     public static final RegistryObject<GrowthcraftPressurePlateBlock> applePlankPressurePlate;
     public static final RegistryObject<GrowthcraftSlabBlock> applePlankSlab;
     public static final RegistryObject<BlockAppleStairs> applePlankStairs;
@@ -101,6 +101,9 @@ public class GrowthcraftApplesBlocks {
         appleFishtrap = BLOCKS.register(
                 UnlocalizedName.FISHTRAP_APPLE,
                 () -> new BlockAppleFishtrap());
+        applePlankFenceRopeLinen = BLOCKS.register(
+                UnlocalizedName.APPLE_PLANK_FENCE_ROPE_LINEN,
+                () -> new GrowthcraftRopeFenceBlock(applePlankFence.get()));
     }
 
     private GrowthcraftApplesBlocks() { /* Prevent Default Public Constructor */ }
@@ -129,6 +132,7 @@ public class GrowthcraftApplesBlocks {
     private static boolean excludeBlockItemRegistry(ResourceLocation registryName) {
         ArrayList<String> excludeBlocks = new ArrayList<>();
         excludeBlocks.add(Reference.MODID + ":" + UnlocalizedName.APPLE_TREE_FRUIT);
+        excludeBlocks.add(applePlankFenceRopeLinen.get().getRegistryName().toString());
         return excludeBlocks.contains(registryName.toString());
     }
 }
