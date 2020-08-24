@@ -16,6 +16,7 @@ public class GrowthcraftItem extends Item {
     /**
      * Setup properties that we want all Growthcraft Items to have, like the
      * creative tab.
+     *
      * @return
      */
     private static Properties getInitProperties(int maxStackSize) {
