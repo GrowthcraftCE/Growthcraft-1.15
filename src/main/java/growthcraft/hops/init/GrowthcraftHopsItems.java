@@ -23,6 +23,9 @@ public class GrowthcraftHopsItems {
         hopsSeeds = ITEMS.register(
                 UnlocalizedName.HOPS_SEEDS,
                 () -> new GrowthcraftBlockItem(GrowthcraftHopsBlocks.hopsBush.get()));
+
+        //GrowthcraftHopsBlocks.hopsBush.get().withSeedsItem(hopsSeeds.get());
+        //GrowthcraftHopsBlocks.hopsBush.get().withFruitItem(hops.get(),1,3);
     }
 
     private GrowthcraftHopsItems() { /* Prevent default public constructor */ }

@@ -6,15 +6,20 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import static net.minecraft.state.properties.BlockStateProperties.PERSISTENT;
@@ -76,4 +81,11 @@ public class BlockAppleTreeFruit extends CropsBlock {
         return new ItemStack(this.getSeedsItem());
     }
 
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (state.get(AGE) == this.getMaxAge()) {
+            worldIn.destroyBlock(pos, true);
+        }
+        return ActionResultType.PASS;
+    }
 }

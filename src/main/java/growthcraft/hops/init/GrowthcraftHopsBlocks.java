@@ -1,10 +1,9 @@
 package growthcraft.hops.init;
 
 import growthcraft.core.Growthcraft;
-import growthcraft.core.init.GrowthcraftBlocks;
-import growthcraft.hops.lib.common.block.BlockHopsBush;
 import growthcraft.hops.shared.Reference;
 import growthcraft.hops.shared.UnlocalizedName;
+import growthcraft.lib.common.block.GrowthcraftCropsRopeBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -20,12 +19,12 @@ public class GrowthcraftHopsBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    public static final RegistryObject<BlockHopsBush> hopsBush;
+    public static final RegistryObject<GrowthcraftCropsRopeBlock> hopsBush;
 
     static {
         hopsBush = BLOCKS.register(
                 UnlocalizedName.HOPS_VINE,
-                () -> new BlockHopsBush(GrowthcraftBlocks.rope_linen.get()));
+                () -> new GrowthcraftCropsRopeBlock());
     }
 
     private GrowthcraftHopsBlocks() { /* Prevent default public constructor */ }

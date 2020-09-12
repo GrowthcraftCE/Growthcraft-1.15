@@ -10,7 +10,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -44,21 +43,6 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public static final BooleanProperty NORTH = BooleanProperty.create("north");
-    public static final BooleanProperty EAST = BooleanProperty.create("east");
-    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST = BooleanProperty.create("west");
-    public static final BooleanProperty UP = BooleanProperty.create("up");
-    public static final BooleanProperty DOWN = BooleanProperty.create("down");
-
-    private static final VoxelShape KNOT_BOUNDING_BOX = makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D);
-    private static final VoxelShape NORTH_BOUNDING_BOX = makeCuboidShape(7.0D, 7.0D, 0.0D, 9.0D, 9.0D, 7.0D);
-    private static final VoxelShape EAST_BOUNDING_BOX = makeCuboidShape(9.0D, 7.0D, 7.0D, 16.0D, 9.0D, 9.0D);
-    private static final VoxelShape SOUTH_BOUNDING_BOX = makeCuboidShape(7.0D, 7.0D, 9.0D, 9.0D, 9.0D, 16.0D);
-    private static final VoxelShape WEST_BOUNDING_BOX = makeCuboidShape(0.0D, 7.0D, 7.0D, 7.0D, 9.0D, 9.0D);
-    private static final VoxelShape UP_BOUNDING_BOX = makeCuboidShape(7.0D, 9.0D, 7.0D, 9.0D, 16.0D, 9.0D);
-    private static final VoxelShape DOWN_BOUNDING_BOX = makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 7.0D, 9.0D);
-
     public GrowthcraftRopeBlock() {
         this(getInitProperties(Material.WOOL));
     }
@@ -87,7 +71,6 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
         if (!worldReader.isRemote()) {
             World world = (World) worldReader;
         }
-
     }
 
     @Override
@@ -108,13 +91,6 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
         voxelShapes = voxelShapeArrayList.toArray(voxelShapes);
 
         return VoxelShapes.or(KNOT_BOUNDING_BOX, voxelShapes);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos blockPos = context.getPos();
-        return getActualBlockState(context.getWorld(), context.getPos());
     }
 
     public BlockState getActualBlockState(World world, BlockPos blockPos) {
@@ -142,7 +118,7 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
         Block connectingBlock = state.getBlock();
-        return connectingBlock instanceof GrowthcraftRopeBlock;
+        return connectingBlock instanceof IBlockRope || connectingBlock instanceof GrowthcraftCropsRopeBlock || connectingBlock instanceof GrowthcraftRopeBlock;
     }
 
     @SuppressWarnings("deprecation")

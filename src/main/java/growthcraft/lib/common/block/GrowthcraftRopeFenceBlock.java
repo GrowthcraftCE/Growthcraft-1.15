@@ -136,25 +136,25 @@ public class GrowthcraftRopeFenceBlock extends Block implements IBlockRope, IWat
         int south = 0;
         int west = 0;
 
-        if (GrowthcraftRopeBlock.class.isInstance(blockMap.get("north"))) {
+        if (IBlockRope.class.isInstance(blockMap.get("north"))) {
             north = 1;
         } else if (GrowthcraftRopeFenceBlock.class.isInstance(blockMap.get("north")) || FenceBlock.class.isInstance(blockMap.get("north"))) {
             north = 2;
         }
 
-        if (GrowthcraftRopeBlock.class.isInstance(blockMap.get("east"))) {
+        if (IBlockRope.class.isInstance(blockMap.get("east"))) {
             east = 1;
         } else if (GrowthcraftRopeFenceBlock.class.isInstance(blockMap.get("east")) || FenceBlock.class.isInstance(blockMap.get("east"))) {
             east = 2;
         }
 
-        if (GrowthcraftRopeBlock.class.isInstance(blockMap.get("south"))) {
+        if (IBlockRope.class.isInstance(blockMap.get("south"))) {
             south = 1;
         } else if (GrowthcraftRopeFenceBlock.class.isInstance(blockMap.get("south")) || FenceBlock.class.isInstance(blockMap.get("south"))) {
             south = 2;
         }
 
-        if (GrowthcraftRopeBlock.class.isInstance(blockMap.get("west"))) {
+        if (IBlockRope.class.isInstance(blockMap.get("west"))) {
             west = 1;
         } else if (GrowthcraftRopeFenceBlock.class.isInstance(blockMap.get("west")) || FenceBlock.class.isInstance(blockMap.get("west"))) {
             west = 2;
@@ -177,7 +177,7 @@ public class GrowthcraftRopeFenceBlock extends Block implements IBlockRope, IWat
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
         Block connectingBlock = state.getBlock();
-        return connectingBlock instanceof GrowthcraftRopeBlock;
+        return connectingBlock instanceof GrowthcraftRopeBlock || connectingBlock instanceof IBlockRope;
     }
 
     @SuppressWarnings("deprecation")
