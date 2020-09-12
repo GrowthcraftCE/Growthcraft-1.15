@@ -26,7 +26,7 @@
         "age": 2
       },
       "apply": {
-        "model": "growthcraft_hops:block/hops_vine_stage0"
+        "model": "growthcraft_hops:block/hops_vine_stage2"
       }
     },
     {
@@ -34,7 +34,7 @@
         "age": 3
       },
       "apply": {
-        "model": "growthcraft_hops:block/hops_vine_stage0"
+        "model": "growthcraft_hops:block/hops_vine_stage2"
       }
     },
     {

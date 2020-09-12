@@ -5,8 +5,7 @@ import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
@@ -14,12 +13,9 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -37,11 +33,12 @@ import java.util.Random;
  * @author Alatyami
  * @since 5.0.0
  */
+@SuppressWarnings("java:S1874")
 public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    protected static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
+    protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -52,29 +49,21 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D)};
 
     private Item seedsItem;
-    private Item fruitItem;
-    private int fruitMin;
-    private int fruitMax;
 
     public GrowthcraftCropsRopeBlock() {
         this(getInitProperties());
     }
 
-    public GrowthcraftCropsRopeBlock(Item seedsItem) {
-        this(getInitProperties());
-        this.withSeedsItem(seedsItem);
-    }
-
     public GrowthcraftCropsRopeBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState()
-                .with(this.getAgeProperty(), 0)
-                .with(NORTH, Boolean.valueOf(false))
-                .with(EAST, Boolean.valueOf(false))
-                .with(SOUTH, Boolean.valueOf(false))
-                .with(WEST, Boolean.valueOf(false))
-                .with(UP, Boolean.valueOf(false))
-                .with(DOWN, Boolean.valueOf(false)));
+                .with(AGE, 0)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
+                .with(UP, false)
+                .with(DOWN, false));
     }
 
     private static Properties getInitProperties() {
@@ -84,6 +73,11 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         properties.sound(SoundType.PLANT);
         properties.notSolid();
         return properties;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 2);
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
@@ -132,21 +126,8 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         builder.add(AGE, NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
-    /**
-     * Add the seed item after the instantiation of the crops rope block. This is used
-     * to solve the race condition of needing the seed item for the crop and the crop
-     * needing the seed item.
-     *
-     * @param seedsItem
-     */
     public void withSeedsItem(Item seedsItem) {
         this.seedsItem = seedsItem;
-    }
-
-    public void withFruitItem(Item fruitItem, int fruitMin, int fruitMax) {
-        this.fruitItem = fruitItem;
-        this.fruitMax = fruitMax;
-        this.fruitMin = fruitMin;
     }
 
     public IItemProvider getSeedsItem() {
@@ -154,6 +135,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         return seedsItem;
     }
 
+    @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(this.getSeedsItem());
     }
@@ -195,7 +177,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
+        return !this.isMaxAge(state);
     }
 
     @Override
@@ -204,74 +186,83 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     }
 
     @Override
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+        super.tick(state, worldIn, pos, rand);
+        if (!worldIn.isAreaLoaded(pos, 1))
+            return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (worldIn.getLightSubtracted(pos, 0) >= 9) {
+            int i = this.getAge(state);
+            if (i < this.getMaxAge()) {
+                float f = getGrowthChance(this, worldIn, pos);
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)) {
+                    grow(worldIn, rand, pos, state);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                }
+            }
+        }
+    }
+
+    @Override
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         this.grow(worldIn, pos, state);
     }
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
-        if (this.getAge(state) == this.getMaxAge()) {
+
+        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
+        int j = this.getMaxAge();
+        if (i > j) {
+            i = j;
+        }
+
+        worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
+
+        if (i == this.getMaxAge()) {
             // then we need to try and spawn another crop above.
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
                     && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
-                worldIn.setBlockState(pos.up(), this.getDefaultState());
+                worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
             }
-        } else {
-            int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-            int j = this.getMaxAge();
-            if (i > j) {
-                i = j;
-            }
-
-            worldIn.setBlockState(pos, this.withAge(i), 2);
         }
     }
 
     protected int getBonemealAgeIncrease(World worldIn) {
-        return MathHelper.nextInt(worldIn.rand, 2, 5);
+        return MathHelper.nextInt(worldIn.rand, 1, 3);
+    }
+
+    public BlockState getActualBlockStateWithAge(World world, BlockPos blockPos, int age) {
+        Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
+
+        return this.getDefaultState()
+                .with(NORTH, canBeConnectedTo(blockMap.get("north")))
+                .with(EAST, canBeConnectedTo(blockMap.get("east")))
+                .with(SOUTH, canBeConnectedTo(blockMap.get("south")))
+                .with(WEST, canBeConnectedTo(blockMap.get("west")))
+                .with(UP, canBeConnectedTo(blockMap.get("up")))
+                .with(DOWN, canBeConnectedTo(blockMap.get("down")))
+                .with(AGE, age);
     }
 
     public BlockState getActualBlockState(World world, BlockPos blockPos) {
-        Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
-        IFluidState ifluidstate = world.getFluidState(blockPos);
-        BlockState state = world.getBlockState(blockPos);
-
-        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-
-        return this.getDefaultState()
-                .with(NORTH, tagRope.contains(blockMap.get("north")))
-                .with(EAST, tagRope.contains(blockMap.get("east")))
-                .with(SOUTH, tagRope.contains(blockMap.get("south")))
-                .with(WEST, tagRope.contains(blockMap.get("west")))
-                .with(UP, tagRope.contains(blockMap.get("up")))
-                .with(DOWN, tagRope.contains(blockMap.get("down")))
-                .with(AGE, state.get(this.getAgeProperty()));
+        return getActualBlockStateWithAge(world, blockPos, world.getBlockState(blockPos).get(this.getAgeProperty()));
     }
 
-    //region: rope block interfacing
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
         Block connectingBlock = state.getBlock();
-        return connectingBlock instanceof IBlockRope || connectingBlock instanceof GrowthcraftCropsRopeBlock || connectingBlock instanceof GrowthcraftRopeBlock;
+        return canBeConnectedTo(connectingBlock);
+    }
+
+    private boolean canBeConnectedTo(Block block) {
+        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+        return tagRope.contains(block) || block instanceof IBlockRope;
     }
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 3);
+        worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
-    //endregion
 
-    @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (state.get(AGE) == 7) {
-            Random random = new Random();
-            // Spawn the random drop count
-            //random.ints(fruitMin, fruitMax).findFirst().getAsInt()
-
-            // Decrease age to 3
-            worldIn.setBlockState(pos, this.withAge(3), 2);
-        }
-        return ActionResultType.PASS;
-    }
 }

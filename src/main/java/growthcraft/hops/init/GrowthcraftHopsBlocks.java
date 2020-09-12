@@ -1,6 +1,7 @@
 package growthcraft.hops.init;
 
 import growthcraft.core.Growthcraft;
+import growthcraft.hops.common.block.BlockHopsCropsRopeLinen;
 import growthcraft.hops.shared.Reference;
 import growthcraft.hops.shared.UnlocalizedName;
 import growthcraft.lib.common.block.GrowthcraftCropsRopeBlock;
@@ -24,7 +25,7 @@ public class GrowthcraftHopsBlocks {
     static {
         hopsBush = BLOCKS.register(
                 UnlocalizedName.HOPS_VINE,
-                () -> new GrowthcraftCropsRopeBlock());
+                () -> new BlockHopsCropsRopeLinen());
     }
 
     private GrowthcraftHopsBlocks() { /* Prevent default public constructor */ }

@@ -188,4 +188,5 @@ public class GrowthcraftRopeFenceBlock extends Block implements IBlockRope, IWat
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, WATERLOGGED);
     }
+
 }
