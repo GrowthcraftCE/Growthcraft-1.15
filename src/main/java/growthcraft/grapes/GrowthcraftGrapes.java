@@ -2,6 +2,7 @@ package growthcraft.grapes;
 
 import growthcraft.grapes.client.proxy.ClientProxy;
 import growthcraft.grapes.common.proxy.CommonProxy;
+import growthcraft.grapes.init.GrowthcraftGrapesItems;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.grapes.shared.Reference;
 import growthcraft.lib.proxy.IProxy;
@@ -40,6 +41,7 @@ public class GrowthcraftGrapes {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Add DeferredRegister<Item> to the mod event bus.
+        GrowthcraftGrapesItems.FOODS.register(modEventBus);
 
         // Add DeferredRegister<Block> to the mod event bus.
 
