@@ -1,7 +1,8 @@
 package growthcraft.cellar.init;
 
-import growthcraft.core.Growthcraft;
+import growthcraft.cellar.common.block.BrewKettle;
 import growthcraft.cellar.shared.Reference;
+import growthcraft.cellar.shared.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -14,22 +15,17 @@ public class GrowthcraftCellarBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    static {
-        /**
-         * bambooButton = BLOCKS.register(
-         *                 "bamboo_button",
-         *                 () -> new BlockBambooButton("bamboo_button"));
-         */
-    }
+    public static final RegistryObject<BrewKettle> brewKettle;
 
-    /**
-     * public static final RegistryObject<BlockBambooStairs> bambooStairs;
-     */
+    static {
+        brewKettle = BLOCKS.register(
+                UnlocalizedName.BREW_KETTLE,
+                () -> new BrewKettle());
+    }
 
     private GrowthcraftCellarBlocks() { /* Prevent default public constructor */ }
 
     public static void registerBlockItems(IForgeRegistry<Item> itemRegistry, Item.Properties properties) {
-        Growthcraft.LOGGER.debug("Growthcraft Bamboo Registering itemBlocks ...");
 
         BLOCKS.getEntries().stream()
                 .map(RegistryObject::get).forEach(block -> {
