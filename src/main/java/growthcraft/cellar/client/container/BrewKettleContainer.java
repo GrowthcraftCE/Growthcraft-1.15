@@ -32,7 +32,35 @@ public class BrewKettleContainer extends Container {
         this.brewKettleTileEntity = tileEntity;
         this.canInteractWithCallable = IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos());
 
+        int index = 0;
         int slotWidth = 18;
+
+        /* Input Slot */
+        this.addSlot(new SlotItemHandler(
+                brewKettleTileEntity.getInventory(),
+                index, 80, 35)
+        );
+        index++;
+
+        SlotItemHandler fluidInputSlot;
+
+        /* Output Slot */
+        this.addSlot(new SlotItemHandler(
+                brewKettleTileEntity.getInventory(),
+                index,
+                141, 17)
+        );
+        index++;
+
+        SlotItemHandler fluidOutputSlot;
+
+        /* Lid Slot */
+        this.addSlot(new SlotItemHandler(
+                brewKettleTileEntity.getInventory(),
+                index,
+                19, 17)
+        );
+        index++;
 
         /* Hotbar Inventory Slots */
         int hotbarBaseY = 142;
@@ -46,6 +74,7 @@ public class BrewKettleContainer extends Container {
                     hotbarBaseY);
 
             this.addSlot(slot);
+            index++;
         }
 
         /* Player Inventory Slots */
@@ -66,16 +95,7 @@ public class BrewKettleContainer extends Container {
             }
         }
 
-        /* Brew Kettle Functional Slots */
-        SlotItemHandler itemInputSlot = new SlotItemHandler(brewKettleTileEntity.getInventory(), 0, 80, 35);
-        SlotItemHandler fluidInputSlot;
-        SlotItemHandler itemOutputSlot = new SlotItemHandler(brewKettleTileEntity.getInventory(), 1, 141, 17);
-        SlotItemHandler fluidOutputSlot;
-        SlotItemHandler lidSlot = new SlotItemHandler(brewKettleTileEntity.getInventory(), 2, 19, 17);
 
-        this.addSlot(itemInputSlot);
-        this.addSlot(itemOutputSlot);
-        this.addSlot(lidSlot);
 
         this.trackInt(currentSmeltTime = new FunctionalIntReferenceHolder(
                 () -> this.brewKettleTileEntity.currentSmeltTime, value -> this.brewKettleTileEntity.currentSmeltTime = value

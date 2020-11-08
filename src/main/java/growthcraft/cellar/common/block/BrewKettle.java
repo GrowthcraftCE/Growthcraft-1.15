@@ -154,21 +154,24 @@ public class BrewKettle extends Block {
     /* Particles */
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        // Sound
-        double s0 = (double) pos.getX() + 0.5D;
-        double s1 = pos.getY();
-        double s2 = (double) pos.getZ() + 0.5D;
-        if (rand.nextDouble() < 0.1D) {
-            worldIn.playSound(s0, s1, s2,
-                    SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE,
-                    SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-        }
+    public void animateTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
+        if (state.get(LIT)) {
+            // Sound
+            double s0 = (double) pos.getX() + 0.5D;
+            double s1 = pos.getY();
+            double s2 = (double) pos.getZ() + 0.5D;
+            if (rand.nextDouble() < 0.1D) {
+                worldIn.playSound(s0, s1, s2,
+                        SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE,
+                        SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
 
-        // Particles
-        double p0 = (double) pos.getX() + 0.4D + (double) rand.nextFloat() * 0.2D;
-        double p1 = (double) pos.getY() + 0.7D + (double) rand.nextFloat() * 0.3D;
-        double p2 = (double) pos.getZ() + 0.4D + (double) rand.nextFloat() * 0.2D;
-        worldIn.addParticle(ParticleTypes.SMOKE, p0, p1, p2, 0.0D, 0.0D, 0.0D);
+            // Particles
+            double p0 = (double) pos.getX() + 0.4D + (double) rand.nextFloat() * 0.2D;
+            double p1 = (double) pos.getY() + 0.7D + (double) rand.nextFloat() * 0.3D;
+            double p2 = (double) pos.getZ() + 0.4D + (double) rand.nextFloat() * 0.2D;
+            worldIn.addParticle(ParticleTypes.SMOKE, p0, p1, p2, 0.0D, 0.0D, 0.0D);
+        }
     }
+
 }

@@ -8,6 +8,8 @@ import growthcraft.cellar.init.GrowthcraftCellarTileEntities;
 import growthcraft.cellar.lib.recipe.BrewKettleRecipe;
 import growthcraft.cellar.shared.Reference;
 import growthcraft.cellar.shared.UnlocalizedName;
+import growthcraft.lib.utils.BlockStateUtils;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,11 +24,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -42,6 +46,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,6 +59,7 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
 
     public BrewKettleTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
+        this.inventory = new BrewKettleItemHandler(3);
     }
 
     public BrewKettleTileEntity() {
@@ -101,7 +107,6 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
 
         if (world != null && !world.isRemote) {
             // Do a check for redstone power
-            // TODO: Implement a heat source check
             if (this.world.isBlockPowered(pos)) {
                 if (this.getRecipe(this.inventory.getStackInSlot(0)) != null) {
                     if (this.currentSmeltTime != this.maxSmeltTime) {
@@ -118,12 +123,28 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
                     }
                 }
             }
+
+            // Do a check for a heat source
+            if (isHeated()) {
+                this.world.setBlockState(this.getPos(), this.getBlockState().with(BrewKettle.LIT, true));
+            } else {
+                this.world.setBlockState(this.getPos(), this.getBlockState().with(BrewKettle.LIT, false));
+            }
+
         }
 
         if (dirty) {
             this.markDirty();
             this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
         }
+    }
+
+    /* Heat Source */
+    public boolean isHeated() {
+        Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, pos);
+        return BlockTags.getCollection().get(
+                new ResourceLocation(growthcraft.core.shared.Reference.MODID,
+                        growthcraft.core.shared.UnlocalizedName.TAG_HEATSOURCES)).contains(blockMap.get("down"));
     }
 
     /* Custom Name Handling */

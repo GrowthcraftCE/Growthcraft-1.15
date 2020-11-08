@@ -46,8 +46,8 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        this.font.drawString(this.title.getFormattedText(), 8.0F, 8.0F, 0x404040);
-        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, 69.0F, 0x404040);
+        this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 0x404040);
+        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, 73.0F, 0x404040);
     }
 
     @Override
