@@ -2,10 +2,7 @@ package growthcraft.cellar;
 
 import growthcraft.cellar.client.proxy.ClientProxy;
 import growthcraft.cellar.common.proxy.CommonProxy;
-import growthcraft.cellar.init.GrowthcraftCellarBlocks;
-import growthcraft.cellar.init.GrowthcraftCellarContainers;
-import growthcraft.cellar.init.GrowthcraftCellarRecipeSerializers;
-import growthcraft.cellar.init.GrowthcraftCellarTileEntities;
+import growthcraft.cellar.init.*;
 import growthcraft.cellar.init.client.GrowthcraftCellarBlockRenders;
 import growthcraft.cellar.init.client.GrowthcraftCellarScreenManager;
 import growthcraft.cellar.init.config.GrowthcraftCellarConfig;
@@ -47,7 +44,9 @@ public class GrowthcraftCellar {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        GrowthcraftCellarItems.ITEMS.register(modEventBus);
         GrowthcraftCellarRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        GrowthcraftCellarFuilds.FLUIDS.register(modEventBus);
         GrowthcraftCellarBlocks.BLOCKS.register(modEventBus);
         GrowthcraftCellarTileEntities.TILE_ENTITIES_TYPES.register(modEventBus);
         GrowthcraftCellarContainers.CONTAINER_TYPES.register(modEventBus);
