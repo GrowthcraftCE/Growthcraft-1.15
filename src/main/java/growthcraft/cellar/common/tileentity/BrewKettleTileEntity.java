@@ -39,10 +39,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashSet;
@@ -50,12 +53,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BrewKettleTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class BrewKettleTileEntity extends TileEntity implements IFluidHandler, ITickableTileEntity, INamedContainerProvider {
 
     public final int maxSmeltTime = 100;
     public int currentSmeltTime;
     private ITextComponent customName;
     private BrewKettleItemHandler inventory;
+
+    // Top = FluidInput, ItemInput
+    // Sides = FluidOutput, ItemOutput
+
+    // Need two tanks.
 
     public BrewKettleTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
@@ -218,6 +226,9 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if ( cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side == Direction.UP ) {
+            
+        }
         return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.inventory));
     }
 
@@ -241,9 +252,47 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         return nbt;
     }
 
+    /* Fluid Handler */
     @Override
     public void handleUpdateTag(CompoundNBT nbt) {
         this.read(nbt);
     }
 
+    @Override
+    public int getTanks() {
+        return 0;
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack getFluidInTank(int tank) {
+        return null;
+    }
+
+    @Override
+    public int getTankCapacity(int tank) {
+        return 0;
+    }
+
+    @Override
+    public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+        return false;
+    }
+
+    @Override
+    public int fill(FluidStack resource, FluidAction action) {
+        return 0;
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(FluidStack resource, FluidAction action) {
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(int maxDrain, FluidAction action) {
+        return null;
+    }
 }

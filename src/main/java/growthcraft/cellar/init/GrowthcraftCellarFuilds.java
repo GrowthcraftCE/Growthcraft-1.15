@@ -27,13 +27,6 @@ public class GrowthcraftCellarFuilds {
     public static final RegistryObject<WortFluid.Source> WORT_FLUID;
     public static final RegistryObject<WortFluid.Flowing> WORT_FLUID_FLOWING;
     public static final RegistryObject<FlowingFluidBlock> WORT_FLUID_BLOCK;
-    public static final ForgeFlowingFluid.Properties WORT_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            () -> WORT_FLUID.get(), () -> WORT_FLUID_FLOWING.get(),
-            FluidAttributes.builder(WORT_FLUID_STILL_RESOURCE, WORT_FLUID_FLOWING_RESOURCE)
-                    .color(0xD0AF4E).density(0).temperature(0).luminosity(0).viscosity(0)
-                    .sound(SoundEvents.BLOCK_WATER_AMBIENT)
-                    .overlay(WORT_FLUID_OVERLAY_RESOURCE))
-            .block(() -> WORT_FLUID_BLOCK.get()).bucket(() -> GrowthcraftCellarItems.BUCKET_WORT.get());
 
     static {
         WORT_FLUID = FLUIDS.register(
@@ -49,6 +42,14 @@ public class GrowthcraftCellarFuilds {
                 )
         );
     }
+
+    public static final ForgeFlowingFluid.Properties WORT_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            () -> WORT_FLUID.get(), () -> WORT_FLUID_FLOWING.get(),
+            FluidAttributes.builder(WORT_FLUID_STILL_RESOURCE, WORT_FLUID_FLOWING_RESOURCE)
+                    .color(0xD0AF4E).density(0).temperature(0).luminosity(0).viscosity(0)
+                    .sound(SoundEvents.BLOCK_WATER_AMBIENT)
+                    .overlay(WORT_FLUID_OVERLAY_RESOURCE))
+            .block(() -> WORT_FLUID_BLOCK.get()).bucket(() -> GrowthcraftCellarItems.BUCKET_WORT.get());
 
     public static ResourceLocation getFluidResourceLocation(String unlocalizedName, String type) {
         return new ResourceLocation(Reference.MODID, String.format("blocks/fluids/%s_%s", unlocalizedName, type));
