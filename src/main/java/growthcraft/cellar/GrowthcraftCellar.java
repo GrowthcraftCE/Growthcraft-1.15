@@ -2,10 +2,16 @@ package growthcraft.cellar;
 
 import growthcraft.cellar.client.proxy.ClientProxy;
 import growthcraft.cellar.common.proxy.CommonProxy;
+import growthcraft.cellar.init.*;
+import growthcraft.cellar.init.client.GrowthcraftCellarBlockRenders;
+import growthcraft.cellar.init.client.GrowthcraftCellarScreenManager;
 import growthcraft.cellar.init.config.GrowthcraftCellarConfig;
 import growthcraft.cellar.shared.Reference;
+import growthcraft.core.Growthcraft;
 import growthcraft.lib.proxy.IProxy;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -17,6 +23,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,24 +42,34 @@ public class GrowthcraftCellar {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        GrowthcraftCellarConfig.loadConfig();
-
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Add DeferredRegister<Item> to the mod event bus.
-
-        // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftCellarItems.ITEMS.register(modEventBus);
+        GrowthcraftCellarRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        GrowthcraftCellarFuilds.FLUIDS.register(modEventBus);
+        GrowthcraftCellarBlocks.BLOCKS.register(modEventBus);
+        GrowthcraftCellarTileEntities.TILE_ENTITIES_TYPES.register(modEventBus);
+        GrowthcraftCellarContainers.CONTAINER_TYPES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    @SubscribeEvent
+    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> itemRegistry = event.getRegistry();
+        final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
+        // Block Items cannot be deferred.
+        GrowthcraftCellarBlocks.registerBlockItems(itemRegistry, properties);
+    }
+
     private void setup(final FMLCommonSetupEvent event) {
         proxy.init();
+        GrowthcraftCellarConfig.loadConfig();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftCellarBlockRenders.setRenderLayers();
+        GrowthcraftCellarScreenManager.registerFactories();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

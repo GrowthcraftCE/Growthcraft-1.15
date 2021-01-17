@@ -14,6 +14,7 @@ public class UnlocalizedName {
 
     public static final String TAG_ROPE = "rope";
     public static final String TAG_ROPE_FENCE = "rope_fence";
+    public static final String TAG_HEATSOURCES = "heatsources";
 
     private UnlocalizedName() { /* Disable default public constructor */ }
 

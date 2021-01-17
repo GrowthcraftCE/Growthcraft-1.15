@@ -1,3 +1,6 @@
 {
-  "block.growthcraft_example.placeholder": "placeholder"
+  "block.growthcraft_cellar.brew_kettle": "Brew Kettle",
+  "container.growthcraft_cellar.brew_kettle": "Brew Kettle",
+  "fluid.growthcraft_cellar.wort_fluid": "Wort",
+  "item.growthcraft_cellar.wort_bucket": "Wort Bucket"
 }
