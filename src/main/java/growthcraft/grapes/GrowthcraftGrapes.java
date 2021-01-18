@@ -2,6 +2,7 @@ package growthcraft.grapes;
 
 import growthcraft.grapes.client.proxy.ClientProxy;
 import growthcraft.grapes.common.proxy.CommonProxy;
+import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
 import growthcraft.grapes.init.GrowthcraftGrapesItems;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.grapes.shared.Reference;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 public class GrowthcraftGrapes {
 
     public static final Logger LOGGER = LogManager.getLogger();
-    public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static final IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public GrowthcraftGrapes() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -40,10 +41,9 @@ public class GrowthcraftGrapes {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Add DeferredRegister<Item> to the mod event bus.
         GrowthcraftGrapesItems.FOODS.register(modEventBus);
-
-        // Add DeferredRegister<Block> to the mod event bus.
+        GrowthcraftGrapesItems.ITEMS.register(modEventBus);
+        GrowthcraftGrapesBlocks.BLOCKS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
