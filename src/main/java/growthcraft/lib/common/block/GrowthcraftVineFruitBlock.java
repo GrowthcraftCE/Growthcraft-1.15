@@ -36,7 +36,7 @@ import java.util.Random;
 @SuppressWarnings("java:S1874")
 public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, IGrowable {
 
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -52,9 +52,8 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
 
     private Item vineFruitItem;
 
-    public GrowthcraftVineFruitBlock(Item vineFruitItem) {
+    public GrowthcraftVineFruitBlock() {
         this(getInitProperties());
-        this.vineFruitItem = vineFruitItem;
     }
 
     public GrowthcraftVineFruitBlock(Properties properties) {

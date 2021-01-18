@@ -1,0 +1,41 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "growthcraft_grapes:grape_vine_fruit_leaves"
+      }
+    },
+    {
+      "when": {
+        "age": 0
+      },
+      "apply": {
+        "model": "growthcraft_grapes:block/grape_vine_stage0"
+      }
+    },
+    {
+      "when": {
+        "age": 1
+      },
+      "apply": {
+        "model": "growthcraft_grapes:block/grape_vine_stage0"
+      }
+    },
+    {
+      "when": {
+        "age": 2
+      },
+      "apply": {
+        "model": "growthcraft_grapes:block/hops_vine_stage2"
+      }
+    },
+    {
+      "when": {
+        "age": 3
+      },
+      "apply": {
+        "model": "growthcraft_grapes:block/grape_vine_purple_fruit"
+      }
+    }
+  ]
+}

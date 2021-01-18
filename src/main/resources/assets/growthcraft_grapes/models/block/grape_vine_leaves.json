@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "growthcraft_grapes:blocks/grape_vine_purple_leaves"
+  }
+}

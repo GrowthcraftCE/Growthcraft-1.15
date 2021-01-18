@@ -20,14 +20,19 @@ public class GrowthcraftGrapesItems {
             Reference.MODID);
 
     public static final RegistryObject<ItemGrape> grapesRed;
+
     public static final RegistryObject<ItemGrape> grapesWhite;
-    public static final RegistryObject<ItemGrape> grapesPurple;
+
+    public static final RegistryObject<ItemGrape> GRAPES_PURPLE = FOODS.register(
+            UnlocalizedName.GRAPES_PURPLE,
+            () -> new ItemGrape(1, 1.0F));
 
     public static final RegistryObject<ItemGrapeSeeds> GRAPE_SEEDS_PURPLE = ITEMS.register(
             UnlocalizedName.GRAPE_SEEDS_PURPLE,
             () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE.get())
     );
 
+    /*
     public static final RegistryObject<ItemGrapeSeeds> GRAPE_SEEDS_RED = ITEMS.register(
             UnlocalizedName.GRAPE_SEEDS_RED,
             () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_RED.get())
@@ -37,14 +42,11 @@ public class GrowthcraftGrapesItems {
             UnlocalizedName.GRAPE_SEEDS_WHITE,
             () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_WHITE.get())
     );
-
+    */
     static {
 
         grapesRed = FOODS.register(
                 UnlocalizedName.GRAPES_RED,
-                () -> new ItemGrape(1, 1.0F));
-        grapesPurple = FOODS.register(
-                UnlocalizedName.GRAPES_PURPLE,
                 () -> new ItemGrape(1, 1.0F));
         grapesWhite = FOODS.register(
                 UnlocalizedName.GRAPES_WHITE,
