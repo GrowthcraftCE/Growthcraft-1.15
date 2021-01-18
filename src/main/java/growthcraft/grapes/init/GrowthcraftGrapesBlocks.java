@@ -1,7 +1,9 @@
 package growthcraft.grapes.init;
 
 import growthcraft.core.Growthcraft;
+import growthcraft.grapes.common.block.BlockGrapeVine;
 import growthcraft.grapes.shared.Reference;
+import growthcraft.grapes.shared.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -13,6 +15,11 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class GrowthcraftGrapesBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
+
+    public static final RegistryObject<BlockGrapeVine> GRAPE_VINE_PURPLE = BLOCKS.register(
+            UnlocalizedName.GRAPE_VINE_PURPLE,
+
+            );
 
     static {
         /**
