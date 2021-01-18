@@ -1,6 +1,7 @@
 package growthcraft.grapes.init;
 
 import growthcraft.grapes.common.item.ItemGrape;
+import growthcraft.grapes.common.item.ItemGrapeSeeds;
 import growthcraft.grapes.shared.Reference;
 import growthcraft.grapes.shared.UnlocalizedName;
 import net.minecraft.item.Item;
@@ -22,10 +23,22 @@ public class GrowthcraftGrapesItems {
     public static final RegistryObject<ItemGrape> grapesWhite;
     public static final RegistryObject<ItemGrape> grapesPurple;
 
+    public static final RegistryObject<ItemGrapeSeeds> GRAPE_SEEDS_PURPLE = ITEMS.register(
+            UnlocalizedName.GRAPE_SEEDS_PURPLE,
+            () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE.get())
+    );
+
+    public static final RegistryObject<ItemGrapeSeeds> GRAPE_SEEDS_RED = ITEMS.register(
+            UnlocalizedName.GRAPE_SEEDS_RED,
+            () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_RED.get())
+    );
+
+    public static final RegistryObject<ItemGrapeSeeds> GRAPE_SEEDS_WHITE = ITEMS.register(
+            UnlocalizedName.GRAPE_SEEDS_WHITE,
+            () -> new ItemGrapeSeeds(GrowthcraftGrapesBlocks.GRAPE_VINE_WHITE.get())
+    );
+
     static {
-        /**
-         * bambooCoal = ITEMS.register("bamboo_coal", () -> new ItemBambooCoal("bamboo_coal"));
-         */
 
         grapesRed = FOODS.register(
                 UnlocalizedName.GRAPES_RED,

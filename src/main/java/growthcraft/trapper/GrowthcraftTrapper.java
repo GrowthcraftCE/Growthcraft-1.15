@@ -44,12 +44,8 @@ public class GrowthcraftTrapper {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        // Mod event bus context for deferred registries
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Add DeferredRegister<Item> to the mod event bus.
-
-        // Add DeferredRegister<Block> to the mod event bus.
         GrowthcraftTrapperBlocks.BLOCKS.register(modEventBus);
         GrowthcraftTrapperTileEntities.TILE_ENTITIES.register(modEventBus);
         GrowthcraftTrapperContainers.CONTAINERS.register(modEventBus);
