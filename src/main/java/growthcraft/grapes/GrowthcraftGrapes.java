@@ -4,6 +4,7 @@ import growthcraft.grapes.client.proxy.ClientProxy;
 import growthcraft.grapes.common.proxy.CommonProxy;
 import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
 import growthcraft.grapes.init.GrowthcraftGrapesItems;
+import growthcraft.grapes.init.client.GrowthcraftGrapesBlockRenders;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.grapes.shared.Reference;
 import growthcraft.lib.proxy.IProxy;
@@ -53,8 +54,7 @@ public class GrowthcraftGrapes {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftGrapesBlockRenders.setRenderLayers();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

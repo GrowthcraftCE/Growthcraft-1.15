@@ -150,7 +150,7 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
+            if (i <= this.getMaxAge()) {
                 float f = BushUtils.getGrowthChance(this, worldIn, pos);
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)) {
                     grow(worldIn, rand, pos, state);
