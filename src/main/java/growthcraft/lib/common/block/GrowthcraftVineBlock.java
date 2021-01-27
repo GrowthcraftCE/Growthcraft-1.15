@@ -147,6 +147,15 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
             }
 
             for (int h = 1; h <= GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); h++) {
+                BlockState blockState = worldIn.getBlockState(pos.up(h));
+                // If we find a Vine Block that is still growing, return false.
+                if ( worldIn.getBlockState(pos.up(h)).getBlock() instanceof GrowthcraftVineBlock ) {
+                    GrowthcraftVineBlock vineBlock = (GrowthcraftVineBlock) blockState.getBlock();
+                    if ( vineBlock.getAge(blockState) < vineBlock.getMaxAge()) {
+                        return false;
+                    }
+                }
+
                 if ( worldIn.getBlockState(pos.up(h)).getBlock() == Blocks.AIR ) {
                     return true;
                 } else if ( worldIn.getBlockState(pos.up(h)).getBlock() instanceof GrowthcraftRopeBlock ) {
@@ -201,8 +210,6 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
 
             for ( int k = 1; k < GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); k++ ) {
-                GrowthcraftGrapes.LOGGER.debug("Checking for growing blocks ... pos.up(" + k + ") is a " + worldIn.getBlockState(pos.up(k)).getBlock().toString());
-
                 // If pos.up(k) is a Rope block, spawn a leaves block.
                 if ( tagRope.contains(worldIn.getBlockState(pos.up(k)).getBlock()) ) {
                     this.spawnVineLeavesBlock(worldIn, pos.up(k));
