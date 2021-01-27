@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "growthcraft_grapes:grape_vine_bush"
+        "model": "growthcraft_grapes:grape_vine_leaves"
       }
     },
     {

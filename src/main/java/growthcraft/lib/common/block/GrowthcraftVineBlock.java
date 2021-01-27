@@ -1,6 +1,9 @@
 package growthcraft.lib.common.block;
 
 import growthcraft.core.shared.Reference;
+import growthcraft.grapes.GrowthcraftGrapes;
+import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
+import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.lib.utils.BushUtils;
@@ -24,6 +27,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.extensions.IForgeBlockState;
 
 import java.util.Map;
 import java.util.Random;
@@ -135,6 +139,21 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        if ( this.isMaxAge(state) ) {
+            for (int h = 1; h <= GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); h++) {
+                    if ( worldIn.getBlockState(pos.up(h)).getBlock() instanceof GrowthcraftVineLeavesBlock ) {
+                        return false;
+                    }
+            }
+
+            for (int h = 1; h <= GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); h++) {
+                if ( worldIn.getBlockState(pos.up(h)).getBlock() == Blocks.AIR ) {
+                    return true;
+                } else if ( worldIn.getBlockState(pos.up(h)).getBlock() instanceof GrowthcraftRopeBlock ) {
+                    return true;
+                }
+            }
+        }
         return !this.isMaxAge(state);
     }
 
@@ -152,7 +171,8 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
             int i = this.getAge(state);
             if (i <= this.getMaxAge()) {
                 float f = BushUtils.getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)) {
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)
+                    || this.isMaxAge(state) ) {
                     grow(worldIn, rand, pos, state);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
@@ -175,31 +195,44 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
 
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
 
-        if (i == this.getMaxAge()) {
-            // then we need to try and spawn another crop above.
+        // If this block is full grown and is a master block, then we need to grow the other blocks.
+        if (i == this.getMaxAge() && this.isMasterBlock(worldIn, pos)) {
+
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-            // Check East First as that is where the sun comes from.
-            boolean spawnVineFruitBlock = false;
 
-            if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
-                    && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftVineBlock)) {
-                worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
+            for ( int k = 1; k < GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); k++ ) {
+                GrowthcraftGrapes.LOGGER.debug("Checking for growing blocks ... pos.up(" + k + ") is a " + worldIn.getBlockState(pos.up(k)).getBlock().toString());
+
+                // If pos.up(k) is a Rope block, spawn a leaves block.
+                if ( tagRope.contains(worldIn.getBlockState(pos.up(k)).getBlock()) ) {
+                    this.spawnVineLeavesBlock(worldIn, pos.up(k));
+                    return;
+                }
+                // If pos.up(k) is a Air block, spawn a new vine.
+                if ( worldIn.getBlockState(pos.up(k)).getBlock() == Blocks.AIR ) {
+                    this.spawnVineBlock(worldIn, pos.up(k));
+                    return;
+                }
             }
-            // Then check North
-
-            // Then check South
-
-            // Then check West
 
         }
     }
 
-    private void spawnVineLeavesBlock(World world, BlockPos pos) {
-
+    private boolean isMasterBlock(World world, BlockPos pos) {
+        return world.getBlockState(pos.down()).getBlock() == Blocks.FARMLAND;
     }
 
-    private void SpawnVineFruitBlock(World world, BlockPos pos) {
+    private void spawnVineBlock(World world, BlockPos pos) {
+        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE.get().getDefaultState());
+    }
 
+    private void spawnVineLeavesBlock(World world, BlockPos pos) {
+        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE_LEAVES.get().getDefaultState());
+    }
+
+    // TODO: Move to leaves block
+    private void SpawnVineFruitBlock(World world, BlockPos pos) {
+        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE_FRUIT.get().getDefaultState());
     }
 
     protected int getBonemealAgeIncrease(World worldIn) {

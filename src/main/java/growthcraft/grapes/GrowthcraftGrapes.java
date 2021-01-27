@@ -51,6 +51,7 @@ public class GrowthcraftGrapes {
 
     private void setup(final FMLCommonSetupEvent event) {
         proxy.init();
+        GrowthcraftGrapesConfig.loadConfig();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
