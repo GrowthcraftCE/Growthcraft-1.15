@@ -35,18 +35,17 @@ import java.util.Random;
  */
 @SuppressWarnings("java:S1874")
 public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, IGrowable {
+    // TODO: Remove the IBLockRope references
+    // TODO: Add blockstate and models
+    // TODO: Add loot table
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D)};
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
 
     private Item seedsItem;
 
@@ -156,7 +155,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
     }
 
     public int getMaxAge() {
-        return 7;
+        return 3;
     }
 
     protected int getAge(BlockState state) {
@@ -218,15 +217,6 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
         }
 
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
-
-        if (i == this.getMaxAge()) {
-            // then we need to try and spawn another crop above.
-            Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-            if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
-                    && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftVineFruitBlock)) {
-                worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
-            }
-        }
     }
 
     protected int getBonemealAgeIncrease(World worldIn) {

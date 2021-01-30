@@ -1,6 +1,7 @@
 package growthcraft.lib.common.block;
 
 import growthcraft.core.shared.Reference;
+import growthcraft.grapes.GrowthcraftGrapes;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.block.*;
@@ -24,6 +25,8 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -110,7 +113,10 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         if (flag && flag1) {
             f /= 2.0F;
         } else {
-            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
+            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
             if (flag2) {
                 f /= 2.0F;
             }
@@ -170,7 +176,7 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return state.getBlock() == Blocks.FARMLAND || state.getBlock() instanceof GrowthcraftVineLeavesBlock;
+        return state.getBlock() == Blocks.FARMLAND || state.getBlock() instanceof GrowthcraftVineLeavesBlock || state.getBlock() == Blocks.AIR || state.getBlock() instanceof GrowthcraftVineFruitBlock;
     }
 
     @Override
@@ -180,12 +186,31 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        if ( this.isMaxAge(state) ) {
+            Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(worldIn, pos);
+            if ( canBeConnectedTo( blockMap.get("north"))
+            || canBeConnectedTo( blockMap.get("east"))
+            || canBeConnectedTo( blockMap.get("south"))
+            || canBeConnectedTo( blockMap.get("west"))
+            || blockMap.get("down") == Blocks.AIR ) {
+                return true;
+            }
+        }
+
         return !this.isMaxAge(state);
     }
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return true;
+        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+
+        Map<String, Block> blockMap = BlockStateUtils.getHorizontalBlocks(worldIn, pos);
+        for(Map.Entry<String, Block> entry : blockMap.entrySet() ) {
+            if(tagRope.contains(entry.getValue()) && !(entry.getValue() instanceof GrowthcraftVineLeavesBlock)) {
+                return true;
+            }
+        }
+        return (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR);
     }
 
     @Override
@@ -210,6 +235,7 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         this.grow(worldIn, pos, state);
     }
 
+    /* Increment AGE, Extend the Grape Vine Leaves, or spawn fruit leaves. */
     public void grow(World worldIn, BlockPos pos, BlockState state) {
 
         int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
@@ -221,12 +247,24 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
 
         if (i == this.getMaxAge()) {
-            // then we need to try and spawn another crop above.
+            boolean trySpawnFruitBlock = true;
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-            if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
-                    && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftVineLeavesBlock)) {
-                worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
+
+            Map<BlockPos, BlockState> blockMap = BlockStateUtils.getHorizontalBlockPos(worldIn, pos);
+            for(Map.Entry<BlockPos, BlockState> entry : blockMap.entrySet() ) {
+                if(tagRope.contains(entry.getValue().getBlock()) && (entry.getValue().getBlock() instanceof GrowthcraftRopeBlock) ) {
+                    worldIn.setBlockState(entry.getKey(), this.getActualBlockStateWithAge(worldIn, entry.getKey(), 0));
+                    trySpawnFruitBlock = false;
+                    return;
+                }
             }
+
+            if(trySpawnFruitBlock) {
+                if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
+                    worldIn.setBlockState(pos.down(), vineFruitBlock.getDefaultState());
+                }
+            }
+
         }
     }
 

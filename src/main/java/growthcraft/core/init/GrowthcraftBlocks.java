@@ -20,26 +20,21 @@ public class GrowthcraftBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    public static final RegistryObject<BlockRockSaltOre> rock_salt_ore;
-    public static final RegistryObject<BlockSalt> salt_block;
-    public static final RegistryObject<GrowthcraftRopeBlock> rope_linen;
-    public static final RegistryObject<GrowthcraftRopeFenceBlock> rope_fence_oak_linen;
+    public static final RegistryObject<BlockRockSaltOre> ROCK_SALT_ORE = BLOCKS.register(
+            UnlocalizedName.ROCK_SALT_ORE,
+            () -> new BlockRockSaltOre(UnlocalizedName.ROCK_SALT_ORE));
 
-    static {
-        rock_salt_ore = BLOCKS.register(
-                UnlocalizedName.ROCK_SALT_ORE,
-                () -> new BlockRockSaltOre(UnlocalizedName.ROCK_SALT_ORE));
-        salt_block = BLOCKS.register(
-                UnlocalizedName.SALT_BLOCK,
-                () -> new BlockSalt(UnlocalizedName.SALT_BLOCK)
-        );
-        rope_linen = BLOCKS.register(
-                UnlocalizedName.ROPE_LINEN,
-                () -> new GrowthcraftRopeBlock());
-        rope_fence_oak_linen = BLOCKS.register(
-                UnlocalizedName.ROPE_FENCE_OAK_LINEN,
-                () -> new GrowthcraftRopeFenceBlock(Blocks.OAK_FENCE));
-    }
+    public static final RegistryObject<BlockSalt> SALT_BLOCK = BLOCKS.register(
+            UnlocalizedName.SALT_BLOCK,
+            () -> new BlockSalt(UnlocalizedName.SALT_BLOCK));
+
+    public static final RegistryObject<GrowthcraftRopeBlock> ROPE_LINEN = BLOCKS.register(
+            UnlocalizedName.ROPE_LINEN,
+            () -> new GrowthcraftRopeBlock());
+
+    public static final RegistryObject<GrowthcraftRopeFenceBlock> ROPE_FENCE_OAK_LINEN  = BLOCKS.register(
+            UnlocalizedName.ROPE_FENCE_OAK_LINEN,
+            () -> new GrowthcraftRopeFenceBlock(Blocks.OAK_FENCE));
 
     private GrowthcraftBlocks() { /* Disable default public constructor */ }
 
