@@ -34,8 +34,7 @@ import java.util.Random;
  * @since 5.0.0
  */
 @SuppressWarnings("java:S1874")
-public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, IGrowable {
-    // TODO: Remove the IBLockRope references
+public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
     // TODO: Add blockstate and models
     // TODO: Add loot table
 
@@ -58,13 +57,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
     public GrowthcraftVineFruitBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState()
-                .with(AGE, 0)
-                .with(NORTH, false)
-                .with(EAST, false)
-                .with(SOUTH, false)
-                .with(WEST, false)
-                .with(UP, false)
-                .with(DOWN, false));
+                .with(AGE, 0));
     }
 
     private static Properties getInitProperties() {
@@ -124,7 +117,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
 
     @Override
     public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(AGE, NORTH, EAST, SOUTH, WEST, UP, DOWN);
+        builder.add(AGE);
     }
 
     public void withSeedsItem(Item seedsItem) {
@@ -226,14 +219,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IBlockRope, 
     public BlockState getActualBlockStateWithAge(World world, BlockPos blockPos, int age) {
         Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
 
-        return this.getDefaultState()
-                .with(NORTH, canBeConnectedTo(blockMap.get("north")))
-                .with(EAST, canBeConnectedTo(blockMap.get("east")))
-                .with(SOUTH, canBeConnectedTo(blockMap.get("south")))
-                .with(WEST, canBeConnectedTo(blockMap.get("west")))
-                .with(UP, canBeConnectedTo(blockMap.get("up")))
-                .with(DOWN, canBeConnectedTo(blockMap.get("down")))
-                .with(AGE, age);
+        return this.getDefaultState().with(AGE, age);
     }
 
     public BlockState getActualBlockState(World world, BlockPos blockPos) {
