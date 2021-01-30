@@ -2,6 +2,7 @@ package growthcraft.lib.common.block;
 
 import growthcraft.core.shared.Reference;
 import growthcraft.grapes.GrowthcraftGrapes;
+import growthcraft.grapes.common.block.BlockGrapeVine;
 import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
@@ -220,6 +221,11 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
                     this.spawnVineBlock(worldIn, pos.up(k));
                     return;
                 }
+
+                // If pos.up(k) is a VineBlock then try and grow it.
+                if ( worldIn.getBlockState(pos.up(k)).getBlock() instanceof GrowthcraftVineBlock ) {
+                    ((GrowthcraftVineBlock) worldIn.getBlockState(pos.up(k)).getBlock()).grow(worldIn, pos.up(k), state);
+                }
             }
 
         }
@@ -230,16 +236,11 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
     }
 
     private void spawnVineBlock(World world, BlockPos pos) {
-        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE.get().getDefaultState());
+        world.setBlockState(pos, this.getDefaultState());
     }
 
     private void spawnVineLeavesBlock(World world, BlockPos pos) {
-        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE_LEAVES.get().getDefaultState());
-    }
-
-    // TODO: Move to leaves block
-    private void SpawnVineFruitBlock(World world, BlockPos pos) {
-        world.setBlockState(pos, GrowthcraftGrapesBlocks.GRAPE_VINE_PURPLE_FRUIT.get().getDefaultState());
+        world.setBlockState(pos, vineLeavesBlock.getDefaultState());
     }
 
     protected int getBonemealAgeIncrease(World worldIn) {
