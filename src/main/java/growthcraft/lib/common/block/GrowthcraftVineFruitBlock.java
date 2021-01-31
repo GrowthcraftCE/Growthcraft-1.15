@@ -1,8 +1,6 @@
 package growthcraft.lib.common.block;
 
-import growthcraft.core.shared.Reference;
 import growthcraft.grapes.init.GrowthcraftGrapesItems;
-import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -14,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -41,7 +37,8 @@ import java.util.Random;
  */
 @SuppressWarnings("java:S1874")
 public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
-    // TODO: Add loot table
+    // TODO: Remove half leaves texture from fruit blocks.
+    // TODO: Set VoxelShape to size of cross model.
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
@@ -262,4 +259,8 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.onBlockHarvested(worldIn, pos, state, player);
+    }
 }
