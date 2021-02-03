@@ -1,13 +1,18 @@
 package growthcraft.grapes;
 
+import growthcraft.core.Growthcraft;
+import growthcraft.core.init.GrowthcraftBlocks;
 import growthcraft.grapes.client.proxy.ClientProxy;
 import growthcraft.grapes.common.proxy.CommonProxy;
 import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
 import growthcraft.grapes.init.GrowthcraftGrapesItems;
+import growthcraft.grapes.init.client.GrowthcraftGrapesBlockRenders;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.grapes.shared.Reference;
 import growthcraft.lib.proxy.IProxy;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -19,6 +24,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,14 +53,24 @@ public class GrowthcraftGrapes {
 
         MinecraftForge.EVENT_BUS.register(this);
     }
+    @SubscribeEvent
+    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> itemRegistry = event.getRegistry();
+        final Item.Properties properties = new Item.Properties().group(Growthcraft.itemGroup);
+        GrowthcraftBlocks.registerBlockItems(itemRegistry, properties);
+
+        // Setup the fruit yields for Grape Vines. We have to put it here because BLOCKS get registered before Items
+        // in the deferred registry.
+        GrowthcraftGrapesBlocks.setupVineFruitItems();
+    }
 
     private void setup(final FMLCommonSetupEvent event) {
         proxy.init();
+        GrowthcraftGrapesConfig.loadConfig();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        GrowthcraftGrapesBlockRenders.setRenderLayers();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

@@ -3,11 +3,13 @@ package growthcraft.lib.common.block;
 import growthcraft.core.shared.Reference;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
+import growthcraft.lib.utils.RopeUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -37,16 +39,17 @@ import java.util.Random;
 public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope, IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+    public static final BooleanProperty TRUNK_CONNECTED = BooleanProperty.create("trunk_connected");
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D)};
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
 
     private Item seedsItem;
 
@@ -66,7 +69,8 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
                 .with(SOUTH, false)
                 .with(WEST, false)
                 .with(UP, false)
-                .with(DOWN, false));
+                .with(DOWN, false)
+                .with(TRUNK_CONNECTED, false));
     }
 
     private static Properties getInitProperties() {
@@ -110,7 +114,10 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         if (flag && flag1) {
             f /= 2.0F;
         } else {
-            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
+            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock()
+                    || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
             if (flag2) {
                 f /= 2.0F;
             }
@@ -126,7 +133,7 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(AGE, NORTH, EAST, SOUTH, WEST, UP, DOWN);
+        builder.add(AGE, NORTH, EAST, SOUTH, WEST, UP, DOWN, TRUNK_CONNECTED);
     }
 
     public void withSeedsItem(Item seedsItem) {
@@ -170,7 +177,7 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return state.getBlock() == Blocks.FARMLAND || state.getBlock() instanceof GrowthcraftVineLeavesBlock;
+        return state.getBlock() == Blocks.FARMLAND || state.getBlock() instanceof GrowthcraftVineLeavesBlock || state.getBlock() == Blocks.AIR || state.getBlock() instanceof GrowthcraftVineFruitBlock;
     }
 
     @Override
@@ -180,12 +187,31 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        if ( this.isMaxAge(state) ) {
+            Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(worldIn, pos);
+            if (RopeUtils.isRopeBlock(blockMap.get("north"))
+                    || RopeUtils.isRopeBlock(blockMap.get("east"))
+                    || RopeUtils.isRopeBlock(blockMap.get("south"))
+                    || RopeUtils.isRopeBlock(blockMap.get("west"))
+                    || blockMap.get("down") == Blocks.AIR) {
+                return true;
+            }
+        }
+
         return !this.isMaxAge(state);
     }
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return true;
+        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+
+        Map<String, Block> blockMap = BlockStateUtils.getHorizontalBlocks(worldIn, pos);
+        for(Map.Entry<String, Block> entry : blockMap.entrySet() ) {
+            if(tagRope.contains(entry.getValue()) && !(entry.getValue() instanceof GrowthcraftVineLeavesBlock)) {
+                return true;
+            }
+        }
+        return (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR);
     }
 
     @Override
@@ -210,6 +236,7 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         this.grow(worldIn, pos, state);
     }
 
+    /* Increment AGE, Extend the Grape Vine Leaves, or spawn fruit leaves. */
     public void grow(World worldIn, BlockPos pos, BlockState state) {
 
         int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
@@ -221,12 +248,24 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
 
         if (i == this.getMaxAge()) {
-            // then we need to try and spawn another crop above.
+            boolean trySpawnFruitBlock = true;
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-            if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
-                    && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftVineLeavesBlock)) {
-                worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
+
+            Map<BlockPos, BlockState> blockMap = BlockStateUtils.getHorizontalBlockPos(worldIn, pos);
+            for(Map.Entry<BlockPos, BlockState> entry : blockMap.entrySet() ) {
+                if(tagRope.contains(entry.getValue().getBlock()) && (entry.getValue().getBlock() instanceof GrowthcraftRopeBlock) ) {
+                    worldIn.setBlockState(entry.getKey(), this.getActualBlockStateWithAge(worldIn, entry.getKey(), 0));
+                    trySpawnFruitBlock = false;
+                    return;
+                }
             }
+
+            if(trySpawnFruitBlock) {
+                if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
+                    worldIn.setBlockState(pos.down(), vineFruitBlock.getDefaultState());
+                }
+            }
+
         }
     }
 
@@ -238,13 +277,14 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
 
         return this.getDefaultState()
-                .with(NORTH, canBeConnectedTo(blockMap.get("north")))
-                .with(EAST, canBeConnectedTo(blockMap.get("east")))
-                .with(SOUTH, canBeConnectedTo(blockMap.get("south")))
-                .with(WEST, canBeConnectedTo(blockMap.get("west")))
-                .with(UP, canBeConnectedTo(blockMap.get("up")))
-                .with(DOWN, canBeConnectedTo(blockMap.get("down")))
-                .with(AGE, age);
+                .with(NORTH, RopeUtils.isRopeBlock(blockMap.get("north")))
+                .with(EAST, RopeUtils.isRopeBlock(blockMap.get("east")))
+                .with(SOUTH, RopeUtils.isRopeBlock(blockMap.get("south")))
+                .with(WEST, RopeUtils.isRopeBlock(blockMap.get("west")))
+                .with(UP, RopeUtils.isRopeBlock(blockMap.get("up")))
+                .with(DOWN, RopeUtils.isRopeBlock(blockMap.get("down")))
+                .with(AGE, age)
+                .with(TRUNK_CONNECTED, blockMap.get("down").getBlock() instanceof GrowthcraftVineBlock);
     }
 
     public BlockState getActualBlockState(World world, BlockPos blockPos) {
@@ -253,18 +293,12 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
 
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
-        Block connectingBlock = state.getBlock();
-        return canBeConnectedTo(connectingBlock);
-    }
-
-    private boolean canBeConnectedTo(Block block) {
-        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-        return tagRope.contains(block) || block instanceof IBlockRope;
+        return RopeUtils.isRopeBlock(state.getBlock());
     }
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
+        worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 3);
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 

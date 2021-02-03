@@ -11,7 +11,7 @@ public class GrowthcraftWorldGen {
 
         if(GrowthcraftConfig.getSaltOreGenerate()) {
             setupOreGeneration(
-                    GrowthcraftBlocks.rock_salt_ore.get(),
+                    GrowthcraftBlocks.ROCK_SALT_ORE.get(),
                     OreFeatureConfig.FillerBlockType.NATURAL_STONE,
                     GrowthcraftConfig.getSaltOreGenCount(),
                     GrowthcraftConfig.getSaltOreGenMinHeight(),

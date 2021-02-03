@@ -3,6 +3,7 @@ package growthcraft.lib.common.block;
 import growthcraft.core.shared.Reference;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
+import growthcraft.lib.utils.RopeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -97,15 +98,13 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
         Map<String, Block> blockMap = BlockStateUtils.getSurroundingBlocks(world, blockPos);
         IFluidState ifluidstate = world.getFluidState(blockPos);
 
-        Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-
         return this.getDefaultState()
-                .with(NORTH, tagRope.contains(blockMap.get("north")))
-                .with(EAST, tagRope.contains(blockMap.get("east")))
-                .with(SOUTH, tagRope.contains(blockMap.get("south")))
-                .with(WEST, tagRope.contains(blockMap.get("west")))
-                .with(UP, tagRope.contains(blockMap.get("up")))
-                .with(DOWN, tagRope.contains(blockMap.get("down")))
+                .with(NORTH, RopeUtils.isRopeBlock(blockMap.get("north")))
+                .with(EAST, RopeUtils.isRopeBlock(blockMap.get("east")))
+                .with(SOUTH, RopeUtils.isRopeBlock(blockMap.get("south")))
+                .with(WEST, RopeUtils.isRopeBlock(blockMap.get("west")))
+                .with(UP, RopeUtils.isRopeBlock(blockMap.get("up")))
+                .with(DOWN, RopeUtils.isRopeBlock(blockMap.get("down")))
                 .with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
@@ -117,8 +116,7 @@ public class GrowthcraftRopeBlock extends Block implements IBlockRope, IWaterLog
 
     @Override
     public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
-        Block connectingBlock = state.getBlock();
-        return connectingBlock instanceof IBlockRope || connectingBlock instanceof GrowthcraftCropsRopeBlock || connectingBlock instanceof GrowthcraftRopeBlock;
+        return RopeUtils.isRopeBlock(state.getBlock());
     }
 
     @SuppressWarnings("deprecation")

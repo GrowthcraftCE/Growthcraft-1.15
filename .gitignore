@@ -50,3 +50,7 @@ forge*changelog.txt
 # Asset files from net.minecraft
 .assets
 .data
+
+# macOS
+.DS_Store
+.ds_store

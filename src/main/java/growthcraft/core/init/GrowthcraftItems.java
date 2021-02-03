@@ -55,7 +55,7 @@ public class GrowthcraftItems {
         crowbarBlack = ITEMS.register("crowbar_black", () -> new ItemCrowbar());
         salt = ITEMS.register(UnlocalizedName.SALT_ITEM, () -> new ItemSalt());
 
-        rope_linen = ITEMS.register(UnlocalizedName.ROPE_LINEN, () -> new GrowthcraftItemRope(GrowthcraftBlocks.rope_linen.get()));
+        rope_linen = ITEMS.register(UnlocalizedName.ROPE_LINEN, () -> new GrowthcraftItemRope(GrowthcraftBlocks.ROPE_LINEN.get()));
     }
 
 }

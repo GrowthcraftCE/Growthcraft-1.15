@@ -27,9 +27,10 @@ public class GrowthcraftGrapesConfig {
      *     private static ForgeConfigSpec.BooleanValue enableAppleTreeGen;
      * </pre>
      */
+    private static ForgeConfigSpec.IntValue maxGrapeVineGrowthHeight;
 
     static {
-        initWorldGenConfig(SERVER_BUILDER);
+        initConfig(SERVER_BUILDER);
 
         SERVER = SERVER_BUILDER.build();
         CLIENT = CLIENT_BUILDER.build();
@@ -55,7 +56,7 @@ public class GrowthcraftGrapesConfig {
      *
      * @param server Server side ForgeConfigSpec builder
      */
-    public static void initWorldGenConfig(ForgeConfigSpec.Builder server) {
+    public static void initConfig(ForgeConfigSpec.Builder server) {
         server.push("general");
         server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
         server.pop();
@@ -67,6 +68,12 @@ public class GrowthcraftGrapesConfig {
          *                 .define("worldgen.apple_trees.enabled", true);
          * </pre>
          */
+        maxGrapeVineGrowthHeight = server.comment("Maximum height that a vine grow towwards a rope.").defineInRange(
+                "vines.max_growth_height",
+                3,
+                3,
+                10
+        );
 
     }
 
@@ -79,5 +86,8 @@ public class GrowthcraftGrapesConfig {
      *     }
      * </pre>
      */
+    public static int maxGrapeVineGrowthHeight() {
+        return maxGrapeVineGrowthHeight.get();
+    }
     // endregion
 }
