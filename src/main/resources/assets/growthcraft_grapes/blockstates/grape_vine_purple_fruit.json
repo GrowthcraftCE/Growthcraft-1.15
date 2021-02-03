@@ -1,9 +1,6 @@
 {
   "multipart": [
     {
-      "apply": { "model": "growthcraft_grapes:block/grape_vine_fruit_leaves" }
-    },
-    {
       "when": { "age": "0|1" },
       "apply": { "model": "growthcraft_grapes:block/grape_vine_fruit_stage0" }
     },

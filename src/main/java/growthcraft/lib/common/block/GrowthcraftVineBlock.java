@@ -1,9 +1,6 @@
 package growthcraft.lib.common.block;
 
 import growthcraft.core.shared.Reference;
-import growthcraft.grapes.GrowthcraftGrapes;
-import growthcraft.grapes.common.block.BlockGrapeVine;
-import growthcraft.grapes.init.GrowthcraftGrapesBlocks;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
@@ -28,7 +25,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.extensions.IForgeBlockState;
 
 import java.util.Map;
 import java.util.Random;
@@ -46,14 +42,14 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D)};
+            Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 5.0D, 9.0D),
+            Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 5.0D, 9.0D),
+            Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 8.0D, 9.0D),
+            Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 8.0D, 9.0D),
+            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D),
+            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D),
+            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D),
+            Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D)};
 
     private Item seedsItem;
 

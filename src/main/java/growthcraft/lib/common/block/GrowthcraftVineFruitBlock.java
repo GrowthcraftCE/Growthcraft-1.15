@@ -1,6 +1,5 @@
 package growthcraft.lib.common.block;
 
-import growthcraft.grapes.init.GrowthcraftGrapesItems;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -37,16 +36,14 @@ import java.util.Random;
  */
 @SuppressWarnings("java:S1874")
 public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
-    // TODO: Remove half leaves texture from fruit blocks.
-    // TODO: Set VoxelShape to size of cross model.
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
+            Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D),
+            Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D),
+            Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D),
+            Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D)};
 
     private Item seedsItem;
 
@@ -63,6 +60,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
         this.minFruit = min;
         this.maxFruit = max;
     }
+
     public GrowthcraftVineFruitBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState()
@@ -75,6 +73,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
         properties.hardnessAndResistance(0.2F, 0.2F);
         properties.sound(SoundType.PLANT);
         properties.notSolid();
+        properties.doesNotBlockMovement();
         return properties;
     }
 
@@ -83,7 +82,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
         if (state.get(AGE) == this.getMaxAge()) {
             int count = RANDOM.nextInt(maxFruit - minFruit) + minFruit;
             // Spawn the random drop count
-            ItemStack itemStack = new ItemStack(GrowthcraftGrapesItems.GRAPES_PURPLE.get(), count);
+            ItemStack itemStack = new ItemStack(vineFruitItem, count);
             InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack);
 
             // Decrease age to 0
