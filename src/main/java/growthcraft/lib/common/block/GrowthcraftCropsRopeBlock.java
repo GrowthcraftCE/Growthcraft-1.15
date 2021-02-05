@@ -1,8 +1,10 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.Growthcraft;
 import growthcraft.core.shared.Reference;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
+import growthcraft.lib.utils.BushUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
@@ -23,6 +25,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Map;
 import java.util.Random;
@@ -81,44 +84,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
-        float f = 1.0F;
-        BlockPos blockpos = pos.down();
-
-        for (int i = -1; i <= 1; ++i) {
-            for (int j = -1; j <= 1; ++j) {
-                float f1 = 0.0F;
-                BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-                if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), net.minecraft.util.Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
-                    f1 = 1.0F;
-                    if (blockstate.isFertile(worldIn, blockpos.add(i, 0, j))) {
-                        f1 = 3.0F;
-                    }
-                }
-
-                if (i != 0 || j != 0) {
-                    f1 /= 4.0F;
-                }
-
-                f += f1;
-            }
-        }
-
-        BlockPos blockpos1 = pos.north();
-        BlockPos blockpos2 = pos.south();
-        BlockPos blockpos3 = pos.west();
-        BlockPos blockpos4 = pos.east();
-        boolean flag = blockIn == worldIn.getBlockState(blockpos3).getBlock() || blockIn == worldIn.getBlockState(blockpos4).getBlock();
-        boolean flag1 = blockIn == worldIn.getBlockState(blockpos1).getBlock() || blockIn == worldIn.getBlockState(blockpos2).getBlock();
-        if (flag && flag1) {
-            f /= 2.0F;
-        } else {
-            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
-            if (flag2) {
-                f /= 2.0F;
-            }
-        }
-
-        return f;
+        return BushUtils.getGrowthChance(blockIn, worldIn, pos);
     }
 
     @Override
@@ -189,17 +155,29 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         super.tick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1))
-            return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+            return;
+
+        if (!state.isValidPosition(worldIn, pos)) {
+            worldIn.destroyBlock(pos, true);
+        }
+
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                float f = getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)) {
+                int f = (int) getGrowthChance(this, worldIn, pos);
+                int maxRandom = (int) (25.0F / f) + 1;
+                int r = rand.nextInt(maxRandom);
+                Growthcraft.LOGGER.warn(
+                        String.format("[%s] %s GrowthModifier = %d, GrowthLottery = %d out of %d", pos.toString(), this.toString(), f, r, maxRandom)
+                );
+
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, r == 0)) {
                     grow(worldIn, rand, pos, state);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
             }
         }
+
     }
 
     @Override
