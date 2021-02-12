@@ -167,12 +167,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                int f = (int) getGrowthChance(this, worldIn, pos);
-                int maxRandom = (int) (25.0F / f) + 1;
-                int r = rand.nextInt(maxRandom);
-                Growthcraft.LOGGER.warn(
-                        String.format("[%s] %s GrowthModifier = %d, GrowthLottery = %d out of %d", pos.toString(), this.toString(), f, r, maxRandom)
-                );
                 if(worldIn.getDimension().getWorldTime() - lastGrowth >= 600000/(int) getGrowthChance(this, worldIn, pos)){
                     worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
                 }
@@ -181,7 +175,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
                 grow(worldIn, rand, pos, state);
                 ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
-
+            lastGrowth = worldIn.getDimension().getWorldTime();
         }
 
     }
