@@ -192,7 +192,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (i == this.getMaxAge()) {
             // then we need to try and spawn another crop above.
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
-            if (tagRope.contains(worldIn.getBlockState(pos.up()).getBlock())
+            if ((worldIn.getBlockState(pos.up()).getBlock() instanceof IBlockRope )
                     && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
                 worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
             }
