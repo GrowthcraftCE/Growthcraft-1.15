@@ -41,6 +41,8 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
+    private long lastGrowth = 0;
+
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -81,6 +83,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 2);
+        lastGrowth = worldIn.getDimension().getWorldTime();
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
@@ -170,12 +173,15 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
                 Growthcraft.LOGGER.warn(
                         String.format("[%s] %s GrowthModifier = %d, GrowthLottery = %d out of %d", pos.toString(), this.toString(), f, r, maxRandom)
                 );
-
-                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, r == 0)) {
-                    grow(worldIn, rand, pos, state);
-                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                if(worldIn.getDimension().getWorldTime() - lastGrowth >= 600000/(int) getGrowthChance(this, worldIn, pos)){
+                    worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
                 }
             }
+            if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, i == this.getMaxAge())) {
+                grow(worldIn, rand, pos, state);
+                ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+            }
+
         }
 
     }
@@ -187,13 +193,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
 
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-        int j = this.getMaxAge();
-        if (i > j) {
-            i = j;
-        }
-
-        worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
+        int i = this.getAge(state);
 
         if (i == this.getMaxAge()) {
             // then we need to try and spawn another crop above.
