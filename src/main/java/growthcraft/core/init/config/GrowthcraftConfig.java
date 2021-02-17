@@ -27,6 +27,7 @@ public class GrowthcraftConfig {
     private static ForgeConfigSpec.IntValue saltOreGenCount;
     private static ForgeConfigSpec.IntValue saltOreGenMinHeight;
     private static ForgeConfigSpec.IntValue saltOreGenMaxHeight;
+    private static ForgeConfigSpec.IntValue pointsToGrow;
 
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftApples;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftBamboo;
@@ -80,6 +81,8 @@ public class GrowthcraftConfig {
         enableGrowthcraftMilk = server.comment("Enable/Disable Growthcraft Milk - Requires Cellar").define("growthcraft.milk.enable", true);
         enableGrowthcraftRice = server.comment("Enable/Disable Growthcraft Rice - Requires Cellar").define("growthcraft.rice.enable", true);
         enableGrowthcraftTrapper = server.comment("Enable/Disable Growthcraft Trapper").define("growthcraft.trapper.enable", true);
+        pointsToGrow = server.comment("Normalized time for a plant to grow up").defineInRange("general.pointsToGrow", 60000,6000,600000);
+
     }
 
     public static void initWorldGenConfig(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client) {
@@ -165,5 +168,8 @@ public class GrowthcraftConfig {
         return enableGrowthcraftRice.get();
     }
 
+    public static int getPointsToGrow(){
+        return pointsToGrow.get();
+    }
     // endregion
 }

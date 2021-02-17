@@ -1,7 +1,9 @@
 package growthcraft.lib.common.block;
 
 import growthcraft.core.Growthcraft;
+import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
+import growthcraft.hops.init.config.GrowthcraftHopsConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.lib.utils.BushUtils;
@@ -167,12 +169,13 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             System.out.println("place");
             Growthcraft.LOGGER.debug(lastGrowth);
         }
+        Growthcraft.LOGGER.debug(pos.toLong());
         Growthcraft.LOGGER.debug(worldIn.getDimension().getWorldTime() - lastGrowth);
-        Growthcraft.LOGGER.debug(600/(int) getGrowthChance(this, worldIn, pos));
+        Growthcraft.LOGGER.debug(GrowthcraftConfig.getPointsToGrow()/(int) (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier() ));
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                if(worldIn.getDimension().getWorldTime() - lastGrowth >= 600/(int) getGrowthChance(this, worldIn, pos)){
+                if(worldIn.getDimension().getWorldTime() - lastGrowth >= GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier() )){
                     worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
                     lastGrowth = worldIn.getDimension().getWorldTime();
                     Growthcraft.LOGGER.debug(lastGrowth);
@@ -182,9 +185,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
                 grow(worldIn, rand, pos, state);
                 ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
-
         }
-
     }
 
     @Override

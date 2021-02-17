@@ -21,6 +21,9 @@ public class GrowthcraftHopsConfig {
 
     // Private ForgeConfigSpec Definitions
 
+    private static ForgeConfigSpec.DoubleValue hopsGrowModifier;
+
+
     /**
      * Placeholder for ForgeConfigSpec definitions.
      * <pre>
@@ -59,25 +62,19 @@ public class GrowthcraftHopsConfig {
         server.push("general");
         server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
         server.pop();
-        /**
-         * Placeholder for setting configuration values.
-         * <pre>
-         *     enableAppleTreeGen = server
-         *                 .comment("Enable/Disable the world generation of Apple Trees.")
-         *                 .define("worldgen.apple_trees.enabled", true);
-         * </pre>
-         */
+
+        hopsGrowModifier = server
+                .comment("The relative growth speed among all type of plants")
+                .defineInRange("general.hopsGrowModifier", 1,0.1,10);
 
     }
 
     // region Getters
-    /**
-     * Placeholder for configuration getters.
-     * <pre>
-     *     public boolean appleTreeGenEnabled() {
-     *         return enableAppleTreeGen.get();
-     *     }
-     * </pre>
-     */
+
+    public static double getHopsGrowModifier(){
+        return hopsGrowModifier.get();
+    }
+
+
     // endregion
 }
