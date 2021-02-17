@@ -83,7 +83,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 2);
-        lastGrowth = worldIn.getDimension().getWorldTime();
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
@@ -163,19 +162,27 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.destroyBlock(pos, true);
         }
-
+        if(lastGrowth == 0){
+            lastGrowth = worldIn.getDimension().getWorldTime();
+            System.out.println("place");
+            Growthcraft.LOGGER.debug(lastGrowth);
+        }
+        Growthcraft.LOGGER.debug(worldIn.getDimension().getWorldTime() - lastGrowth);
+        Growthcraft.LOGGER.debug(600/(int) getGrowthChance(this, worldIn, pos));
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                if(worldIn.getDimension().getWorldTime() - lastGrowth >= 600000/(int) getGrowthChance(this, worldIn, pos)){
-                    worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
+                if(worldIn.getDimension().getWorldTime() - lastGrowth >= 600/(int) getGrowthChance(this, worldIn, pos)){
+                    worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
+                    lastGrowth = worldIn.getDimension().getWorldTime();
+                    Growthcraft.LOGGER.debug(lastGrowth);
                 }
             }
             if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, i == this.getMaxAge())) {
                 grow(worldIn, rand, pos, state);
                 ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
-            lastGrowth = worldIn.getDimension().getWorldTime();
+
         }
 
     }
