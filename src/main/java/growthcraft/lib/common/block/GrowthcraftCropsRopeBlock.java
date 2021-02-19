@@ -171,7 +171,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             Growthcraft.LOGGER.debug(lastGrowth);
         }
         if(pointsToGrow == 0){
-            pointsToGrow = GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier());
+            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         }
         Growthcraft.LOGGER.debug(pos.toLong());
         Growthcraft.LOGGER.debug(worldIn.getDimension().getWorldTime() - lastGrowth);
@@ -179,7 +179,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                if(worldIn.getDimension().getWorldTime() - lastGrowth >=  pointsToGrow)){
+                if(worldIn.getDimension().getWorldTime() - lastGrowth >=  pointsToGrow){
                     worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
                     lastGrowth = worldIn.getDimension().getWorldTime();
                     Growthcraft.LOGGER.debug(lastGrowth);
@@ -203,7 +203,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         int i = this.getAge(state);
         if (i == this.getMaxAge()) {
             // try and spawn another crop above.
-            Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             if ((worldIn.getBlockState(pos.up()).getBlock() instanceof IBlockRope )
                     && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
                 worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
@@ -247,7 +246,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
         // only update its point when neighbor changed
-        pointsToGrow = GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier());
+        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 

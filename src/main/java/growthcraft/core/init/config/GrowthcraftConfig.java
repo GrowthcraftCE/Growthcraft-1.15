@@ -81,7 +81,7 @@ public class GrowthcraftConfig {
         enableGrowthcraftMilk = server.comment("Enable/Disable Growthcraft Milk - Requires Cellar").define("growthcraft.milk.enable", true);
         enableGrowthcraftRice = server.comment("Enable/Disable Growthcraft Rice - Requires Cellar").define("growthcraft.rice.enable", true);
         enableGrowthcraftTrapper = server.comment("Enable/Disable Growthcraft Trapper").define("growthcraft.trapper.enable", true);
-        pointsToGrow = server.comment("Normalized time for a plant to grow up").defineInRange("general.pointsToGrow", 60000,6000,600000);
+        pointsToGrow = server.comment("Normalized time for a plant to grow up").defineInRange("general.pointsToGrow", 600000,60000,60000000);
 
     }
 
