@@ -44,6 +44,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
     private long lastGrowth = 0;
+    private long pointsToGrow = 0;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -142,7 +143,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return true;
+        return super.isValidPosition(state,worldIn,pos);
     }
 
     @Override
@@ -169,17 +170,22 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             System.out.println("place");
             Growthcraft.LOGGER.debug(lastGrowth);
         }
+        if(pointsToGrow == 0){
+            pointsToGrow = GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier());
+        }
         Growthcraft.LOGGER.debug(pos.toLong());
         Growthcraft.LOGGER.debug(worldIn.getDimension().getWorldTime() - lastGrowth);
-        Growthcraft.LOGGER.debug(GrowthcraftConfig.getPointsToGrow()/(int) (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier() ));
+        Growthcraft.LOGGER.debug(pointsToGrow);
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                if(worldIn.getDimension().getWorldTime() - lastGrowth >= GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier() )){
+                if(worldIn.getDimension().getWorldTime() - lastGrowth >=  pointsToGrow)){
                     worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
                     lastGrowth = worldIn.getDimension().getWorldTime();
                     Growthcraft.LOGGER.debug(lastGrowth);
                 }
+                return;
+                // if it age up in this tick, it can't grow in the same tick.
             }
             if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, i == this.getMaxAge())) {
                 grow(worldIn, rand, pos, state);
@@ -194,11 +200,9 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     }
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
-
         int i = this.getAge(state);
-
         if (i == this.getMaxAge()) {
-            // then we need to try and spawn another crop above.
+            // try and spawn another crop above.
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             if ((worldIn.getBlockState(pos.up()).getBlock() instanceof IBlockRope )
                     && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
@@ -242,6 +246,8 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
+        // only update its point when neighbor changed
+        pointsToGrow = GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier());
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 
