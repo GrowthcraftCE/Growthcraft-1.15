@@ -43,7 +43,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    private long lastGrowth = 0;
+    private long randomTickCount = 0;
     private long pointsToGrow = 0;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
@@ -159,30 +159,26 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         super.tick(state, worldIn, pos, rand);
+        randomTickCount++;
         if (!worldIn.isAreaLoaded(pos, 1))
             return;
 
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.destroyBlock(pos, true);
         }
-        if(lastGrowth == 0){
-            lastGrowth = worldIn.getDimension().getWorldTime();
-            System.out.println("place");
-            Growthcraft.LOGGER.debug(lastGrowth);
-        }
         if(pointsToGrow == 0){
             pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         }
         Growthcraft.LOGGER.debug(pos.toLong());
-        Growthcraft.LOGGER.debug(worldIn.getDimension().getWorldTime() - lastGrowth);
+        Growthcraft.LOGGER.debug(randomTickCount);
         Growthcraft.LOGGER.debug(pointsToGrow);
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                if(worldIn.getDimension().getWorldTime() - lastGrowth >=  pointsToGrow){
+                if(randomTickCount * 1365 >=  pointsToGrow){
                     worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
-                    lastGrowth = worldIn.getDimension().getWorldTime();
-                    Growthcraft.LOGGER.debug(lastGrowth);
+                    randomTickCount = 0;
+                    Growthcraft.LOGGER.debug(randomTickCount);
                 }
                 return;
                 // if it age up in this tick, it can't grow in the same tick.
