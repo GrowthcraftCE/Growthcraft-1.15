@@ -159,19 +159,19 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         super.tick(state, worldIn, pos, rand);
-        randomTickCount++;
-        if (!worldIn.isAreaLoaded(pos, 1))
-            return;
 
+        if (!worldIn.isAreaLoaded(pos, 1)) {
+            return;
+        }
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.destroyBlock(pos, true);
         }
         if(pointsToGrow == 0){
             pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         }
-        Growthcraft.LOGGER.debug(pos.toLong());
-        Growthcraft.LOGGER.debug(randomTickCount);
-        Growthcraft.LOGGER.debug(pointsToGrow);
+
+        randomTickCount++;
+
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
@@ -199,7 +199,9 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         int i = this.getAge(state);
         if (i == this.getMaxAge()) {
             // try and spawn another crop above.
-            if ((worldIn.getBlockState(pos.up()).getBlock() instanceof IBlockRope )
+            Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+            Tag<Block> tagRopeFence = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE_FENCE);
+            if ((tagRope.contains(worldIn.getBlockState(pos.up()).getBlock()) )&& !(tagRopeFence.contains(worldIn.getBlockState(pos.up()).getBlock()))
                     && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
                 worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
             }
