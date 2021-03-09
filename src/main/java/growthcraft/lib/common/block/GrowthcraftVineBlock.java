@@ -205,10 +205,11 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
         if (i == this.getMaxAge() && this.isMasterBlock(worldIn, pos)) {
 
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
+            Tag<Block> tagRopeFence = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE_FENCE);
 
             for ( int k = 1; k < GrowthcraftGrapesConfig.maxGrapeVineGrowthHeight(); k++ ) {
                 // If pos.up(k) is a Rope block, spawn a leaves block.
-                if ( worldIn.getBlockState(pos.up(k)).getBlock() instanceof IBlockRope ) {
+                if ((tagRope.contains(worldIn.getBlockState(pos.up(k)).getBlock()))&&!(tagRopeFence.contains(worldIn.getBlockState(pos.up(k)).getBlock()))) {
                     this.spawnVineLeavesBlock(worldIn, pos.up(k));
                     return;
                 }
