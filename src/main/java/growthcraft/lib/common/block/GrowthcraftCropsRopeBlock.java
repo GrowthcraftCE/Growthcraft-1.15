@@ -170,22 +170,13 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         }
 
-        randomTickCount++;
-
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                if(randomTickCount * 1365 >=  pointsToGrow){
-                    worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
-                    randomTickCount = 0;
-                    Growthcraft.LOGGER.debug(randomTickCount);
+            randomTickCount++;
+            if(randomTickCount * 1365 >=  pointsToGrow) {
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
+                    grow(worldIn, rand, pos, state);
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
-                return;
-                // if it age up in this tick, it can't grow in the same tick.
-            }
-            if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, i == this.getMaxAge())) {
-                grow(worldIn, rand, pos, state);
-                ForgeHooks.onCropsGrowPost(worldIn, pos, state);
             }
         }
     }
@@ -197,7 +188,13 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
         int i = this.getAge(state);
-        if (i == this.getMaxAge()) {
+        if (i != this.getMaxAge()){
+            //age up
+            worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
+            randomTickCount = 0;
+            Growthcraft.LOGGER.debug(randomTickCount);
+        }
+        else {
             // try and spawn another crop above.
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             Tag<Block> tagRopeFence = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE_FENCE);
