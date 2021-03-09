@@ -198,8 +198,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             // try and spawn another crop above.
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             Tag<Block> tagRopeFence = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE_FENCE);
-            if ((tagRope.contains(worldIn.getBlockState(pos.up()).getBlock()) )&& !(tagRopeFence.contains(worldIn.getBlockState(pos.up()).getBlock()))
-                    && !(worldIn.getBlockState(pos.up()).getBlock() instanceof GrowthcraftCropsRopeBlock)) {
+            if ((tagRope.contains(worldIn.getBlockState(pos.up()).getBlock()) )&& !(tagRopeFence.contains(worldIn.getBlockState(pos.up()).getBlock()))) {
                 worldIn.setBlockState(pos.up(), this.getActualBlockStateWithAge(worldIn, pos.up(), 0));
             }
         }
