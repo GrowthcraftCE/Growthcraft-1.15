@@ -6,6 +6,8 @@
     "growthcraft_bamboo:bamboo_plank_fence_rope_linen",
     "growthcraft_apples:apple_plank_fence_rope_linen",
     "growthcraft_hops:hops_vine",
-    "growthcraft_grapes:grape_vine_purple_leaves"
+    "growthcraft_grapes:grape_vine_purple_leaves",
+    "growthcraft_grapes:grape_vine_red_leaves",
+    "growthcraft_grapes:grape_vine_white_leaves"
   ]
 }
