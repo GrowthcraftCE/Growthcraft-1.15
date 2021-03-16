@@ -173,6 +173,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             randomTickCount++;
             if(randomTickCount * 1365 >=  pointsToGrow) {
+                // 1365 is the average ticks between two random tick
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);

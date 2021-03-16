@@ -1,7 +1,9 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
+import growthcraft.hops.init.config.GrowthcraftHopsConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.lib.utils.BushUtils;
@@ -25,6 +27,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Map;
 import java.util.Random;
@@ -40,6 +43,9 @@ import java.util.Random;
 public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+
+    private long randomTickCount = 0;
+    private long pointsToGrow = 0;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 5.0D, 9.0D),
@@ -78,6 +84,10 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 2);
+    }
+
+    protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
+        return BushUtils.getGrowthChance(blockIn, worldIn, pos);
     }
 
     @Override
@@ -173,14 +183,19 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
         super.tick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (!state.isValidPosition(worldIn, pos)) {
+            worldIn.destroyBlock(pos, true);
+        }
+        if(pointsToGrow == 0){
+            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapeConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+        }
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i <= this.getMaxAge()) {
-                float f = BushUtils.getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)
-                    || this.isMaxAge(state) ) {
+            randomTickCount++;
+            if(randomTickCount * 1365 >=  pointsToGrow) {
+                // 1365 is the average ticks between two random tick
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
             }
         }
