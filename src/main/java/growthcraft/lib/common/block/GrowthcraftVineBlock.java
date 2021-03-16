@@ -185,6 +185,7 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.destroyBlock(pos, true);
+            return;
         }
         if(pointsToGrow == 0){
             pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapeConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
@@ -197,6 +198,8 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
+                randomTickCount = 0;
+                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }
@@ -208,16 +211,16 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
 
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-        int j = this.getMaxAge();
-        if (i > j) {
-            i = j;
+        int i = this.getAge(state);
+        if (i != this.getMaxAge()){
+            //age up
+            worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
+            randomTickCount = 0;
+            Growthcraft.LOGGER.debug(randomTickCount);
         }
 
-        worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i), 2);
-
         // If this block is full grown and is a master block, then we need to grow the other blocks.
-        if (i == this.getMaxAge() && this.isMasterBlock(worldIn, pos)) {
+        else if (i == this.getMaxAge() && this.isMasterBlock(worldIn, pos)) {
 
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
             Tag<Block> tagRopeFence = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE_FENCE);
@@ -284,6 +287,7 @@ public class GrowthcraftVineBlock extends BushBlock implements IGrowable {
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
+        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 

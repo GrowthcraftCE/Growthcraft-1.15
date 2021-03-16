@@ -165,6 +165,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         }
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.destroyBlock(pos, true);
+            return;
         }
         if(pointsToGrow == 0){
             pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
@@ -178,6 +179,8 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
+                randomTickCount = 0;
+                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }

@@ -1,6 +1,9 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.lib.utils.BlockStateUtils;
+import growthcraft.lib.utils.BushUtils;
+import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
@@ -24,6 +27,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Map;
 import java.util.Random;
@@ -38,6 +42,9 @@ import java.util.Random;
 public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+
+    private long randomTickCount = 0;
+    private long pointsToGrow = 0;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D),
@@ -92,44 +99,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
-        float f = 1.0F;
-        BlockPos blockpos = pos.down();
-
-        for (int i = -1; i <= 1; ++i) {
-            for (int j = -1; j <= 1; ++j) {
-                float f1 = 0.0F;
-                BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-                if (blockstate.canSustainPlant(worldIn, blockpos.add(i, 0, j), Direction.UP, (net.minecraftforge.common.IPlantable) blockIn)) {
-                    f1 = 1.0F;
-                    if (blockstate.isFertile(worldIn, blockpos.add(i, 0, j))) {
-                        f1 = 3.0F;
-                    }
-                }
-
-                if (i != 0 || j != 0) {
-                    f1 /= 4.0F;
-                }
-
-                f += f1;
-            }
-        }
-
-        BlockPos blockpos1 = pos.north();
-        BlockPos blockpos2 = pos.south();
-        BlockPos blockpos3 = pos.west();
-        BlockPos blockpos4 = pos.east();
-        boolean flag = blockIn == worldIn.getBlockState(blockpos3).getBlock() || blockIn == worldIn.getBlockState(blockpos4).getBlock();
-        boolean flag1 = blockIn == worldIn.getBlockState(blockpos1).getBlock() || blockIn == worldIn.getBlockState(blockpos2).getBlock();
-        if (flag && flag1) {
-            f /= 2.0F;
-        } else {
-            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
-            if (flag2) {
-                f /= 2.0F;
-            }
-        }
-
-        return f;
+        return BushUtils.getGrowthChance(blockIn, worldIn, pos);
     }
 
     @Override
@@ -206,14 +176,23 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
         super.tick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (!state.isValidPosition(worldIn, pos)) {
+            worldIn.destroyBlock(pos, true);
+            return;
+        }
+        if(pointsToGrow == 0){
+            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+        }
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                float f = getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0)) {
+            randomTickCount++;
+            if(randomTickCount * 1365 >=  pointsToGrow) {
+                // 1365 is the average ticks between two random tick
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
+                randomTickCount = 0;
+                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }
@@ -260,6 +239,7 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 }
