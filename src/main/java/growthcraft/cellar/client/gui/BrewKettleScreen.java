@@ -33,13 +33,21 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
         int maxX = 256;
         int maxY = 256;
 
-        this.blit(this.guiLeft, this.guiTop, baseX, baseY, this.xSize, this.ySize, maxX, maxY);
+        blit(this.guiLeft, this.guiTop, baseX, baseY, this.xSize, this.ySize, maxX, maxY);
 
         // Progress bar
         int guiProgressX = this.guiLeft + 98;
         int guiProgressY = this.guiTop + 30;
 
         this.blit(guiProgressX, guiProgressY, 176, 0, 9, this.container.getSmeltProgressionScaled(28));
+
+        // Heated
+        int guiHeatLevelX = this.guiLeft + 68;
+        int guiHeatLevelY = this.guiTop + 53;
+
+        if (this.container.isBurning()) {
+            this.blit(guiHeatLevelX, guiHeatLevelY, 176, 28, 13, 13);
+        }
     }
 
     @Override
@@ -48,6 +56,7 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
 
         this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 0x404040);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, 73.0F, 0x404040);
+
     }
 
     @Override

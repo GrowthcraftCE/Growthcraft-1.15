@@ -23,7 +23,7 @@ public class BrewKettleContainer extends Container {
 
     private final BrewKettleTileEntity brewKettleTileEntity;
     public FunctionalIntReferenceHolder currentSmeltTime;
-    private IWorldPosCallable canInteractWithCallable;
+    private final IWorldPosCallable canInteractWithCallable;
 
     // Server Side Constructor
     public BrewKettleContainer(final int windowID, final PlayerInventory playerInventory, final BrewKettleTileEntity tileEntity) {
@@ -161,4 +161,10 @@ public class BrewKettleContainer extends Container {
                 ? this.currentSmeltTime.get() * size / this.brewKettleTileEntity.maxSmeltTime
                 : 0;
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public boolean isBurning() {
+        return this.brewKettleTileEntity.isHeated();
+    }
+
 }
