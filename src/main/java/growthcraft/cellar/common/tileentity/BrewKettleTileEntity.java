@@ -39,13 +39,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,25 +52,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BrewKettleTileEntity extends TileEntity implements IFluidHandler, ITickableTileEntity, INamedContainerProvider {
+public class BrewKettleTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public final int maxSmeltTime = 100;
     public int currentSmeltTime;
     private ITextComponent customName;
-    private BrewKettleItemHandler inventory;
+    private final BrewKettleItemHandler inventory;
 
-    // Top = FluidInput, ItemInput
-    // Sides = FluidOutput, ItemOutput
-
-    // Need two tanks.
+    private FluidTank inputFluidTank;
+    private final LazyOptional<IFluidHandler> inputFluidHandler = LazyOptional.of(() -> inputFluidTank);
 
     public BrewKettleTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
         this.inventory = new BrewKettleItemHandler(3);
+        this.createFluidTanks();
     }
 
     public BrewKettleTileEntity() {
         this(GrowthcraftCellarTileEntities.brewKettleTileEntity.get());
+    }
+
+    private void createFluidTanks() {
+        this.inputFluidTank = new FluidTank(1000);
     }
 
     public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> brewKettleRecipeType, World world) {
@@ -182,7 +184,7 @@ public class BrewKettleTileEntity extends TileEntity implements IFluidHandler, I
             this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
         }
 
-        NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(this.inventory.getSlots(), ItemStack.EMPTY);
+        NonNullList<ItemStack> inv = NonNullList.withSize(this.inventory.getSlots(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, inv);
         this.inventory.setNonNullList(inv);
 
@@ -252,47 +254,4 @@ public class BrewKettleTileEntity extends TileEntity implements IFluidHandler, I
         return nbt;
     }
 
-    /* Fluid Handler */
-    @Override
-    public void handleUpdateTag(CompoundNBT nbt) {
-        this.read(nbt);
-    }
-
-    @Override
-    public int getTanks() {
-        return 0;
-    }
-
-    @Nonnull
-    @Override
-    public FluidStack getFluidInTank(int tank) {
-        return null;
-    }
-
-    @Override
-    public int getTankCapacity(int tank) {
-        return 0;
-    }
-
-    @Override
-    public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
-        return false;
-    }
-
-    @Override
-    public int fill(FluidStack resource, FluidAction action) {
-        return 0;
-    }
-
-    @Nonnull
-    @Override
-    public FluidStack drain(FluidStack resource, FluidAction action) {
-        return null;
-    }
-
-    @Nonnull
-    @Override
-    public FluidStack drain(int maxDrain, FluidAction action) {
-        return null;
-    }
 }
