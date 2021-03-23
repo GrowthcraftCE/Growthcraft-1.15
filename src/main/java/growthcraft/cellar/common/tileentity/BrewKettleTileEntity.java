@@ -1,5 +1,6 @@
 package growthcraft.cellar.common.tileentity;
 
+import growthcraft.cellar.GrowthcraftCellar;
 import growthcraft.cellar.client.container.BrewKettleContainer;
 import growthcraft.cellar.common.block.BrewKettle;
 import growthcraft.cellar.common.tileentity.handler.BrewKettleItemHandler;
@@ -39,9 +40,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -62,6 +63,9 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
     private FluidTank inputFluidTank;
     private final LazyOptional<IFluidHandler> inputFluidHandler = LazyOptional.of(() -> inputFluidTank);
 
+    private FluidTank outputFluidTank;
+    private final LazyOptional<IFluidHandler> outputFluidHandler = LazyOptional.of(() -> outputFluidTank);
+
     public BrewKettleTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
         this.inventory = new BrewKettleItemHandler(3);
@@ -74,6 +78,7 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
 
     private void createFluidTanks() {
         this.inputFluidTank = new FluidTank(1000);
+        this.outputFluidTank = new FluidTank(1000);
     }
 
     public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> brewKettleRecipeType, World world) {
@@ -116,6 +121,11 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         boolean dirty = false;
 
         if (world != null && !world.isRemote) {
+            // TODO: Debug logging, remove when done.
+            String brewKettleInfo = String.format("BrewKettle input tank: %s (%d mb)",
+                    inputFluidTank.getFluid().getTranslationKey(), inputFluidTank.getFluidAmount());
+            GrowthcraftCellar.LOGGER.warn(brewKettleInfo);
+
             // Do a check for redstone power
             if (this.world.isBlockPowered(pos)) {
                 if (this.getRecipe(this.inventory.getStackInSlot(0)) != null) {
@@ -140,6 +150,7 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
             } else {
                 this.world.setBlockState(this.getPos(), this.getBlockState().with(BrewKettle.LIT, false));
             }
+
 
         }
 
@@ -228,10 +239,10 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if ( cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side == Direction.UP ) {
-            
+        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return inputFluidHandler.cast();
         }
-        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.inventory));
+        return super.getCapability(cap, side);
     }
 
     @Nullable

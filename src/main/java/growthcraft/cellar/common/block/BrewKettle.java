@@ -27,6 +27,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
@@ -104,6 +106,11 @@ public class BrewKettle extends Block {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
                                              Hand handIn, BlockRayTraceResult hit) {
+        if (FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, hit.getFace())
+                || player.getHeldItem(handIn).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
+            return ActionResultType.SUCCESS;
+        }
+
         if (worldIn != null && !worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof BrewKettleTileEntity) {

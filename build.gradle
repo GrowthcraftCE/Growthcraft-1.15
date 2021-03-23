@@ -29,6 +29,7 @@ sonarqube {
 
 repositories {
     mavenLocal()
+    jcenter()
     // JEI, Tinker's Construct, Mantle, Iron Chests, Natura, etc.
     maven { url = "https://dvs1.progwml6.com/files/maven" }
     // The One Probe
