@@ -81,6 +81,15 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         this.outputFluidTank = new FluidTank(1000);
     }
 
+    public FluidTank getFluidTank(int slot) {
+        switch (slot) {
+            case 0:
+                return inputFluidTank;
+            default:
+                return null;
+        }
+    }
+
     public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> brewKettleRecipeType, World world) {
         return world != null ?
                 world.getRecipeManager().getRecipes().stream()

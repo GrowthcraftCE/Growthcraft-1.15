@@ -1,14 +1,21 @@
 package growthcraft.cellar.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import growthcraft.cellar.client.container.BrewKettleContainer;
 import growthcraft.cellar.shared.Reference;
 import growthcraft.cellar.shared.UnlocalizedName;
 import growthcraft.lib.utils.TextureHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 
 public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
 
@@ -48,6 +55,43 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
         if (this.container.isBurning()) {
             this.blit(guiHeatLevelX, guiHeatLevelY, 176, 28, 13, 13);
         }
+
+        // InputFluidTank Render
+        if (this.container.getInputFluidTank().getFluidAmount() > 0) {
+            FluidStack fluidStack = this.container.getInputFluidTank().getFluid();
+
+            GlStateManager.pushMatrix();
+            GlStateManager.translated(0, 63, 0);
+            renderTiledFluid(this.guiLeft + 151, this.guiTop + 11, 16, 0, 0, fluidStack);
+            GlStateManager.popMatrix();
+
+            //FluidStack fluidStack = this.container.getInputFluidTank().getFluid();
+            //ResourceLocation stillLocation = fluidStack.getFluid().getAttributes().getStillTexture(fluidStack);
+            //TextureAtlasSprite textureAtlasSprite = getStillFluidSprite(fluidStack);
+            //int color = fluidStack.getFluid().getAttributes().getColor();
+            //GlStateManager.color4f(1.0f, 1.0f, 1.0f, color);
+            //blit(guiLeft + 80, guiTop + 7 + (73 - 10), 0, 16, 0, textureAtlasSprite);
+            //blit(guiLeft + 80, guiTop + 7 + (73), 0, 16, 73, textureAtlasSprite);
+        }
+    }
+
+    public static void renderTiledFluid(int x, int y, int width, int height, float depth, FluidStack fluidStack) {
+        if (fluidStack == null) return;
+        TextureAtlasSprite fluidSprite = getStillFluidSprite(fluidStack);
+        //setColorRGBA(fluidStack.getFluid().getColor(fluidStack));
+        //renderTiledTextureAtlas(x, y, width, height, depth, fluidSprite, fluidStack.getFluid().isGaseous(fluidStack));
+    }
+
+    private static TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Fluid fluid = fluidStack.getFluid();
+        FluidAttributes attributes = fluid.getAttributes();
+        ResourceLocation fluidStill = attributes.getStillTexture(fluidStack);
+        return minecraft.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(fluidStill);
+    }
+
+    private int getScaledFluid(int a, int b, int maxPixelSize) {
+        return 0;
     }
 
     @Override

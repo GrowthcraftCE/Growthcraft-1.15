@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -163,6 +164,11 @@ public class BrewKettleContainer extends Container {
     @OnlyIn(Dist.CLIENT)
     public boolean isBurning() {
         return this.brewKettleTileEntity.isHeated();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public FluidTank getInputFluidTank() {
+        return this.brewKettleTileEntity.getFluidTank(0);
     }
 
 }
