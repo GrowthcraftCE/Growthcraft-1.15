@@ -1,6 +1,5 @@
 package growthcraft.cellar.common.tileentity;
 
-import growthcraft.cellar.GrowthcraftCellar;
 import growthcraft.cellar.client.container.BrewKettleContainer;
 import growthcraft.cellar.common.block.BrewKettle;
 import growthcraft.cellar.common.tileentity.handler.BrewKettleItemHandler;
@@ -77,8 +76,8 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
     }
 
     private void createFluidTanks() {
-        this.inputFluidTank = new FluidTank(1000);
-        this.outputFluidTank = new FluidTank(1000);
+        this.inputFluidTank = new FluidTank(4000);
+        this.outputFluidTank = new FluidTank(4000);
     }
 
     public FluidTank getFluidTank(int slot) {
@@ -130,11 +129,6 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         boolean dirty = false;
 
         if (world != null && !world.isRemote) {
-            // TODO: Debug logging, remove when done.
-            String brewKettleInfo = String.format("BrewKettle input tank: %s (%d mb)",
-                    inputFluidTank.getFluid().getTranslationKey(), inputFluidTank.getFluidAmount());
-            GrowthcraftCellar.LOGGER.warn(brewKettleInfo);
-
             // Do a check for redstone power
             if (this.world.isBlockPowered(pos)) {
                 if (this.getRecipe(this.inventory.getStackInSlot(0)) != null) {
@@ -209,6 +203,8 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         this.inventory.setNonNullList(inv);
 
         this.currentSmeltTime = compound.getInt("CurrentSmeltTime");
+
+        inputFluidTank.readFromNBT(compound.getCompound("inputTank"));
     }
 
     @Override
@@ -221,7 +217,30 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         ItemStackHelper.saveAllItems(compound, this.inventory.toNonNullList());
         compound.putInt("CurrentSmeltTime", this.currentSmeltTime);
 
+        CompoundNBT inputTankNBT = inputFluidTank.writeToNBT(new CompoundNBT());
+        compound.put("inputTank", inputTankNBT);
+
         return super.write(compound);
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT nbt = new CompoundNBT();
+        this.write(nbt);
+        return new SUpdateTileEntityPacket(this.pos, 0, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        this.read(pkt.getNbtCompound());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT nbt = new CompoundNBT();
+        this.write(nbt);
+        return nbt;
     }
 
     /* Recipe Handling */
@@ -254,24 +273,5 @@ public class BrewKettleTileEntity extends TileEntity implements ITickableTileEnt
         return super.getCapability(cap, side);
     }
 
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbt = new CompoundNBT();
-        this.write(nbt);
-        return new SUpdateTileEntityPacket(this.pos, 0, nbt);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = new CompoundNBT();
-        this.write(nbt);
-        return nbt;
-    }
 
 }

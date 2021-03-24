@@ -1,13 +1,16 @@
 package growthcraft.cellar.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import growthcraft.cellar.client.container.BrewKettleContainer;
 import growthcraft.cellar.shared.Reference;
 import growthcraft.cellar.shared.UnlocalizedName;
+import growthcraft.lib.utils.ClientUtils;
 import growthcraft.lib.utils.TextureHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
@@ -32,6 +35,11 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
+        MatrixStack matrixStack = new MatrixStack();
+        matrixStack.push();
+        IRenderTypeBuffer.Impl renderTypeBuffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         // Copy the image from the texture to the background layer
@@ -57,29 +65,19 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
         }
 
         // InputFluidTank Render
+        int guiInputTankX = guiLeft + 46;
+        int guiInputTankY = guiTop + 17;
+        int guiInputTankHeight = 52;
+
         if (this.container.getInputFluidTank().getFluidAmount() > 0) {
             FluidStack fluidStack = this.container.getInputFluidTank().getFluid();
 
-            GlStateManager.pushMatrix();
-            GlStateManager.translated(0, 63, 0);
-            renderTiledFluid(this.guiLeft + 151, this.guiTop + 11, 16, 0, 0, fluidStack);
-            GlStateManager.popMatrix();
-
-            //FluidStack fluidStack = this.container.getInputFluidTank().getFluid();
-            //ResourceLocation stillLocation = fluidStack.getFluid().getAttributes().getStillTexture(fluidStack);
-            //TextureAtlasSprite textureAtlasSprite = getStillFluidSprite(fluidStack);
-            //int color = fluidStack.getFluid().getAttributes().getColor();
-            //GlStateManager.color4f(1.0f, 1.0f, 1.0f, color);
-            //blit(guiLeft + 80, guiTop + 7 + (73 - 10), 0, 16, 0, textureAtlasSprite);
-            //blit(guiLeft + 80, guiTop + 7 + (73), 0, 16, 73, textureAtlasSprite);
+            int scaledFluidH = getScaledFluid(fluidStack.getAmount(), this.container.getInputFluidTank().getCapacity(), guiInputTankHeight);
+            ClientUtils.drawRepeatedFluidSpriteGui(renderTypeBuffer, matrixStack, fluidStack,
+                    guiInputTankX, guiInputTankY + (guiInputTankHeight - scaledFluidH), 16, scaledFluidH);
         }
-    }
 
-    public static void renderTiledFluid(int x, int y, int width, int height, float depth, FluidStack fluidStack) {
-        if (fluidStack == null) return;
-        TextureAtlasSprite fluidSprite = getStillFluidSprite(fluidStack);
-        //setColorRGBA(fluidStack.getFluid().getColor(fluidStack));
-        //renderTiledTextureAtlas(x, y, width, height, depth, fluidSprite, fluidStack.getFluid().isGaseous(fluidStack));
+        renderTypeBuffer.finish();
     }
 
     private static TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {
@@ -90,8 +88,11 @@ public class BrewKettleScreen extends ContainerScreen<BrewKettleContainer> {
         return minecraft.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(fluidStill);
     }
 
-    private int getScaledFluid(int a, int b, int maxPixelSize) {
-        return 0;
+    private int getScaledFluid(float amount, float capacity, int maxPixelSize) {
+        float ratio = amount / capacity;
+        float scaled = maxPixelSize * ratio;
+
+        return (int) scaled;
     }
 
     @Override
