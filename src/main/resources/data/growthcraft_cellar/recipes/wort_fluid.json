@@ -1,0 +1,17 @@
+{
+  "type": "growthcraft_cellar:brew_kettle",
+  "requiresLid": false,
+  "processTime": 800,
+  "ingredient_item": {
+    "item": "minecraft:wheat",
+    "count": 1
+  },
+  "ingredient_fluid": {
+    "fluid": "minecraft:water",
+    "amount": 250
+  },
+  "result": {
+    "fluid": "growthcraft_cellar:wort_fluid",
+    "amount": 250
+  }
+}

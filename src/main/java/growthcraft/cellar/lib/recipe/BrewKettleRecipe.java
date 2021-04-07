@@ -1,5 +1,6 @@
 package growthcraft.cellar.lib.recipe;
 
+import growthcraft.cellar.shared.UnlocalizedName;
 import growthcraft.lib.registry.BrewKettleRecipeSerializer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -12,18 +13,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class BrewKettleRecipe implements IRecipe<IInventory> {
 
     public static final BrewKettleRecipeSerializer serializer = new BrewKettleRecipeSerializer();
+    public static final IRecipeType<BrewKettleRecipe> recipeType = IRecipeType.register(UnlocalizedName.RECIPE_WORT_FLUID);
 
     private final ResourceLocation id;
     private FluidStack resultFluidStack;
-    private Map<Ingredient, Integer> ingredientItemStacks = new LinkedHashMap<>();
+    private Ingredient ingredientItem;
+    private int ingredientItemAmount;
     private FluidStack ingredientFluidStack;
     private int processingTime;
+    private boolean requiresLid;
 
     public BrewKettleRecipe(ResourceLocation id) {
         this.id = id;
@@ -45,24 +46,32 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
         this.processingTime = processingTime;
     }
 
-    public Map<Ingredient, Integer> getItemIngredients() {
-        return ingredientItemStacks;
+    public Ingredient getItemIngredient() {
+        return ingredientItem;
     }
 
     public void setIngredientFluidStack(FluidStack ingredientFluidStack) {
         this.ingredientFluidStack = ingredientFluidStack;
     }
 
-    public void setIngredientItemStacks(Map<Ingredient, Integer> ingredientItemStacks) {
-        this.ingredientItemStacks = ingredientItemStacks;
+    public void setItemIngredient(Ingredient ingredientItemStack) {
+        this.ingredientItem = ingredientItemStack;
     }
 
-    public void addIngredientItemStack(Ingredient ingredient, Integer count) {
-        ingredientItemStacks.put(ingredient, count);
+    public void setItemIngredientAmount(int amount) {
+        ingredientItemAmount = amount;
     }
 
     public void setFluidStackResult(FluidStack resultFluidStack) {
         this.resultFluidStack = resultFluidStack;
+    }
+
+    public void setRequiresLid(boolean requiresLid) {
+        this.requiresLid = requiresLid;
+    }
+
+    public boolean isLidRequired() {
+        return requiresLid;
     }
 
     @Override
@@ -76,7 +85,7 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
     public ItemStack getCraftingResult(IInventory inv) {
         // TODO: Change to universal bucket?
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -92,8 +101,10 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        // TODO: Finish this.
-        return null;
+        NonNullList<Ingredient> ingredientsList = NonNullList.create();
+
+        ingredientsList.add(ingredientItem);
+        return ingredientsList;
     }
 
     @Override
@@ -108,6 +119,6 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeType<?> getType() {
-        return null;
+        return recipeType;
     }
 }

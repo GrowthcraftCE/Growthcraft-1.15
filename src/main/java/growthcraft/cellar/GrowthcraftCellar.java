@@ -45,11 +45,11 @@ public class GrowthcraftCellar {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         GrowthcraftCellarItems.ITEMS.register(modEventBus);
-        GrowthcraftCellarRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         GrowthcraftCellarFuilds.FLUIDS.register(modEventBus);
         GrowthcraftCellarBlocks.BLOCKS.register(modEventBus);
         GrowthcraftCellarTileEntities.TILE_ENTITIES_TYPES.register(modEventBus);
         GrowthcraftCellarContainers.CONTAINER_TYPES.register(modEventBus);
+        GrowthcraftCellarRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

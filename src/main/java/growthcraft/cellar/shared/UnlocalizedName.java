@@ -6,4 +6,5 @@ public class UnlocalizedName {
     public static final String WORT_BUCKET = "wort_bucket";
     public static final String WORT_FLUID = "wort_fluid";
     public static final String WORT_FLUID_FLOWING = "wort_fluid_flowing";
+    public static final String RECIPE_WORT_FLUID = "wort_fluid";
 }

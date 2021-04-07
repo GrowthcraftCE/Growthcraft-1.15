@@ -1,6 +1,7 @@
 package growthcraft.lib.registry;
 
 import com.google.gson.JsonObject;
+import growthcraft.cellar.GrowthcraftCellar;
 import growthcraft.cellar.lib.recipe.BrewKettleRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,31 +27,31 @@ public class BrewKettleRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 
         BrewKettleRecipe recipe = new BrewKettleRecipe(recipeId);
 
-        JSONUtils.getJsonArray(json, "ingredient_items").forEach(element -> {
-            Ingredient ingredient = Ingredient.deserialize(element);
-            int count = JSONUtils.getInt(element.getAsJsonObject(), "count", 1);
-            recipe.addIngredientItemStack(ingredient, count);
+        ResourceLocation ingredientItemResourceLocation = ResourceLocation.tryCreate(JSONUtils.getString(
+                json.get("ingredient_item").getAsJsonObject(), "item", "minecraft:empty"));
+        int ingredientItemAmount = JSONUtils.getInt(json.get("ingredient_item").getAsJsonObject(), "count", 0);
+        ItemStack ingredientItemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(ingredientItemResourceLocation), ingredientItemAmount);
 
-            for (ItemStack stack : ingredient.getMatchingStacks()) {
-                if (!ingredients.contains(stack.getItem())) {
-                    ingredients.add(stack.getItem());
-                }
-            }
-        });
+        recipe.setItemIngredient(Ingredient.fromStacks(ingredientItemStack));
+        recipe.setItemIngredientAmount(JSONUtils.getInt(json.get("ingredient_item").getAsJsonObject(), "count", 1));
 
-        ResourceLocation ingredientFluidResourceLocation = ResourceLocation.create(JSONUtils.getString(
-                json.get("ingredient_fluid").getAsJsonObject(), "fluid", "minecraft:empty"), ':');
-
+        // Input Fluid
+        ResourceLocation ingredientFluidResourceLocation = ResourceLocation.tryCreate(JSONUtils.getString(
+                json.get("ingredient_fluid").getAsJsonObject(), "fluid", "minecraft:empty"));
         int ingredientFluidAmount = JSONUtils.getInt(json.get("ingredient_fluid").getAsJsonObject(), "amount", 0);
-
         recipe.setIngredientFluidStack(new FluidStack(ForgeRegistries.FLUIDS.getValue(ingredientFluidResourceLocation), ingredientFluidAmount));
 
-        ResourceLocation resultResourceLocation = ResourceLocation.create(JSONUtils.getString(json.get("result").getAsJsonObject(), "fluid", "minecraft:empty"), ':');
+        GrowthcraftCellar.LOGGER.error(recipe.getFluidIngredient().getFluid().toString());
 
+        // Output Fluid
+        ResourceLocation resultResourceLocation = ResourceLocation.tryCreate(JSONUtils.getString(
+                json.get("result").getAsJsonObject(), "fluid", "minecraft:empty"));
         int resultAmount = JSONUtils.getInt(json.get("result").getAsJsonObject(), "amount", 0);
-
         recipe.setFluidStackResult(new FluidStack(ForgeRegistries.FLUIDS.getValue(resultResourceLocation), resultAmount));
 
+        GrowthcraftCellar.LOGGER.error(recipe.getResult().getFluid().toString());
+
+        recipe.setRequiresLid(JSONUtils.getBoolean(json, "requiresLid", false));
         recipe.setProcessingTime(JSONUtils.getInt(json, "processTime", 200));
 
         return recipe;
@@ -60,27 +61,20 @@ public class BrewKettleRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
     @Override
     public BrewKettleRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
         BrewKettleRecipe recipe = new BrewKettleRecipe(recipeId);
-        int ingredientCount = buffer.readByte();
-        for (int i = 0; i < ingredientCount; ++i) {
-            Ingredient ingredient = Ingredient.read(buffer);
-            int count = buffer.readVarInt();
-            recipe.addIngredientItemStack(ingredient, count);
-        }
+        recipe.setItemIngredient(Ingredient.read(buffer));
         recipe.setIngredientFluidStack(buffer.readFluidStack());
         recipe.setFluidStackResult(buffer.readFluidStack());
         recipe.setProcessingTime(buffer.readInt());
+        recipe.setRequiresLid(buffer.readBoolean());
         return recipe;
     }
 
     @Override
     public void write(PacketBuffer buffer, BrewKettleRecipe recipe) {
-        buffer.writeByte(recipe.getItemIngredients().size());
-        recipe.getItemIngredients().forEach((ingredient, count) -> {
-            ingredient.write(buffer);
-            buffer.writeVarInt(count);
-        });
+        recipe.getItemIngredient().write(buffer);
         buffer.writeFluidStack(recipe.getFluidIngredient());
         buffer.writeFluidStack(recipe.getResult());
         buffer.writeInt(recipe.getProcessingTime());
+        buffer.writeBoolean(recipe.isLidRequired());
     }
 }
