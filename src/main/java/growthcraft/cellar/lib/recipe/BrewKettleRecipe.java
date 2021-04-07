@@ -12,6 +12,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BrewKettleRecipe implements IRecipe<IInventory> {
 
@@ -21,7 +22,6 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
     private final ResourceLocation id;
     private FluidStack resultFluidStack;
     private Ingredient ingredientItem;
-    private int ingredientItemAmount;
     private FluidStack ingredientFluidStack;
     private int processingTime;
     private boolean requiresLid;
@@ -58,10 +58,6 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
         this.ingredientItem = ingredientItemStack;
     }
 
-    public void setItemIngredientAmount(int amount) {
-        ingredientItemAmount = amount;
-    }
-
     public void setFluidStackResult(FluidStack resultFluidStack) {
         this.resultFluidStack = resultFluidStack;
     }
@@ -83,9 +79,8 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
-        // TODO: Change to universal bucket?
-
-        return ItemStack.EMPTY;
+        ResourceLocation resultFluidBucket = new ResourceLocation(this.getResult().getFluid().getRegistryName() + "_bucket");
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(resultFluidBucket));
     }
 
     @Override
@@ -95,8 +90,8 @@ public class BrewKettleRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getRecipeOutput() {
-        // TODO: Change to Universal bucket?
-        return ItemStack.EMPTY;
+        ResourceLocation resultFluidBucket = new ResourceLocation(this.getResult().getFluid().getRegistryName() + "_bucket");
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(resultFluidBucket));
     }
 
     @Override

@@ -33,7 +33,7 @@ public class BrewKettleRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
         ItemStack ingredientItemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(ingredientItemResourceLocation), ingredientItemAmount);
 
         recipe.setItemIngredient(Ingredient.fromStacks(ingredientItemStack));
-        recipe.setItemIngredientAmount(JSONUtils.getInt(json.get("ingredient_item").getAsJsonObject(), "count", 1));
+        //recipe.setItemIngredientAmount(JSONUtils.getInt(json.get("ingredient_item").getAsJsonObject(), "count", 1));
 
         // Input Fluid
         ResourceLocation ingredientFluidResourceLocation = ResourceLocation.tryCreate(JSONUtils.getString(
