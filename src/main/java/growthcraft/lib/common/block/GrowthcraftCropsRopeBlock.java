@@ -3,6 +3,7 @@ package growthcraft.lib.common.block;
 import growthcraft.core.Growthcraft;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
+import growthcraft.hops.init.GrowthcraftHopsItems;
 import growthcraft.hops.init.config.GrowthcraftHopsConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
@@ -10,6 +11,8 @@ import growthcraft.lib.utils.BushUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
@@ -17,9 +20,12 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -43,8 +49,10 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    private long randomTickCount = 0;
-    private long pointsToGrow = 0;
+    private BlockPos anchorBlockPos = null;
+    private long lastAnchorTime = 0;
+    private int randomTickCount = 0;
+    private boolean lastTickGrow = false;
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -159,7 +167,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         super.tick(state, worldIn, pos, rand);
-
         if (!worldIn.isAreaLoaded(pos, 1)) {
             return;
         }
@@ -167,20 +174,49 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             worldIn.destroyBlock(pos, true);
             return;
         }
-        if(pointsToGrow == 0){
-            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+
+        if(anchorBlockPos == null){
+            anchorBlockPos = pos;
+            lastAnchorTime = worldIn.getGameTime();
+            randomTickCount = 0;
+        }
+        else if(pos.toLong() == anchorBlockPos.toLong()){
+            lastAnchorTime = worldIn.getGameTime();
+            if(lastTickGrow){
+                randomTickCount = 0;
+                lastTickGrow = false;
+            }
+            else {
+                randomTickCount++;
+            }
+        }
+        else if(worldIn.getGameTime() - lastAnchorTime >= 2712){
+            /*
+                2712 is the double of average time between two random tick, this occur indicate the anchor crops might already have been destroyed.
+                So we need a new anchor crop.
+             */
+            anchorBlockPos = pos;
+            lastAnchorTime = worldIn.getGameTime();
+            lastTickGrow = false;
+            randomTickCount++;
         }
 
+        Growthcraft.LOGGER.debug("anchorPos:"+anchorBlockPos.toString());
+        Growthcraft.LOGGER.debug("pos:"+pos.toString());
+        Growthcraft.LOGGER.debug("randomTick:"+this.randomTickCount);
+        Growthcraft.LOGGER.debug("nowTime:"+worldIn.getGameTime());
+        Growthcraft.LOGGER.debug("lastAnchorTime:"+lastAnchorTime);
+        Growthcraft.LOGGER.debug("diff:"+ (worldIn.getGameTime() - lastAnchorTime));
+
+        long pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            randomTickCount++;
-            if(randomTickCount * 1365 >=  pointsToGrow) {
+            if(this.randomTickCount * 1365 >=  pointsToGrow) {
                 // 1365 is the average ticks between two random tick
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
-                randomTickCount = 0;
-                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }
@@ -195,8 +231,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
         if (i != this.getMaxAge()){
             //age up
             worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
-            randomTickCount = 0;
-            Growthcraft.LOGGER.debug(randomTickCount);
         }
         else {
             // try and spawn another crop above.
@@ -242,10 +276,9 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        Growthcraft.LOGGER.debug("randomTick:"+this.randomTickCount);
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
         // only update its point when neighbor changed
-        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
-
 }
