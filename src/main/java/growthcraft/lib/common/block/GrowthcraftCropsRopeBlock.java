@@ -49,10 +49,9 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
-    private BlockPos anchorBlockPos = null;
-    private long lastAnchorTime = 0;
-    private int randomTickCount = 0;
-    private boolean lastTickGrow = false;
+    private long startTime = 0;
+    private long configModifier = (long) (GrowthcraftConfig.getPointsToGrow() / GrowthcraftHopsConfig.getHopsGrowModifier());
+    private int averageRandomTick = GrowthcraftConfig.getAverageRandomTick();
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D),
@@ -175,44 +174,18 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
             return;
         }
 
-        if(anchorBlockPos == null){
-            anchorBlockPos = pos;
-            lastAnchorTime = worldIn.getGameTime();
-            randomTickCount = 0;
-        }
-        else if(pos.toLong() == anchorBlockPos.toLong()){
-            lastAnchorTime = worldIn.getGameTime();
-            if(lastTickGrow){
-                randomTickCount = 0;
-                lastTickGrow = false;
-            }
-            else {
-                randomTickCount++;
-            }
-        }
-        else if(worldIn.getGameTime() - lastAnchorTime >= 2712){
-            /*
-                2712 is the double of average time between two random tick, this occur indicate the anchor crops might already have been destroyed.
-                So we need a new anchor crop.
-             */
-            anchorBlockPos = pos;
-            lastAnchorTime = worldIn.getGameTime();
-            lastTickGrow = false;
-            randomTickCount++;
+        if(startTime == 0){
+            startTime = worldIn.getGameTime();
         }
 
-        Growthcraft.LOGGER.debug("anchorPos:"+anchorBlockPos.toString());
-        Growthcraft.LOGGER.debug("pos:"+pos.toString());
-        Growthcraft.LOGGER.debug("randomTick:"+this.randomTickCount);
-        Growthcraft.LOGGER.debug("nowTime:"+worldIn.getGameTime());
-        Growthcraft.LOGGER.debug("lastAnchorTime:"+lastAnchorTime);
-        Growthcraft.LOGGER.debug("diff:"+ (worldIn.getGameTime() - lastAnchorTime));
-
-        long pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftHopsConfig.getHopsGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
-
+        long pointsToGrow = (long) (configModifier /(int)  (getGrowthChance(this, worldIn, pos)) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+        Growthcraft.LOGGER.debug("passed tick:"+(worldIn.getGameTime() - startTime));
+        Growthcraft.LOGGER.debug("configModifer:"+configModifier);
+        Growthcraft.LOGGER.debug("pointsToGrow:"+pointsToGrow);
+        Growthcraft.LOGGER.debug("getGrowthChance:"+getGrowthChance(this, worldIn, pos));
+        Growthcraft.LOGGER.debug("passed tick%:"+(worldIn.getGameTime() - startTime)%pointsToGrow);
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            if(this.randomTickCount * 1365 >=  pointsToGrow) {
-                // 1365 is the average ticks between two random tick
+            if((worldIn.getGameTime() - startTime)%pointsToGrow <= averageRandomTick*1.5) {
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -276,7 +249,6 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        Growthcraft.LOGGER.debug("randomTick:"+this.randomTickCount);
         worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, worldIn.getBlockState(pos).get(this.getAgeProperty())), 3);
         // only update its point when neighbor changed
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);

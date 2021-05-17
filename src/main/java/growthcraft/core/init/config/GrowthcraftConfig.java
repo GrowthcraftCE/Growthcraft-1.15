@@ -28,6 +28,7 @@ public class GrowthcraftConfig {
     private static ForgeConfigSpec.IntValue saltOreGenMinHeight;
     private static ForgeConfigSpec.IntValue saltOreGenMaxHeight;
     private static ForgeConfigSpec.IntValue pointsToGrow;
+    private static ForgeConfigSpec.IntValue averageRandomTick;
 
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftApples;
     private static ForgeConfigSpec.BooleanValue enableGrowthcraftBamboo;
@@ -81,8 +82,8 @@ public class GrowthcraftConfig {
         enableGrowthcraftMilk = server.comment("Enable/Disable Growthcraft Milk - Requires Cellar").define("growthcraft.milk.enable", true);
         enableGrowthcraftRice = server.comment("Enable/Disable Growthcraft Rice - Requires Cellar").define("growthcraft.rice.enable", true);
         enableGrowthcraftTrapper = server.comment("Enable/Disable Growthcraft Trapper").define("growthcraft.trapper.enable", true);
-        pointsToGrow = server.comment("Normalized time for a plant to grow up").defineInRange("general.pointsToGrow", 600000,60000,60000000);
-
+        pointsToGrow = server.comment("Normalized tick for a plant to grow up").defineInRange("general.pointsToGrow", 24000,2400,240000);
+        averageRandomTick = server.comment("DO NOT change this if you haven't use '/gamerule randomTickSpeed'. ").defineInRange("general.averageRandomTick",1365,1,10000);
     }
 
     public static void initWorldGenConfig(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client) {
@@ -170,6 +171,10 @@ public class GrowthcraftConfig {
 
     public static int getPointsToGrow(){
         return pointsToGrow.get();
+    }
+
+    public static int getAverageRandomTick(){
+        return averageRandomTick.get();
     }
     // endregion
 }
