@@ -21,8 +21,6 @@ public class GrowthcraftGrapesConfig {
 
     // Private ForgeConfigSpec Definitions
 
-    private static ForgeConfigSpec.DoubleValue grapeGrowModifier;
-
     /**
      * Placeholder for ForgeConfigSpec definitions.
      * <pre>
@@ -77,10 +75,6 @@ public class GrowthcraftGrapesConfig {
                 10
         );
 
-        grapeGrowModifier = server
-                .comment("The relative growth speed among all type of plants")
-                .defineInRange("general.grapeGrowModifier", 1,0.1,10);
-
     }
 
     // region Getters
@@ -96,8 +90,5 @@ public class GrowthcraftGrapesConfig {
         return maxGrapeVineGrowthHeight.get();
     }
 
-    public static double getGrapeGrowModifier(){
-        return grapeGrowModifier.get();
-    }
     // endregion
 }

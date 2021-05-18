@@ -21,7 +21,6 @@ public class GrowthcraftHopsConfig {
 
     // Private ForgeConfigSpec Definitions
 
-    private static ForgeConfigSpec.DoubleValue hopsGrowModifier;
 
 
     /**
@@ -62,18 +61,9 @@ public class GrowthcraftHopsConfig {
         server.push("general");
         server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
         server.pop();
-
-        hopsGrowModifier = server
-                .comment("The relative growth speed among all type of plants")
-                .defineInRange("general.hopsGrowModifier", 1,0.1,10);
-
     }
 
     // region Getters
-
-    public static double getHopsGrowModifier(){
-        return hopsGrowModifier.get();
-    }
 
 
     // endregion

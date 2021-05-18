@@ -1,5 +1,6 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.Growthcraft;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
 import growthcraft.grapes.init.config.GrowthcraftGrapesConfig;
@@ -45,8 +46,9 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
     public static final BooleanProperty TRUNK_CONNECTED = BooleanProperty.create("trunk_connected");
 
-    private long randomTickCount = 0;
-    private long pointsToGrow = 0;
+    private long startTime = 0;
+    private long configModifier = (long) (GrowthcraftConfig.getPointsToGrow() / GrowthcraftConfig.getVineGrowModifier());
+    private int averageRandomTick = GrowthcraftConfig.getAverageRandomTick();
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
@@ -190,19 +192,18 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
             worldIn.destroyBlock(pos, true);
             return;
         }
-        if(pointsToGrow == 0){
-            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapeConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+
+        if(startTime == 0){
+            startTime = worldIn.getGameTime();
         }
+
+        long pointsToGrow = (long) (configModifier /(int)  (getGrowthChance(this, worldIn, pos)) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            randomTickCount++;
-            if(randomTickCount * 1365 >=  pointsToGrow) {
-                // 1365 is the average ticks between two random tick
+            if((worldIn.getGameTime() - startTime)%pointsToGrow <= averageRandomTick*1.5) {
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
-                randomTickCount = 0;
-                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }
@@ -219,8 +220,6 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         if (i != this.getMaxAge()){
             //age up
             worldIn.setBlockState(pos, getActualBlockStateWithAge(worldIn, pos, i+1), 2);
-            randomTickCount = 0;
-            Growthcraft.LOGGER.debug(randomTickCount);
         }
 
         if (i == this.getMaxAge()) {
@@ -275,7 +274,6 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         worldIn.setBlockState(pos, getActualBlockState(worldIn, pos), 3);
-        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
     }
 

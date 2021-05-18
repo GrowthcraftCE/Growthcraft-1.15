@@ -1,5 +1,6 @@
 package growthcraft.lib.common.block;
 
+import growthcraft.core.Growthcraft;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.lib.utils.BushUtils;
@@ -43,8 +44,9 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
-    private long randomTickCount = 0;
-    private long pointsToGrow = 0;
+    private long startTime = 0;
+    private long configModifier = (long) (GrowthcraftConfig.getPointsToGrow() / GrowthcraftConfig.getVineGrowModifier());
+    private int averageRandomTick = GrowthcraftConfig.getAverageRandomTick();
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D),
@@ -180,19 +182,18 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
             worldIn.destroyBlock(pos, true);
             return;
         }
-        if(pointsToGrow == 0){
-            pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
+
+        if(startTime == 0){
+            startTime = worldIn.getGameTime();
         }
+
+        long pointsToGrow = (long) (configModifier /(int)  (getGrowthChance(this, worldIn, pos)) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            randomTickCount++;
-            if(randomTickCount * 1365 >=  pointsToGrow) {
-                // 1365 is the average ticks between two random tick
+            if((worldIn.getGameTime() - startTime)%pointsToGrow <= averageRandomTick*1.5) {
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
                     grow(worldIn, rand, pos, state);
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
-                randomTickCount = 0;
-                pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
             }
         }
     }
@@ -239,7 +240,6 @@ public class GrowthcraftVineFruitBlock extends BushBlock implements IGrowable {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        pointsToGrow = (long) ((GrowthcraftConfig.getPointsToGrow() /(int)  (getGrowthChance(this, worldIn, pos)* GrowthcraftGrapesConfig.getGrapeGrowModifier())) * (1+worldIn.rand.nextInt() % 20 / 100.0));
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 }

@@ -4,7 +4,6 @@ import growthcraft.core.Growthcraft;
 import growthcraft.core.init.config.GrowthcraftConfig;
 import growthcraft.core.shared.Reference;
 import growthcraft.hops.init.GrowthcraftHopsItems;
-import growthcraft.hops.init.config.GrowthcraftHopsConfig;
 import growthcraft.lib.common.block.rope.IBlockRope;
 import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.lib.utils.BushUtils;
@@ -50,7 +49,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements IBlockRope, 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 
     private long startTime = 0;
-    private long configModifier = (long) (GrowthcraftConfig.getPointsToGrow() / GrowthcraftHopsConfig.getHopsGrowModifier());
+    private long configModifier = (long) (GrowthcraftConfig.getPointsToGrow() / GrowthcraftConfig.getCropsGrowModifier());
     private int averageRandomTick = GrowthcraftConfig.getAverageRandomTick();
 
     protected static VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
