@@ -223,24 +223,45 @@ public class GrowthcraftVineLeavesBlock extends BushBlock implements IBlockRope,
         }
 
         if (i == this.getMaxAge()) {
-            boolean trySpawnFruitBlock = true;
             Tag<Block> tagRope = BlockTags.getCollection().getOrCreate(Reference.TAG_ROPE);
 
             Map<BlockPos, BlockState> blockMap = BlockStateUtils.getHorizontalBlockPos(worldIn, pos);
-            for(Map.Entry<BlockPos, BlockState> entry : blockMap.entrySet() ) {
-                if(tagRope.contains(entry.getValue().getBlock()) ) {
-                    worldIn.setBlockState(entry.getKey(), this.getActualBlockStateWithAge(worldIn, entry.getKey(), 0));
-                    trySpawnFruitBlock = false;
+            int growChoice = Math.abs(worldIn.rand.nextInt())%5 ;
+            Growthcraft.LOGGER.debug(growChoice);
+            if(growChoice > 0){
+                Growthcraft.LOGGER.debug("Light mode");
+                // 80% probability the vine will grow toward the brightest side
+                int highestLightValue = 0;
+                BlockPos brightestBlockPos = null;
+                for(Map.Entry<BlockPos, BlockState> entry : blockMap.entrySet() ) {
+                    if(tagRope.contains(entry.getValue().getBlock()) ) {
+                        int light = worldIn.getLightSubtracted(entry.getKey(), worldIn.getSkylightSubtracted());
+                        if(light > highestLightValue){
+                            highestLightValue = light;
+                            brightestBlockPos = entry.getKey();
+                        }
+                    }
+                }
+                Growthcraft.LOGGER.debug(highestLightValue);
+                if(highestLightValue != 0){
+                    worldIn.setBlockState(brightestBlockPos, this.getActualBlockStateWithAge(worldIn, brightestBlockPos, 0));
                     return;
                 }
             }
-
-            if(trySpawnFruitBlock) {
-                if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
-                    worldIn.setBlockState(pos.down(), vineFruitBlock.getDefaultState());
+            else{
+                // 20% it just grows at any direction
+                Growthcraft.LOGGER.debug("Random mode");
+                for(Map.Entry<BlockPos, BlockState> entry : blockMap.entrySet() ) {
+                    if(tagRope.contains(entry.getValue().getBlock()) ) {
+                        worldIn.setBlockState(entry.getKey(), this.getActualBlockStateWithAge(worldIn, entry.getKey(), 0));
+                        return;
+                    }
                 }
             }
 
+            if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
+                worldIn.setBlockState(pos.down(), vineFruitBlock.getDefaultState());
+            }
         }
     }
 
